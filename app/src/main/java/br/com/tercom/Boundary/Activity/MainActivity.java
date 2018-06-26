@@ -1,4 +1,4 @@
-package br.com.tercom.Boundary;
+package br.com.tercom.Boundary.Activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
