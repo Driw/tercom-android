@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item  android:height="250dp" >
+        <shape>
+            <solid android:color="@color/colorTransparent"/>
+        </shape>
+
+    </item>
+    <item  android:height="200dp"  android:gravity="top">
+        <shape>
+            <solid android:color="@color/colorAccent"/>
+        </shape>
+
+    </item>
+    <item  android:height="250dp">
+        <vector xmlns:android="http://schemas.android.com/apk/res/android"
+            android:height="35dp"
+            android:width="200dp"
+            android:viewportHeight="250"
+            android:viewportWidth="384">
+
+            <path
+                android:name="dark_triangle"
+                android:fillColor="@color/colorAccent"
+                android:pathData="M 0,200 L 192,250 384,200 z" />
+
+
+        </vector>
+    </item>
+
+
+
+</layer-list>
