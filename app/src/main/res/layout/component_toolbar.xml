@@ -1,0 +1,32 @@
+<android.support.v7.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/include_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:background="@color/colorBlack"
+    android:elevation="@dimen/toolbar_elevation"
+    android:gravity="center"
+    android:minHeight="@dimen/toolbar_height"
+    android:title="Home"
+    app:titleMarginBottom="@dimen/toolbar_titleMarginBottom"
+    app:titleMarginStart="@dimen/toolbar_titleMarginStart"
+    app:titleMarginTop="@dimen/toolbar_titleMarginTop"
+    app:titleTextColor="@color/colorPrimary">
+
+    <android.support.v7.widget.ActionMenuView
+        android:id="@+id/amvMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginRight="20dp"
+        android:text=" TERCOM"
+        android:textColor="@color/colorPrimaryDark"/>
+
+</android.support.v7.widget.Toolbar>
+
+
+

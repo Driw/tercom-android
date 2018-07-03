@@ -1,11 +1,55 @@
 <resources>
 
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="AppThemeNoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:textColorSecondary">@color/colorPrimary</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+
+
     </style>
+
+    <style name="tabtextcolor" parent="Widget.AppCompat.ActionBar.Solid">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:color">@color/colorLightBlue</item>
+        <item name="android:textAllCaps">false</item>
+
+    </style>
+
+    <style name="MenuTextColor" parent="ThemeOverlay.AppCompat.Light">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorDark</item>
+        <item name="android:color">@color/colorPrimary</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColorSecondary">@color/colorPrimary</item>
+
+
+    </style>
+
+    <style name="ToolbarTheme" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:background">@color/colorAccent</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColorSecondary">@color/colorPrimary</item>
+
+    </style>
+
+
 
 </resources>
