@@ -45,7 +45,7 @@ public class TercomFuncionario {
 
     public String getCpf() {
         //TODO(corrigir após testes)
-        return "3";
+        return cpf;
     }
 
     public void setCpf(String cpf) {

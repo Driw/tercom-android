@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             try {
-                GenericEntityFiller.fillEntity(TercomFuncionario.class, (ViewGroup) findViewById(R.id.funcionarioTercom_Constraint).getParent());
+                GenericEntityFiller.fillEntity(TercomFuncionario.class, (ViewGroup) findViewById(R.id.funcionarioTercom_Constraint));
             }
             catch (Exception e)
             {
