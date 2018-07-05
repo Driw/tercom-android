@@ -1,21 +1,27 @@
 package br.com.tercom.Util;
 
 import android.view.ViewGroup;
-import android.widget.EditText;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import br.com.tercom.Util.Component.CustomDataEditText;
 
 
 public class GenericEntityFiller {
-    public static <T> void fillEntity(Class<T> t, ViewGroup vg) throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
+    private static String entitiesPath = "br.com.tercom.Entity.";
+    public static <T> void fillEntity(Class<T> t, ViewGroup vg) throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException, ClassNotFoundException {
         T entity = t.newInstance();
+
+        Class<?> test = Class.forName(entitiesPath + "TercomFuncionario");
+
         for(int i = 0; i < vg.getChildCount(); i++)
         {
-            if(vg.getChildAt(i) instanceof EditText)
+            if(vg.getChildAt(i) instanceof CustomDataEditText)
             {
-                EditText txt = (EditText) vg.getChildAt(i);
+                CustomDataEditText txt = (CustomDataEditText) vg.getChildAt(i);
+
+
                 Method m = entity.getClass().getDeclaredMethod(txt.getTag().toString(), String.class);
                 m.invoke(entity, txt.getText()).toString();
                 Method mTeste = entity.getClass().getDeclaredMethod("getSenha");

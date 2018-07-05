@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomDataEditText">
+        <attr name="DBTable" format="string" />
+        <attr name="DBField" format="string" />
+    </declare-styleable>
+</resources>

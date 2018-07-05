@@ -46,7 +46,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:tag="setEmail" />
 
-    <EditText
+    <br.com.tercom.Util.Component.CustomDataEditText
         android:id="@+id/editSenha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -57,7 +57,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/txtSenha"
         app:layout_constraintTop_toBottomOf="@+id/editEmail"
-        android:tag="setSenha"/>
+        android:tag="setSenha"
+        app:DBTable="FuncionarioTercom"
+        app:DBField="Email" />
 
     <Button
         android:id="@+id/btnLogin"
@@ -68,4 +70,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editSenha" />
+
 </android.support.constraint.ConstraintLayout>
