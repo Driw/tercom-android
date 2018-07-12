@@ -55,12 +55,13 @@
 
         <br.com.tercom.Util.Component.CustomEditText
             android:id="@+id/editSenha"
+            style="@style/editText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="40dp"
-            style="@style/editText"
+            android:background="@drawable/shape_rec_edit_text"
             android:ems="10"
             android:hint="E-mail"
             android:inputType="textPassword"
@@ -89,6 +90,7 @@
             android:layout_marginEnd="24dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="40dp"
+            android:background="@drawable/shape_rec_edit_text"
             android:hint="Senha"
             android:textAlignment="center"
             app:Attribute="Nome"

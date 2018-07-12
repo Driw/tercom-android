@@ -10,16 +10,23 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
+import java.net.URLEncoder;
 import java.util.Locale;
 
 import br.com.tercom.Enum.BaseUrl;
 import br.com.tercom.Enum.EnumMethod;
+import br.com.tercom.Enum.EnumWebServices;
+import br.com.tercom.Util.CustomPair;
 import br.com.tercom.Util.HttpUtil;
 
+import static br.com.tercom.Entity.User.USER_STATIC;
 
 /**
- * Created by Trabalho on 2/5/2018.
+ * <b>GenericControl</b> é uma classe abstrata feita para suprir todas necessidades em uma chamada de webservice, trazendo métodos para criar a url e adicionar os parâmetros;
+ * Pode ser usado em GET ou POST, os métodos se adaptam aos diversos tipos de chamads.
+ * Pode ser trabalhando em arquiteturas SOAP ou REST.
+ * @author Felipe
+ * @version 2.0
  */
 
 public abstract class GenericControl {
@@ -27,39 +34,63 @@ public abstract class GenericControl {
     private final static int WEBSERVICE_FAIL = 0;
     private final static  int WEBSERVICE_OK = 1;
 
-
+    /**
+     * A URL_BASE é um atributo que contém a base do header da chamada.
+     * @see BaseUrl é uma enum que tem a base da url, sendo ela de dev ou a real(mais tipos podem ser adicionados se necessário)
+     */
     private final  String URL_BASE = BaseUrl.URL_DEV.path;
 
-    //TODO(Necessário adaptar ao modelo novo do projeto e necessário documentar usando a própria documentação do android.)
 
-
-//
-//    protected  String[] getValuesBase() {
-//        return new String[] {USER_STATIC.getEmail(),USER_STATIC.getSenha()};
-//    }
-
-
-    /*
-        Usado para GET e POST. Define a base da url e o tipo do webservice que será usado.
+    /**
+     * Usado para pegar a base das informações do usuário(Login e senha), que será necessário para fazer chamadas que terão como objetivo obter informações do usuário em questão.
+     * @return Retorna um array de String com as informações pertinentes ao usuário em questão.
      */
 
-    protected  String getBase(String type)
+    protected  String[] getValuesBase() {
+        return new String[] {USER_STATIC.getEmail(),USER_STATIC.getSenha()};
+    }
+
+
+    /**
+     * Webservice feito para formar o header usando padrão RESTFUL.
+     * @param types 1...* valores da enum EnumWebServices, ajudando a formar o header da chamada.
+     * @return Retorna uma String com a base do header. Sendo formado por url base + caminho.
+     */
+
+    protected  String getBase(EnumWebServices... types)
     {
+        StringBuilder type = new StringBuilder();
+
+        for(EnumWebServices ws : types)
+            type.append(ws.path);
 
         return String.format(Locale.US,"%s%s",URL_BASE, type);
     }
 
-    /*
-        Usado somente para GET, cria a url completa que será usada, sendo que é formada pela base, os parâmetros do usuário e por fim algum tipo, se for necessário.
-     */
 
+    /**
+     * Forma final da chamada, adicionando parâmetros necessários ainda na url, caso haja necessidade;
+     * @param base A base é formada pelo método getBase que trará a url base que estará sendo usada no momento somado de webservices formando o caminho completo;
+     * @param params O parâmetro trará qualquer informação extra variável, que pode ser necessário para completar a chamada.
+     * @return Retorna a url completa que será enviada na chamada do Webservice.
+     */
     protected  String getLink(String base, String params){
         return String.format(Locale.US,"%s%s",base,params);
     }
 
 
-     /*
-        Usado em GET e POST, ele gera os parametros de usuário, baseado no formato (valor_valor) e retorna uma string completa com todos valores do array.
+    /*
+
+     */
+
+    /**
+     * Usado em GET e POST, ele gera os parametros baseado no formato (valor_valor) e retorna uma string completa com todos valores do array.
+     * @param values É um array de strings que contém todos os valores necessários para a chamada.
+     * @param separator será o caractér de escape para informar que a partir dele será um novo parâmetro
+     * @return String concatenada com todos os valores contidos em values separados pelo separator.
+     * @throws UnsupportedEncodingException Se faz necessário para previnir erros quando o URLEncoder estiver em ação
+     * @see URLEncoder classe usda para converter o valor em UTF-8 afim de evitar erros quando recebido no webservice.
+     * @method encode usado para evitar que algum parâmetro seja inválido, independete do caractér existente nele. Padrão usado: UTF-8
      */
 
     protected  String generateParams(String[] values,String separator) throws UnsupportedEncodingException {
@@ -68,8 +99,8 @@ public abstract class GenericControl {
 
         for (int i= 0;i<values.length;i++) {
 
-            //result.append(URLEncoder.encode(values[i], "UTF-8"));
-            result.append(values[i]);
+            result.append(URLEncoder.encode(values[i], "UTF-8"));
+
 
             if(i != values.length-1)
                 result.append(separator);
@@ -79,140 +110,102 @@ public abstract class GenericControl {
         return result.toString();
     }
 
-//    protected  String generateArrayCompraItem(ArrayList<CompraItem> values) throws UnsupportedEncodingException {
-//
-//        StringBuilder result = new StringBuilder();
-//
-//        for (int i= 0;i<values.size();i++) {
-//            if (values.get(i).getQTD()>0) {
-//                result.append(String.format(Locale.US, "%s[%s]=%d", values.get(i).getType().type, URLEncoder.encode(values.get(i).getNome(), "UTF-8"), values.get(i).getQTD()));
-//                if (i != values.size() - 1)
-//                    result.append("&");
-//            }
-//        }
-//
-//        return result.toString();
-//    }
-//
-
-    protected  String generateArrayCadeiras(ArrayList<String> values) throws UnsupportedEncodingException {
-
-        StringBuilder result = new StringBuilder();
-
-        for (int i= 0;i<values.size();i++) {
-                result.append(String.format(Locale.US, "cadeira[%s]=1",values.get(i)));
-                if (i != values.size() - 1)
-                    result.append("&");
-            }
-
-        return result.toString();
-    }
-
     /*
-        Usado em GET e POST, ele gera os parametros de usuário, formato (key=valor) que é definido previamente e enviado no array de valores.Retorna uma string completa com todos valores do array.
      */
 
-    protected  String generateParamsWithKey(String[] values) throws UnsupportedEncodingException {
+    /**
+     *  Usado em GET e POST, ele gera os parametros baseado no formato formato (key=valor&key=valor). Usando o "&" como separador padrão;
+     * @param keys É um array de Strings que contém todas as chaves(key) dos valores que serão citados a seguir. Segue as respectivas posições do array(1-1...);
+     * @param values  É um array de strings que contém todos os valores necessários para a chamada.
+     * @return Retorna uma string concatenada com todos valores e chaves dos arrays combinados.
+     * @throws UnsupportedEncodingException Se faz necessário para previnir erros quando o URLEncoder estiver em ação
+
+     * @method URLEncoder.encode usado para evitar que algum parâmetro seja inválido, independete do caractér existente nele. Padrão usado: UTF-8
+     */
+    protected  String generateParamsWithKey(String[] keys, String[] values) throws UnsupportedEncodingException {
 
         StringBuilder result = new StringBuilder();
 
         for (int i= 0;i<values.length;i++) {
-            result.append(values[i]);
+            result.append(createField(keys[i] ,URLEncoder.encode(values[i], "UTF-8")));
             if(i != values.length-1) result.append("&");
         }
 
         return result.toString();
     }
 
+    /**
+     *  Identifica a página que será requisitada, usada normalmente em chamadas de busca de espetáculos, sendo a página da lista que deverá ser requisitada
+     * @param page número da página requisitada (int)
+     * @return retorna um padrão pagina=valor
+     */
+
     protected  String setPage(int page){
         return String.format(Locale.US,"pagina=%d",page);
     }
 
-
-    /*
-        * Cria uma conexão com o webservice através de GET para receber um json, parâmetros usados:
-        * Activity: usado para a verificações de internet dentro do método de conexão;
-        * Link: a url completa usada;
-        * Chave: O callJsonArray virá em um formato com o status e um array, a chave será usada para pegar esse JsonArray;
-        * Retorno: retornará um pair com o status (boolean), caso seja true, retornará o array, caso false retornará a mensagem que será tratada na activity previamente selecionada.
+    /**
+     * Esse método é usado para fazer as chamadas dos webservices, seja em <b>GET</b> ou <b>POST</b>/ <b>Array</b> ou <b>Object</b>.
+     * Ele irá reconhecer e trazer um retorno apropriado ao que foi recebido.
+     * Espera um status que dirá se o webservice foi ok ou teve algum problema durante a chamada.
+     * @param method define se a chamada vai ser feita em GET ou POST, baseado no method, o método interpretará o parâmetro link de uma maneira diferente.
+     * @param activity usado para a verificações de internet dentro do método de conexão;
+     * @param link e formada pela url e os parâmetros da chamada. Ele considera o parâmetro method para traduzir esse objeto de formas diferentes, caso o parâmetro seja GET, ele considera
+     *             uma String, caso seja POST, ele considera que o objeto é um <b>CustomPair</b>, sendo que o <i>first</i> seria o header e o <i>second</i> seria os parâmetros que iriam pelo post.
+     * @return Esse método retorna um CustomPair em que o primeiro atributo é boolean e o segundo é um objet podendo ser um JSONObject, JSONArray ou uma String.
+     * O primeiro atributo retorna true caso o retorno tenha sido como esperado e false caso tenha dado algum erro.
+     * Caso tenha sido false, ele espera uma mensagem do webservice, caso não venha ele coloca uma mensagem padrão de erro de download dos dados.(Será colocado no second)
+     * Caso o retorno tenha sido true, quer dizer que o valor esperado foi obtido e ele trará no second;
+     * Os valores retornados dele serão tratados fora desse método, deverão ser tratados onde forem chamados.
+     * @see EnumMethod EnumMethod: essa enum é usada para definir o tipo de chamada que será feito, pode ser selecionado GET ou POST e é o valor a ser passado em <i>method</i>
      */
+    protected CustomPair callJson(EnumMethod method, Activity activity, Object link){
 
-            protected Pair callJsonArray(EnumMethod method, Activity activity, Object link){
-                try{
-                    String jsonCalled = "";
-                    if(method == EnumMethod.GET) {
-                        jsonCalled = new HttpUtil().httpConnectionGET((String)link, activity);
-                    }
-                    if(method == EnumMethod.POST) {
-                        jsonCalled = new HttpUtil().httpConnectionPOST((Pair)link, activity);
-                    }
-                    if( !jsonCalled.trim().isEmpty()) {
-                        if (jsonCalled.startsWith("[")) {
-                            JSONArray jsonArray = new JSONArray(jsonCalled);
-                            if(jsonArray.length()!= 0) {
-                                return new Pair<>(true,jsonArray.toString());
-                            }else{
-                                return new Pair<>(false,"Não há resultados");
-                            }
-                        } else {
-                            JSONObject jsonObject = new JSONObject(jsonCalled);
-                            if (jsonObject.getInt("status") == WEBSERVICE_FAIL) {
-                                return new Pair<>(false, jsonObject.get("msg"));
-                            }
-                        }
-                    } throw  new Exception("Erro ao fazer o download");
-        }catch (Exception e){
-            e.printStackTrace();
-            return new Pair<>(false,"Erro! Não foi possível fazer o download dos dados.");
-        }
-    }
-
-    /*
-    * Cria uma conexão com o webservice através de GET para receber um json, parâmetros usados:
-    * Activity: usado para a verificações de internet dentro do método de conexão;
-    * Link: é a url que será usada para fazer o GET.
-    * Retorno: retornará um JSONObject;
-    */
-
-    protected  Pair callJSONObjetct(Activity activity, String link){
-        try{
-            JSONObject jsonObject = new JSONObject(new HttpUtil().httpConnectionGET(link,activity));
-            if(jsonObject.getInt("status") == WEBSERVICE_OK) {
-                return new Pair<>(true,jsonObject.toString());
-            }else{
-                return new Pair<>(false,jsonObject.get("msg"));
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-            return new Pair<>(false,"Erro! Não foi possível fazer o download dos dados.");
-        }
-    }
-
-    /*
-    * Cria uma conexão com o webservice através de GET para receber um json, parâmetros usados:
-    * Activity: usado para a verificações de internet dentro do método de conexão;
-    * Link: é a url que será usada para fazer o GET.
-    * Retorno: retornará um JSONObject;
-    */
-
-    protected  Pair callJSONObjetctWithoutStatus(Activity activity, String link){
+        String jsonCalled = "";
 
         try{
-            JSONObject jsonObject = new JSONObject(new HttpUtil().httpConnectionGET(link,activity));
-            if(jsonObject.keys().hasNext()) {
-                return new Pair<>(true,jsonObject.toString());
-            }else{
-                return new Pair<>(false,jsonObject.get("msg"));
+            if(method == EnumMethod.GET) {
+                jsonCalled = new HttpUtil().httpConnectionGET((String)link, activity);
             }
+            if(method == EnumMethod.POST) {
+                jsonCalled = new HttpUtil().httpConnectionPOST((Pair) link, activity);
+            }
+
+            if( !jsonCalled.trim().isEmpty()) {
+                if (jsonCalled.startsWith("[")) {
+                    JSONArray jsonArray = new JSONArray(jsonCalled);
+                    if(jsonArray.length()!= 0) {
+                        return new CustomPair<>(true,jsonArray.toString());
+                    }else{
+                        return new CustomPair<>(false,"Não há resultados");
+                    }
+                } else {
+                    JSONObject jsonObject = new JSONObject(jsonCalled);
+                    if (jsonObject.getInt("status") == WEBSERVICE_FAIL) {
+                        return new CustomPair<>(false, jsonObject.get("msg"));
+                    }else{
+                        return new CustomPair<>(true,jsonObject.toString());
+                    }
+                }
+            } throw  new Exception("Não há dados no retorno.");
         }catch (Exception e){
             e.printStackTrace();
-            return new Pair<>(false,"Erro! Não foi possível fazer o download dos dados.");
+            return new CustomPair<>(false,"Erro! Não foi possível fazer o download dos dados.");
         }
     }
+
 
     /*
         Este método recebe uma string de json e o transforma em um objeto da entidade selecionada.
         Retorno: Um Object que sofrerá um cast ao voltar para o controle onde foi chamado. (O cast deverá ser igual ao da classe selecionada)
+     */
+
+    /**
+     * Recebe um json em formato string e a entidade referente a ele e retorna a entidade preenchida pelos seus respectivos campos no json.
+     * @param json String do json recebido.
+     * @param selectedClass Define a entidade que o gson retornará.
+     * @param <T> Entidade que será definida em selectedClass
+     * @return Retorna a entidade definida em <b>selectedClass</b> preenchida com os seus reespectivos atributos do json.
      */
 
     protected <T>  T getItem(String json, Class<T> selectedClass){
@@ -223,6 +216,14 @@ public abstract class GenericControl {
     /*
         Este método recebe a chave e seu resultado, montado uma das variáveis que será enviada nas conexões.
         Retorno: Uma String montada com os parâmetros.
+     */
+
+
+    /**
+     * Esse método gera um parametro baseado na estrutura chave=valor e retorna a String
+     * @param key chave que será enviado (ex:email, telefone etc)
+     * @param result valor da chave em questão
+     * @return uma String formada por key=result
      */
 
     protected   String createField(String key, String result){
