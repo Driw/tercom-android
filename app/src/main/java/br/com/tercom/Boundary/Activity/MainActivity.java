@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
             try {
-                entities = GenericEntityFiller.fillEntity((ViewGroup) findViewById(R.id.funcionarioTercom_Constraint));
+                entities = GenericEntityFiller.fillEntity((ViewGroup) findViewById(R.id.ConstraintViewGroup));
             }
             catch (Exception e)
             {

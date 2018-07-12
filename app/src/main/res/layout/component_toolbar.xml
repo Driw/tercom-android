@@ -25,7 +25,7 @@
         android:layout_height="45dp"
         android:layout_marginRight="20dp"
         android:gravity="center"
-        android:text="@string/tercom"
+        android:text=""
         android:textSize="18sp"
         android:textStyle="bold"
         tools:textAllCaps="false" />
