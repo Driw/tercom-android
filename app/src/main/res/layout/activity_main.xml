@@ -19,20 +19,21 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/ConstraintViewGroup"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="4dp"
         android:layout_marginEnd="4dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
-        android:background="@drawable/background_teste"
+        android:background="@drawable/shape_background_rounded_white"
         android:orientation="vertical"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include_toolbar"
-        android:id="@+id/ConstraintViewGroup">
+        app:layout_constraintTop_toBottomOf="@+id/include_toolbar">
 
         <br.com.tercom.Util.Component.CustomEditText
             android:id="@+id/editEmail"
@@ -47,8 +48,8 @@
             android:inputType="textEmailAddress"
             android:tag="setEmail"
             android:textAlignment="center"
-            app:Attribute="Email"
             app:AttrType="String"
+            app:Attribute="Email"
             app:Entity="TercomFuncionario"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -62,13 +63,13 @@
             android:layout_marginEnd="24dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="40dp"
-            style="@style/editText"
+            android:background="@drawable/shape_rec_edit_text"
             android:ems="10"
             android:hint="Senha"
             android:inputType="textPassword"
             android:textAlignment="center"
-            app:Attribute="Senha"
             app:AttrType="String"
+            app:Attribute="Senha"
             app:Entity="TercomFuncionario"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -78,8 +79,9 @@
             android:id="@+id/btnLogin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/btn_corner_bottom"
+            android:background="@drawable/shape_btn_corner_bottom"
             android:text="Cadastrar"
+            android:textColor="@color/colorPrimary"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -92,10 +94,11 @@
             android:layout_marginEnd="24dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="40dp"
+            android:background="@drawable/shape_rec_edit_text"
             android:hint="Nome"
             android:textAlignment="center"
-            app:Attribute="Nome"
             app:AttrType="String"
+            app:Attribute="Nome"
             app:Entity="TercomFuncionario"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -111,8 +114,8 @@
             android:background="@drawable/shape_rec_edit_text"
             android:hint="ID Teste"
             android:textAlignment="center"
-            app:Attribute="Id"
             app:AttrType="Integer"
+            app:Attribute="Id"
             app:Entity="TercomFuncionario"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -124,15 +127,37 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="52dp"
-            android:background="@drawable/background_text_black"
+            android:background="@drawable/shape_header_blue"
             android:padding="5dp"
             android:text=""
             android:textAlignment="center"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/include" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/item_fornecedor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include_toolbar" />
+
+    <include
+        layout="@layout/item_fornecedor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include" />
 </android.support.constraint.ConstraintLayout>

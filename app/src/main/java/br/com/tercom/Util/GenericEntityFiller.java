@@ -40,8 +40,8 @@ public abstract class GenericEntityFiller
                 if(!entities.containsKey(txt.getEntity()))
                     entities.put(txt.getEntity(), Class.forName(entitiesPath + txt.getEntity()).newInstance());
                 type = txt.getAttrType();
-                Method m = entities.get(txt.getEntity()).getClass().getDeclaredMethod("set" + txt.getAttribute(), type.getPrimitive());
-                m.invoke(entities.get(txt.getEntity()), castValue(type.getClassType(), txt.getText().toString()));
+                Method m = entities.get(txt.getEntity()).getClass().getDeclaredMethod("set" + txt.getAttribute(), type.primitive);
+                m.invoke(entities.get(txt.getEntity()), castValue(type.classType, txt.getText().toString()));
             }
         }
         return entities;
