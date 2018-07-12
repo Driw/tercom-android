@@ -58,11 +58,11 @@ public class ViewComponent {
         return view;
     }
 
-    public View addComponent(EnumComponent type, int image, String text,int background,int textColor) {
+    public View addComponent(EnumComponent type, int image, String text, int background, int textColor) {
        return addComponent(type, image, text, background, textColor, false);
     }
 
-    public View addComponent(EnumComponent type, int image, String text,int background,int textColor, boolean drawable){
+    public View addComponent(EnumComponent type, int image, String text, int background, int textColor, boolean drawable){
         Resources res = activity.getResources();
         LayoutInflater inflater = activity.getLayoutInflater();
         View view = inflater.inflate(type.component, null, true);
@@ -85,7 +85,7 @@ public class ViewComponent {
         return view;
     }
 
-    public View addComponentTitle(EnumComponent type, int image, String title,String text,int textColor,int titleTextColor,int background){
+    public View addComponentTitle(EnumComponent type, int image, String title, String text, int textColor, int titleTextColor, int background){
 
         Resources res = activity.getResources();
         LayoutInflater inflater = activity.getLayoutInflater();
