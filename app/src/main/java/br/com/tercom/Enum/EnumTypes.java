@@ -8,35 +8,23 @@ import java.util.Map;
  */
 public enum EnumTypes
 {
-    STRING(0), INTEGER(1), FLOAT(2);
+    STRING(0,String.class,String.class),
+    INTEGER(1,Integer.class,int.class),
+    FLOAT(2,Float.class,float.class);
+
 
     /**
      * Using Map to keep EnumTypes int and string values, to be able to get EnumType by int.
      */
     private static Map<Integer, EnumTypes> values = new HashMap<>();
-    private final int typeIndex;
-    private final Class classType;
-    private final Class primitive;
+    public final int typeIndex;
+    public final Class classType;
+    public final Class primitive;
 
-    EnumTypes(int index)
-    {
-       typeIndex = index;
-
-        switch(typeIndex)
-        {
-            default:
-                classType = String.class;
-                primitive = String.class;
-                break;
-            case 1:
-                classType = Integer.class;
-                primitive = int.class;
-                break;
-            case 2:
-                classType = Float.class;
-                primitive = float.class;
-                break;
-        }
+    EnumTypes(int index,Class classType, Class primitive) {
+        this.classType = classType;
+        this.primitive = primitive;
+        this.typeIndex = index;
     }
 
     /**
@@ -45,14 +33,8 @@ public enum EnumTypes
     static
     {
         for(EnumTypes value : EnumTypes.values())
-            values.put(value.getValue(), value);
+            values.put(value.typeIndex, value);
     }
-
-    public int getValue()
-    {
-        return typeIndex;
-    }
-
     /**
      *
      * @param intType Enum's int value
@@ -63,17 +45,4 @@ public enum EnumTypes
         return values.get(intType);
     }
 
-    /**
-     *
-     * @return Class object according to the EnumType's set value.
-     */
-    public Class getClassType()
-    {
-        return classType;
-    }
-
-    public Class getPrimitive()
-    {
-        return primitive;
-    }
 }
