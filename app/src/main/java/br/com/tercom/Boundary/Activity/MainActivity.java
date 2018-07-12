@@ -5,15 +5,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.HashMap;
 
 import br.com.tercom.Application.AppTercom;
-import br.com.tercom.Entity.TercomFuncionario;
 import br.com.tercom.R;
-import br.com.tercom.Util.Component.CustomDataEditText;
+import br.com.tercom.Util.Component.CustomEditText;
 import br.com.tercom.Util.GenericEntityFiller;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,8 +19,8 @@ public class MainActivity extends AppCompatActivity {
     private final View.OnClickListener btnLogin_Click = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            CustomDataEditText email = findViewById(R.id.editEmail);
-            CustomDataEditText senha = findViewById(R.id.editSenha);
+            CustomEditText email = findViewById(R.id.editEmail);
+            CustomEditText senha = findViewById(R.id.editSenha);
             //TODO(Fazer validação decente)
             if(email.getText().toString().equals("") || senha.getText().toString().equals(""))
             {

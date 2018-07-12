@@ -6,7 +6,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
-import br.com.tercom.Util.Component.CustomDataEditText;
+import br.com.tercom.Util.Component.CustomEditText;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 /**
  * Class for filling entities properties in given ViewGroup, based on ViewGroup's CustomDataEditText.
@@ -31,9 +33,9 @@ public abstract class GenericEntityFiller {
         HashMap<String, Object> entities = new HashMap<>();
         for(int i = 0; i < vg.getChildCount(); i++)
         {
-            if(vg.getChildAt(i) instanceof CustomDataEditText)
+            if(vg.getChildAt(i) instanceof CustomEditText)
             {
-                CustomDataEditText txt = (CustomDataEditText) vg.getChildAt(i);
+                CustomEditText txt = (CustomEditText) vg.getChildAt(i);
                 if(!entities.containsKey(txt.getEntity()))
                     entities.put(txt.getEntity(), Class.forName(entitiesPath + txt.getEntity()).newInstance());
                 //TODO(Problema: O parâmetro do método está chumbado em String.class. Como fazer para pegar dinamicamente?)

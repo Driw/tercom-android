@@ -1,6 +1,7 @@
 <android.support.v7.widget.Toolbar
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/include_toolbar"
     android:layout_width="match_parent"
     android:layout_height="56dp"
@@ -20,11 +21,14 @@
         android:layout_height="56dp"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginRight="20dp"
-        android:text=" TERCOM"
-        android:textColor="@color/colorPrimaryDark"/>
+        android:gravity="center"
+        android:text="@string/tercom"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:textAllCaps="false" />
 
 </android.support.v7.widget.Toolbar>
 
