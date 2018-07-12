@@ -4,6 +4,8 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.util.Date;
+
 @Entity(tableName = "tercom_funcionario")
 public class TercomFuncionario {
     @PrimaryKey(autoGenerate = true)
@@ -32,8 +34,7 @@ public class TercomFuncionario {
     private String dataRegistro;
 
     @ColumnInfo(name = "ativo")
-    private Boolean ativo;
-
+    private boolean ativo;
 
     public int getId() {
         return id;

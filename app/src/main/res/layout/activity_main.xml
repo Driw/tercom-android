@@ -2,73 +2,109 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/funcionarioTercom_Constraint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="br.com.tercom.Boundary.Activity.MainActivity"
-    tools:layout_editor_absoluteY="81dp"
-    android:id="@+id/funcionarioTercom_Constraint">
+    tools:layout_editor_absoluteY="81dp">
 
     <TextView
         android:id="@+id/txtEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="7dp"
-        android:layout_marginEnd="26dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="72dp"
         android:text="Email"
-        app:layout_constraintBottom_toBottomOf="@+id/editEmail"
-        app:layout_constraintEnd_toStartOf="@+id/editEmail"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtSenha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="1dp"
-        android:layout_marginEnd="22dp"
+        android:layout_marginTop="64dp"
         android:text="Senha"
-        app:layout_constraintBottom_toBottomOf="@+id/editSenha"
-        app:layout_constraintEnd_toStartOf="@+id/editSenha"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/txtEmail"
+        app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
 
-    <EditText
+    <br.com.tercom.Util.Component.CustomDataEditText
         android:id="@+id/editEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="28dp"
         android:layout_marginTop="56dp"
         android:ems="10"
         android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:tag="setEmail"
+        app:Attribute="Email"
+        app:Entity="TercomFuncionario"
         app:layout_constraintStart_toEndOf="@+id/txtEmail"
-        app:layout_constraintTop_toTopOf="parent"
-        android:tag="setEmail" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <br.com.tercom.Util.Component.CustomDataEditText
         android:id="@+id/editSenha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="40dp"
         android:ems="10"
         android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:Attribute="Senha"
+        app:Entity="TercomFuncionario"
         app:layout_constraintStart_toEndOf="@+id/txtSenha"
-        app:layout_constraintTop_toBottomOf="@+id/editEmail"
-        android:tag="setSenha"
-        app:DBTable="FuncionarioTercom"
-        app:DBField="Email" />
+        app:layout_constraintTop_toBottomOf="@+id/editEmail" />
 
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="43dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="48dp"
         android:text="Login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editSenha" />
+        app:layout_constraintTop_toBottomOf="@+id/editCPF" />
+
+    <br.com.tercom.Util.Component.CustomDataEditText
+        android:id="@+id/editNome"
+        android:layout_width="216dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/editSenha"
+        app:Attribute="Nome"
+        app:Entity="TercomFuncionario" />
+
+    <br.com.tercom.Util.Component.CustomDataEditText
+        android:id="@+id/editCPF"
+        android:layout_width="217dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/editNome"
+        app:Attribute="Cpf"
+        app:Entity="TercomFuncionario" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
+        android:text="Nome"
+        app:layout_constraintStart_toStartOf="@+id/txtSenha"
+        app:layout_constraintTop_toBottomOf="@+id/txtSenha" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
+        android:text="CPF"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 </android.support.constraint.ConstraintLayout>

@@ -9,12 +9,12 @@ import br.com.tercom.R;
 
 public class CustomDataEditText extends CustomEditText
 {
-    private String DBTable;
-    private String DBField;
+    private String Entity;
+    private String Attribute;
 
     public CustomDataEditText(Context context) {
         super(context);
-        verifyAttributes(null);;
+        verifyAttributes(null);
     }
 
     public CustomDataEditText(Context context, AttributeSet attrs) {
@@ -30,30 +30,30 @@ public class CustomDataEditText extends CustomEditText
     private void verifyAttributes(AttributeSet attrs)
     {
         TypedArray attributes = AppTercom.getContext().obtainStyledAttributes(attrs, R.styleable.CustomDataEditText);
-        String dbField = attributes.getString(R.styleable.CustomDataEditText_DBField);
-        String dbTable = attributes.getString(R.styleable.CustomDataEditText_DBTable);
-        if(dbField.equals("") || dbTable.equals(""))
-            throw new RuntimeException("DBColumn and DBField MUST be filled");
+        String dbField = attributes.getString(R.styleable.CustomDataEditText_Attribute);
+        String dbTable = attributes.getString(R.styleable.CustomDataEditText_Entity);
+        if(dbField == null || dbTable == null)
+            throw new RuntimeException("Entity and Attribute MUST be filled");
         else
         {
-            setDBTable(dbTable);
-            setDBField(dbField);
+            setEntity(dbTable);
+            setAttribute(dbField);
         }
     }
 
-    public String getDBTable() {
-        return DBTable == null ? "" : DBTable;
+    public String getEntity() {
+        return Entity == null ? "" : Entity;
     }
 
-    public void setDBTable(String DBTable) {
-        this.DBTable = DBTable;
+    public void setEntity(String entity) {
+        this.Entity = entity;
     }
 
-    public String getDBField() {
-        return DBField == null ? "" : DBField;
+    public String getAttribute() {
+        return Attribute == null ? "" : Attribute;
     }
 
-    public void setDBField(String DBField) {
-        this.DBField = DBField;
+    public void setAttribute(String attribute) {
+        this.Attribute = attribute;
     }
 }

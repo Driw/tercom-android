@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="CustomDataEditText">
-        <attr name="DBTable" format="string" />
-        <attr name="DBField" format="string" />
+        <attr name="Entity" format="string" />
+        <attr name="Attribute" format="string" />
+        <attr name="AttrType">
+            <enum name="String" value="0" />
+            <enum name="Integer" value="1" />
+            <enum name="Float" value="2" />
+        </attr>
     </declare-styleable>
 </resources>
