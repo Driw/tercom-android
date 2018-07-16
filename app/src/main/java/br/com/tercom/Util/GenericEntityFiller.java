@@ -6,6 +6,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
+import br.com.tercom.Entity.Telefone;
+import br.com.tercom.Entity.TercomFuncionario;
 import br.com.tercom.Enum.EnumTypes;
 import br.com.tercom.Util.Component.CustomEditText;
 
@@ -21,7 +23,7 @@ public abstract class GenericEntityFiller
     private static String entitiesPath = "br.com.tercom.Entity.";
     private static EnumTypes type;
     /**
-     * Method created to loop the received ViewGroup, getting each CustomDataEditText and their attributes to fill the designed Entity.
+     * Method created to loop the received ViewGroup, getting each CustomEditText and their attributes to fill the designed Entity.
      * @param vg ViewGroup of the calling Activity where there's one or more CustomDataEditText.
      * @return HashMap containing the Entities, with properties values that user set. In case there is more than one Entity defined in the CustomDataEditText, the method will fill the HashMap with all the entities involved.
      * @throws IllegalAccessException
@@ -40,8 +42,11 @@ public abstract class GenericEntityFiller
                 if(!entities.containsKey(txt.getEntity()))
                     entities.put(txt.getEntity(), Class.forName(entitiesPath + txt.getEntity()).newInstance());
                 type = txt.getAttrType();
-                Method m = entities.get(txt.getEntity()).getClass().getDeclaredMethod("set" + txt.getAttribute(), type.primitive);
-                m.invoke(entities.get(txt.getEntity()), castValue(type.classType, txt.getText().toString()));
+                if(!txt.getText().toString().equals(""))
+                {
+                    Method m = entities.get(txt.getEntity()).getClass().getDeclaredMethod("set" + txt.getAttribute(), type.primitive);
+                    m.invoke(entities.get(txt.getEntity()), castValue(type.classType, txt.getText().toString()));
+                }
             }
         }
         return entities;

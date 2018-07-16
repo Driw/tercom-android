@@ -13,17 +13,16 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Locale;
 
+import br.com.tercom.Application.AppTercom;
 import br.com.tercom.Enum.BaseUrl;
 import br.com.tercom.Enum.EnumMethod;
 import br.com.tercom.Enum.EnumWebServices;
 import br.com.tercom.Util.CustomPair;
 import br.com.tercom.Util.HttpUtil;
 
-import static br.com.tercom.Entity.User.USER_STATIC;
-
 /**
  * <b>GenericControl</b> é uma classe abstrata feita para suprir todas necessidades em uma chamada de webservice, trazendo métodos para criar a url e adicionar os parâmetros;
- * Pode ser usado em GET ou POST, os métodos se adaptam aos diversos tipos de chamads.
+ * Pode ser usado em GET ou POST, os métodos se adaptam aos diversos tipos de chamadas.
  * Pode ser trabalhando em arquiteturas SOAP ou REST.
  * @author Felipe
  * @version 2.0
@@ -47,7 +46,7 @@ public abstract class GenericControl {
      */
 
     protected  String[] getValuesBase() {
-        return new String[] {USER_STATIC.getEmail(),USER_STATIC.getSenha()};
+        return new String[] {AppTercom.USER_STATIC.getEmail(), AppTercom.USER_STATIC.getSenha()};
     }
 
 

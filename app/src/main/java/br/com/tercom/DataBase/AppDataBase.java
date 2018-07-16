@@ -16,5 +16,5 @@ abstract public class AppDataBase extends RoomDatabase
      * Método abstrato para gerar a DAO de TercomFuncionario.
      * @return instância da DAO referente
      */
-    abstract TercomFuncionarioDAO tercomFuncionarioDao();
+    abstract public TercomFuncionarioDAO tercomFuncionarioDao();
 }

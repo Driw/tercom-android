@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Tercom</string>
     <string name="tercom">TERCOM</string>
+    <string name="email">Email</string>
+    <string name="senha">Senha</string>
+    <string name="cadastrar">Cadastrar</string>
+    <string name="nome">Nome</string>
 </resources>

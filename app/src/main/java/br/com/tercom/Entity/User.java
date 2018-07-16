@@ -2,8 +2,6 @@ package br.com.tercom.Entity;
 
 public class User extends GenericEntity<User> {
 
-    public static User USER_STATIC;
-
     private String email;
     private String senha;
     private String token;

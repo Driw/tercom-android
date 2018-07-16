@@ -24,7 +24,6 @@ public class TercomFuncionario {
     private String senha;
 
 
-
     //    TODO(Rever como irá ficar nesse caso, que é um atributo do tipo Telefone)
 //    @ColumnInfo(name = "telefone")
 //    private Telefone telefone;

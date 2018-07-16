@@ -1,5 +1,7 @@
 package br.com.tercom.Enum;
 
+import android.util.SparseArray;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,7 +18,8 @@ public enum EnumTypes
     /**
      * Using Map to keep EnumTypes int and string values, to be able to get EnumType by int.
      */
-    private static Map<Integer, EnumTypes> values = new HashMap<>();
+    //private static Map<Integer, EnumTypes> values = new HashMap<>();
+    private static SparseArray<EnumTypes> values = new SparseArray<>();
     public final int typeIndex;
     public final Class classType;
     public final Class primitive;
@@ -27,13 +30,13 @@ public enum EnumTypes
         this.typeIndex = index;
     }
 
-    /**
-     * Fill Map with EnumType's int and String. Run only once.
+    /*
+      Fill Map with EnumType's int and String. Run only once.
      */
     static
     {
         for(EnumTypes value : EnumTypes.values())
-            values.put(value.typeIndex, value);
+            values.append(value.typeIndex, value);
     }
     /**
      *
