@@ -12,7 +12,8 @@ public enum EnumTypes
 {
     STRING(0,String.class,String.class),
     INTEGER(1,Integer.class,int.class),
-    FLOAT(2,Float.class,float.class);
+    FLOAT(2,Float.class,float.class),
+    SHORT(3, Short.class, short.class);
 
 
     /**

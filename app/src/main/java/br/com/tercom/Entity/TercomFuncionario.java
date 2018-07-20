@@ -24,12 +24,12 @@ public class TercomFuncionario {
     private String senha;
 
 
-    //    TODO(Rever como irá ficar nesse caso, que é um atributo do tipo Telefone)
+    //    TODO(Rever como irá ficar nesse caso, que é um atributo do tipo Phone)
 //    @ColumnInfo(name = "telefone")
-//    private Telefone telefone;
+//    private Phone telefone;
 
 //    @ColumnInfo(name = "celular")
-//    private Telefone celular;
+//    private Phone celular;
 
     @ColumnInfo(name = "data_registro")
     private String dataRegistro;
@@ -46,7 +46,6 @@ public class TercomFuncionario {
     }
 
     public String getCpf() {
-        //TODO(corrigir após testes)
         return cpf;
     }
 

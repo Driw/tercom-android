@@ -21,18 +21,11 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             CustomEditText email = findViewById(R.id.editEmail);
             CustomEditText senha = findViewById(R.id.editSenha);
-            //TODO(Fazer validação decente)
-            if(email.getText().toString().equals("") || senha.getText().toString().equals(""))
-            {
-                Toast.makeText(AppTercom.getContext(), "Informar os campos de Email e Senha.", Toast.LENGTH_SHORT).show();
-                return;
-            }
             try {
                 entities = GenericEntityFiller.fillEntity((ViewGroup) findViewById(R.id.ConstraintViewGroup));
             }
             catch (Exception e)
             {
-                //TODO(método genérico para exibição de Exceptions?)
                 Toast.makeText(AppTercom.getContext(), "ERRO conversão dinâmica", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
