@@ -14,7 +14,7 @@ import br.com.tercom.R;
 import br.com.tercom.Util.Component.CustomEditText;
 import br.com.tercom.Util.GenericEntityFiller;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     private HashMap<String, Object> entities;
     private final View.OnClickListener btnLogin_Click = new View.OnClickListener() {
         @Override
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(br.com.tercom.R.layout.activity_main);
+        setContentView(br.com.tercom.R.layout.activity_login);
 
         Button btn_Login = (Button)findViewById(R.id.btnLogin);
         btn_Login.setOnClickListener(btnLogin_Click);

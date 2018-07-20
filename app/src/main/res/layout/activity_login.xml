@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorGrayBG"
     android:orientation="vertical"
-    tools:context="br.com.tercom.Boundary.Activity.MainActivity"
+    tools:context="br.com.tercom.Boundary.Activity.LoginActivity"
     tools:layout_editor_absoluteY="81dp">
     <include
         android:id="@+id/include_toolbar"

@@ -1,11 +1,14 @@
 package br.com.tercom.Entity;
 
-public abstract class GenericEntity<T> {
+import java.util.ArrayList;
+
+public class GenericEntity<T> {
 
     private int status;
     private String message;
     private String time;
     private T result;
+
 
     public int getStatus() {
         return status;

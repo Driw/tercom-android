@@ -6,7 +6,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
-import br.com.tercom.Entity.Telefone;
 import br.com.tercom.Entity.TercomFuncionario;
 import br.com.tercom.Enum.EnumTypes;
 import br.com.tercom.Util.Component.CustomEditText;

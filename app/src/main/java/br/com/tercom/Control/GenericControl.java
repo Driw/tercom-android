@@ -7,10 +7,12 @@ import com.google.gson.Gson;
 
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import br.com.tercom.Application.AppTercom;
@@ -78,9 +80,6 @@ public abstract class GenericControl {
     }
 
 
-    /*
-
-     */
 
     /**
      * Usado em GET e POST, ele gera os parametros baseado no formato (valor_valor) e retorna uma string completa com todos valores do array.
@@ -109,8 +108,7 @@ public abstract class GenericControl {
         return result.toString();
     }
 
-    /*
-     */
+
 
     /**
      *  Usado em GET e POST, ele gera os parametros baseado no formato formato (key=valor&key=valor). Usando o "&" como separador padrão;
@@ -194,11 +192,6 @@ public abstract class GenericControl {
     }
 
 
-    /*
-        Este método recebe uma string de json e o transforma em um objeto da entidade selecionada.
-        Retorno: Um Object que sofrerá um cast ao voltar para o controle onde foi chamado. (O cast deverá ser igual ao da classe selecionada)
-     */
-
     /**
      * Recebe um json em formato string e a entidade referente a ele e retorna a entidade preenchida pelos seus respectivos campos no json.
      * @param json String do json recebido.
@@ -212,10 +205,30 @@ public abstract class GenericControl {
     }
 
 
-    /*
-        Este método recebe a chave e seu resultado, montado uma das variáveis que será enviada nas conexões.
-        Retorno: Uma String montada com os parâmetros.
+    /**
+     * Recebe um jsonArray em formato string e a entidade referente a ele e retorna um array da entidade preenchida pelos seus respectivos campos no json.
+     * @param json String do json recebido.
+     * @param selectedClass Define a entidade que o gson retornará.
+     * @param <T> Entidade que será definida em selectedClass
+     * @return Retorna um array da entidade definida em <b>selectedClass</b> preenchida com os seus reespectivos atributos do json.
      */
+
+
+    protected <T> ArrayList<T> getItems(String json, Class<T> selectedClass){
+        ArrayList<T> values = new ArrayList<>();
+        try {
+            JSONArray jsonElements = new JSONArray(json);
+
+            for(int i =0; i<jsonElements.length();i++)
+                values.add(getItem(jsonElements.getString(i),selectedClass));
+
+            return values;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return values;
+        }
+    }
+
 
 
     /**
