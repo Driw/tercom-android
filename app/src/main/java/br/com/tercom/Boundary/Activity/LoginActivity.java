@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 import br.com.tercom.Application.AppTercom;
 import br.com.tercom.R;
-import br.com.tercom.Util.Component.CustomEditText;
+import br.com.tercom.Boundary.BoundaryUtil.Component.CustomEditText;
 import br.com.tercom.Util.GenericEntityFiller;
 
 public class LoginActivity extends AppCompatActivity {

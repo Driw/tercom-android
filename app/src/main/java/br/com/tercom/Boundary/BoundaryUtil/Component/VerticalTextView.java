@@ -1,4 +1,4 @@
-package br.com.tercom.Util;
+package br.com.tercom.Boundary.BoundaryUtil.Component;
 
 import android.content.Context;
 import android.graphics.Canvas;

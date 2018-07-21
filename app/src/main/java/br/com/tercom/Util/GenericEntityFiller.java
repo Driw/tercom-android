@@ -7,7 +7,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 
 import br.com.tercom.Enum.EnumTypes;
-import br.com.tercom.Util.Component.CustomEditText;
+import br.com.tercom.Boundary.BoundaryUtil.Component.CustomEditText;
 
 
 /**

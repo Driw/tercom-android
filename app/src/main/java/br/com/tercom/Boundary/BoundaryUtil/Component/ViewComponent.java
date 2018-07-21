@@ -1,4 +1,4 @@
-package br.com.tercom.Util;
+package br.com.tercom.Boundary.BoundaryUtil.Component;
 
 import android.app.Activity;
 import android.content.res.Resources;
@@ -38,7 +38,7 @@ public class ViewComponent {
         LayoutInflater inflater = activity.getLayoutInflater();
         View view = inflater.inflate(type.component, null, true);
         ButterKnife.bind(this,view);
-        overrideFonts(activity,view, EnumFont.FONT_MONTSERRAT_REGULAR);
+        overrideFonts(activity,view, EnumFont.FONT_ROBOTO_REGULAR);
         imageComponent.setImageBitmap(BitmapFactory.decodeResource(res,image));
         textComponent.setText(text);
         textComponent.setTextColor(Color.BLACK);
@@ -51,7 +51,7 @@ public class ViewComponent {
         View view = inflater.inflate(type.component, null, true);
         ButterKnife.bind(this,view);
         view.setBackgroundColor(bgColor==0? activity.getResources().getColor(R.color.colorPrimary):bgColor);
-        overrideFonts(activity,view,EnumFont.FONT_MONTSERRAT_REGULAR);
+        overrideFonts(activity,view,EnumFont.FONT_ROBOTO_REGULAR);
         imageComponent.setImageBitmap(BitmapFactory.decodeResource(res,image));
         textComponent.setText(text);
         textComponent.setTextColor(Color.BLACK);
@@ -74,7 +74,7 @@ public class ViewComponent {
         }else {
             view.setBackgroundColor(activity.getResources().getColor(background));
         }
-        overrideFonts(activity,view,EnumFont.FONT_MONTSERRAT_REGULAR);
+        overrideFonts(activity,view,EnumFont.FONT_ROBOTO_REGULAR);
 
         if(image == 0)
             imageComponent.setVisibility(View.GONE);
@@ -92,7 +92,7 @@ public class ViewComponent {
         View view = inflater.inflate(type.component, null, true);
         TextView titleComponent = view.findViewById(R.id.titleComponent);
         ButterKnife.bind(this,view);
-        overrideFonts(activity,view,EnumFont.FONT_MONTSERRAT_REGULAR);
+        overrideFonts(activity,view,EnumFont.FONT_ROBOTO_REGULAR);
 
         titleComponent.setText(title);
         textComponent.setText(text);

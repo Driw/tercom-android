@@ -1,4 +1,4 @@
-package br.com.tercom.Util;
+package br.com.tercom.Boundary.BoundaryUtil;
 
 import android.text.Editable;
 import android.text.TextWatcher;

@@ -1,6 +1,7 @@
 package br.com.tercom.Control;
 
 import android.app.Activity;
+import android.support.annotation.Nullable;
 import android.util.Pair;
 
 import com.google.gson.Gson;
@@ -14,6 +15,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Map;
+import java.util.TreeMap;
 
 import br.com.tercom.Application.AppTercom;
 import br.com.tercom.Enum.BaseUrl;
@@ -21,6 +24,9 @@ import br.com.tercom.Enum.EnumMethod;
 import br.com.tercom.Enum.EnumWebServices;
 import br.com.tercom.Util.CustomPair;
 import br.com.tercom.Util.HttpUtil;
+
+import static br.com.tercom.Util.HMAC.encrypt;
+import static br.com.tercom.Util.Util.getTimeStampFormated;
 
 /**
  * <b>GenericControl</b> é uma classe abstrata feita para suprir todas necessidades em uma chamada de webservice, trazendo métodos para criar a url e adicionar os parâmetros;
@@ -32,8 +38,11 @@ import br.com.tercom.Util.HttpUtil;
 
 public abstract class GenericControl {
 
-    private final static int WEBSERVICE_FAIL = 0;
-    private final static  int WEBSERVICE_OK = 1;
+    private final static  int API_FAILURE = 00;
+    private final static  int API_SUCCESS = 01;
+    private final static  int API_PHP_FATAL_ERROR = 97;
+    private final static  int API_ERROR_EXCEPTION = 98;
+    private final static  int API_ERROR_API_EXCEPTION = 99;
 
     /**
      * A URL_BASE é um atributo que contém a base do header da chamada.
@@ -78,6 +87,41 @@ public abstract class GenericControl {
     protected  String getLink(String base, String params){
         return String.format(Locale.US,"%s%s",base,params);
     }
+
+
+
+    /**
+     * retorna o token com todos parâmetros
+     * @param treeMap um map que terá cada chave e valor que será enviado no post;
+     * @see br.com.tercom.Util.HMAC classe onde o encrypt é feito.
+     * @return Retorna uma string com os parâmetros do post feitos, incluindo o token criptografado.
+     */
+
+    protected String getPostValues(@Nullable TreeMap<String,String> treeMap) throws UnsupportedEncodingException {
+
+        if(treeMap == null)
+            treeMap = new TreeMap<>();
+
+        treeMap.put("origem","android");
+        treeMap.put("timestamp",getTimeStampFormated());
+
+
+
+        StringBuilder tokenBuilder = new StringBuilder();
+        StringBuilder valuesBuilder = new StringBuilder();
+
+
+        for (Map.Entry<String,String> entry : treeMap.entrySet()) {
+            tokenBuilder.append(entry.getValue());
+            valuesBuilder.append(createField(entry.getKey(),URLEncoder.encode(entry.getValue(),"UTF-8")));
+            valuesBuilder.append("&");
+
+        }
+
+        String encryptedToken =  encrypt(tokenBuilder.toString());
+        return String.format(Locale.US,"%s%s",valuesBuilder.toString(), createField("token",encryptedToken));
+    }
+
 
 
 
@@ -178,7 +222,7 @@ public abstract class GenericControl {
                     }
                 } else {
                     JSONObject jsonObject = new JSONObject(jsonCalled);
-                    if (jsonObject.getInt("status") == WEBSERVICE_FAIL) {
+                    if (jsonObject.getInt("status") == API_FAILURE) {
                         return new CustomPair<>(false, jsonObject.get("msg"));
                     }else{
                         return new CustomPair<>(true,jsonObject.toString());

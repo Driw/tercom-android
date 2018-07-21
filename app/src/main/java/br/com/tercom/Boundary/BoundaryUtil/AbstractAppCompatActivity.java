@@ -1,4 +1,4 @@
-package br.com.tercom.Util;
+package br.com.tercom.Boundary.BoundaryUtil;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -6,8 +6,13 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
+import br.com.tercom.Application.AppTercom;
+import br.com.tercom.Enum.EnumFont;
 import br.com.tercom.R;
+
+import static br.com.tercom.Util.CustomTypeFace.overrideFonts;
 
 /**
  * Created by Felipe on 14/06/2017.
@@ -23,6 +28,7 @@ public abstract class AbstractAppCompatActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
+
 
 //
 //    public void createBottomMenu(final BottomNavigationView bottomNavigationView, int indice){

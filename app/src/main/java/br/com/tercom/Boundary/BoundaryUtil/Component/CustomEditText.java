@@ -1,4 +1,4 @@
-package br.com.tercom.Util.Component;
+package br.com.tercom.Boundary.BoundaryUtil.Component;
 
 import android.content.Context;
 import android.content.res.TypedArray;
