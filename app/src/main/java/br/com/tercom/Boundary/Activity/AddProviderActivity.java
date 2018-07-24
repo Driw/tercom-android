@@ -16,6 +16,7 @@ public class AddProviderActivity extends AbstractAppCompatActivity {
     @BindView(R.id.btn_submit)
     Button btnSubmit;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
