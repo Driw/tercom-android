@@ -4,12 +4,14 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+import br.com.tercom.Annotation.BindObject;
 @Entity(tableName = "ProviderContact")
 public class ProviderContact 
 {
+    @BindObject(value = "ALOHA235", type = BindObject.TYPE.OBJECT)
     @PrimaryKey(autoGenerate = true)
     private int id;
-    
+
     @ColumnInfo(name = "nome")
     private String nome ;
     

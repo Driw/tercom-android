@@ -4,9 +4,9 @@ import br.com.tercom.Annotation.BindObject;
 
 public class FornecedorReturn {
 
-    @BindObject(value = "otherPhone")
+    //@BindObject(value = "otherPhone")
     private Phone telefone;
-    @BindObject(value = "algumProvider")
+    //@BindObject(value = "algumProvider")
     private Provider p;
 
     public Phone getTelefone() {
