@@ -20,7 +20,7 @@ import static br.com.tercom.Util.CustomTypeFace.overrideFonts;
 
 public abstract class AbstractAppCompatActivity extends AppCompatActivity {
 
-    public void CreateToolbar(boolean haveHome) {
+    public void createToolbar(boolean haveHome) {
         Toolbar mToolbar = findViewById(R.id.include_toolbar);
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
@@ -28,6 +28,7 @@ public abstract class AbstractAppCompatActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
+
 
 
 //
