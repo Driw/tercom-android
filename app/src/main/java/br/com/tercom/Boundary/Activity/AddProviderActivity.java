@@ -3,6 +3,8 @@ package br.com.tercom.Boundary.Activity;
 import android.os.Bundle;
 import android.widget.Button;
 
+import com.google.gson.Gson;
+
 import org.json.JSONObject;
 
 import java.lang.annotation.Annotation;
@@ -35,6 +37,13 @@ public class AddProviderActivity extends AbstractAppCompatActivity {
         overrideFonts(this,getWindow().getDecorView().getRootView(), EnumFont.FONT_ROBOTO_REGULAR);
         btnSubmit.setEnabled(false);
 
+        ProviderContact npc = new ProviderContact();
+        npc.setCargo("cargo");
+        npc.setEmail("email");
+        npc.setId(1);
+        npc.setNome("nome");
+        String jsonTest = new Gson().toJson(npc);
+
         Class<ProviderContact> pc = ProviderContact.class;
         //TODO(EXEMPLO DE ANNOTATION!!!)
         for (Field f : pc.getDeclaredFields())
@@ -45,5 +54,9 @@ public class AddProviderActivity extends AbstractAppCompatActivity {
                 print("Annotation boladona tô entendendo nada " + bo.value());
             }
         }
+
+        ProviderContact newPc = new ProviderContact();
+        newPc.toObject(jsonTest);
+        String teste = "";
     }
 }

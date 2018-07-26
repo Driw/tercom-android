@@ -15,13 +15,13 @@
         <activity android:name=".Boundary.Activity.LoginActivity" />
         <activity android:name=".Boundary.Activity.ProviderListActivity"></activity>
         <activity android:name=".Boundary.Activity.AddProviderActivity">
-        </activity>
-        <activity android:name=".Boundary.Activity.AddServiceActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".Boundary.Activity.AddServiceActivity">
         </activity>
     </application>
 
