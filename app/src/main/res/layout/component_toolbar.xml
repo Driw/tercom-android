@@ -19,15 +19,19 @@
         android:layout_width="wrap_content"
         android:layout_height="56dp" />
 
-    <ImageView
+    <TextView
+        android:id="@+id/textTitle"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginRight="20dp"
         android:gravity="center"
+        android:paddingRight="50dp"
         android:scaleX="0.7"
         android:scaleY="0.7"
         android:src="@drawable/ic_tercom_logo"
-        android:textSize="18sp"
+        android:text="@string/tercom"
+        android:textColor="@color/colorPrimary"
+        android:textSize="30sp"
         android:textStyle="bold"
         tools:textAllCaps="false" />
 

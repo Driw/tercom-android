@@ -18,7 +18,7 @@ public class CustomTypeFace {
 
 
 
-        public static final Typeface getFontSingleTxt( Context assets,EnumFont font)
+        public static final Typeface setFontSingleTxt( Context assets,EnumFont font)
         {
             return Typeface.createFromAsset(assets.getAssets(), font.path);
         }

@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Boundary.Activity.LoginActivity" />
-        <activity android:name=".Boundary.Activity.ProviderListActivity"></activity>
+        <activity android:name=".Boundary.Activity.ProviderListActivity" />
         <activity android:name=".Boundary.Activity.AddProviderActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,8 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Boundary.Activity.AddServiceActivity">
-        </activity>
+        <activity android:name=".Boundary.Activity.AddServiceActivity" />
+        <activity android:name=".Boundary.Activity.AddProductActivity"></activity>
     </application>
 
 </manifest>

@@ -148,6 +148,9 @@ public class Util {
 
 
 
+    public static String toUpperCaseFirst(String value){
+        return String.format(Locale.US,"%s%s",value.substring(0,1).toUpperCase(),value.substring(1));
+    }
 
 
 

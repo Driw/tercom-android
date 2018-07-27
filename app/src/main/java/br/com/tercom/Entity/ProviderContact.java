@@ -5,6 +5,8 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
 import br.com.tercom.Annotation.BindObject;
+import br.com.tercom.DAO.TelefoneDAO;
+
 @Entity(tableName = "ProviderContact")
 public class ProviderContact extends GenericEntity
 {
@@ -20,6 +22,9 @@ public class ProviderContact extends GenericEntity
     
     @ColumnInfo(name = "email")
     private String email;
+
+    @BindObject(value="paranue")
+    private TelefoneDAO fone;
 
 
     //TODO(Fix for Phone use)

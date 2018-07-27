@@ -35,6 +35,7 @@ public class AddProviderActivity extends AbstractAppCompatActivity {
         setContentView(R.layout.activity_add_provider);
         ButterKnife.bind(this);
         overrideFonts(this,getWindow().getDecorView().getRootView(), EnumFont.FONT_ROBOTO_REGULAR);
+        CreateToolbarWithNavigation(1);
         btnSubmit.setEnabled(false);
 
         ProviderContact npc = new ProviderContact();
