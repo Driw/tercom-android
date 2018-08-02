@@ -14,20 +14,21 @@ public class ProviderContact extends GenericEntity
     private int id;
 
     @ColumnInfo(name = "nome")
-    private String nome ;
+    private String name ;
     
     @ColumnInfo(name = "cargo")
-    private String cargo;
+    private String position;
     
     @ColumnInfo(name = "email")
     private String email;
 
-    //TODO(Fix for Phone use)
-//    @ColumnInfo(name = "telefone")
-//    private Phone telefone;
-//
-//    @ColumnInfo(name = "celular")
-//    private Phone celular;
+    @ColumnInfo(name = "telefone")
+    @BindObject(value = "commercial")
+    private Phone commercial;
+
+    @ColumnInfo(name = "celular")
+    @BindObject(value = "otherphone")
+    private Phone otherphone;
 
 
     public int getId() {
@@ -38,27 +39,43 @@ public class ProviderContact extends GenericEntity
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getCargo() {
-        return cargo;
-    }
-
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
-    }
-
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public Phone getCommercial() {
+        return commercial;
+    }
+
+    public void setCommercial(Phone commercial) {
+        this.commercial = commercial;
+    }
+
+    public Phone getOtherphone() {
+        return otherphone;
+    }
+
+    public void setOtherphone(Phone otherphone) {
+        this.otherphone = otherphone;
     }
 }

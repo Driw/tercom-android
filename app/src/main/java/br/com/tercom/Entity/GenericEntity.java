@@ -1,10 +1,13 @@
 package br.com.tercom.Entity;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -31,6 +34,7 @@ public class GenericEntity
             while(keys.hasNext())
             {
                 field = selectedClass.getDeclaredField(keys.next());
+                field.setAccessible(true);
                 if(field.isAnnotationPresent(BindObject.class))
                 {
                     BindObject bo = field.getAnnotation(BindObject.class);
@@ -38,17 +42,19 @@ public class GenericEntity
                     if(bo.type() == BindObject.TYPE.OBJECT)
                     {
                         Class<? extends GenericEntity> classe = (Class<? extends GenericEntity>) field.getType();
-                        field.set(this,classe.newInstance().toObject(jObj.get(bo.value()).toString(),classe));
+                        field.set(this,classe.newInstance().toObject(jObj.getJSONObject(field.getName()).toString(),classe));
                     }
                     else
                     {
-//                        field.set(this, toList(jObj.get(bo.value()).toString(),field.getType()));
+                        ParameterizedType listType = (ParameterizedType) field.getGenericType();
+                        Class<? extends GenericEntity> classe = (Class<? extends GenericEntity>) listType.getActualTypeArguments()[0];
+                        field.set(this, toList(jObj.get(field.getName()).toString(),classe));
                     }
                 }
                 else
                 {
-                    field.setAccessible(true);
-                    field.set(this, jObj.get(field.getName()));
+                    if(!jObj.isNull(field.getName()))
+                    field.set(this,jObj.get(field.getName()));
                 }
             }
 
@@ -69,21 +75,22 @@ public class GenericEntity
         }
     }
 
-    public <T extends GenericEntity> ArrayList<T> toList(String json,Class<T> selectedClass) {
+    public <T extends GenericEntity> ArrayList<?> toList(String json,Class<T> selectedClass) {
         try {
 
             JSONObject jObj = new JSONObject(json);
+            jObj = jObj.getJSONObject("attributes");
             JSONArray jsonArray = jObj.getJSONArray("elements");
             ArrayList<T> values = new ArrayList<>();
 
-            for(int i = 0; i< jsonArray.length();i++)
+            for(int i = 0; i < jsonArray.length();i++)
             {
-                values.add(selectedClass.cast(toObject(jsonArray.getString(i),selectedClass)));
+                values.add(selectedClass.newInstance().toObject(jsonArray.getJSONObject(i).toString(),selectedClass));
             }
 
             return values;
 
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }

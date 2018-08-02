@@ -46,24 +46,6 @@ public class AddProviderActivity extends AbstractAppCompatActivity {
         CreateToolbarWithNavigation(1);
         btnSubmit.setEnabled(false);
 
-        ProviderContact npc = new ProviderContact();
-        npc.setCargo("cargo");
-        npc.setEmail("email");
-        npc.setId(1);
-        npc.setNome("nome");
-        String jsonTest = new Gson().toJson(npc);
-        printTAG("RETURN TESTE",jsonTeste);
-        Class<ProviderContact> pc = ProviderContact.class;
-        //TODO(EXEMPLO DE ANNOTATION!!!)
-        for (Field f : pc.getDeclaredFields())
-        {
-            if(f.isAnnotationPresent(BindObject.class))
-            {
-                BindObject bo = f.getAnnotation(BindObject.class);
-                print("Annotation boladona tô entendendo nada " + bo.value());
-            }
-        }
-
         Provider newPc = new Provider();
         newPc.toObject(jsonTeste,Provider.class);
         String teste = "";

@@ -4,6 +4,8 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.util.ArrayList;
+
 import br.com.tercom.Annotation.BindObject;
 
 @Entity(tableName = "Provider")
@@ -35,6 +37,9 @@ public class Provider extends GenericEntity
     private Phone otherphone;
 
     private boolean inactive;
+
+    @BindObject(value = "contacts",type = BindObject.TYPE.LIST)
+    private ArrayList<ProviderContact> contacts;
 
 
 

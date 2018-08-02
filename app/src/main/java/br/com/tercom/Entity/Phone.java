@@ -11,13 +11,13 @@ public class Phone extends GenericEntity
     private int id;
 
     @ColumnInfo(name = "ddd")
-    private  int ddd;
+    private  Integer ddd;
 
     @ColumnInfo(name = "numero")
     private String number;
 
     @ColumnInfo(name = "tipo")
-    private short type;
+    private String type;
 
     public int getId() {
         return id;
@@ -43,11 +43,16 @@ public class Phone extends GenericEntity
         this.number = number;
     }
 
-    public short getType() {
+
+    public void setDdd(Integer ddd) {
+        this.ddd = ddd;
+    }
+
+    public String getType() {
         return type;
     }
 
-    public void setType(short type) {
+    public void setType(String type) {
         this.type = type;
     }
 }
