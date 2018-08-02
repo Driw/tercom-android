@@ -151,6 +151,99 @@ public class Util {
     public static String toUpperCaseFirst(String value){
         return String.format(Locale.US,"%s%s",value.substring(0,1).toUpperCase(),value.substring(1));
     }
+    
+    public static String jsonTeste = "{" +
+            "\"class\": \"tercom\\\\entities\\\\Provider\"," +
+            "\"attributes\": {" +
+            "\"id\": 1," +
+            "\"cnpj\": \"43299544000109\"," +
+            "\"companyName\": \"Samuel e Benedito Assessoria Jurídica ME (CN)\"," +
+            "\"fantasyName\": \"Samuel e Benedito Assessoria Jurídica ME\"," +
+            "\"spokesman\": \"Elza Caroline Moreira\"," +
+            "\"site\": \"www.samuelebeneditoassessoriajuridicame.com.br\"," +
+            "\"commercial\": {" +
+            "\"class\": \"tercom\\\\entities\\\\Phone\"," +
+            "\"attributes\": {" +
+            "\"id\": 1," +
+            "\"ddd\": null," +
+            "\"number\": null," +
+            "\"type\": \"celular\"" +
+            "}" +
+            "}," +
+            "\"otherphone\": {" +
+            "\"class\": \"tercom\\\\entities\\\\Phone\"," +
+            "\"attributes\": {" +
+            "\"id\": 2," +
+            "\"ddd\": null," +
+            "\"number\": null," +
+            "\"type\": \"celular\"" +
+            "}" +
+            "}," +
+            "\"inactive\": null," +
+            "\"contacts\": {" +
+            "\"class\": \"tercom\\\\entities\\\\lists\\\\ProviderContacts\"," +
+            "\"attributes\": {" +
+            "\"generic\": \"tercom\\\\entities\\\\ProviderContact\"," +
+            "\"elements\": [" +
+            "{" +
+            "\"class\": \"tercom\\\\entities\\\\ProviderContact\"," +
+            "\"attributes\": {" +
+            "\"id\": 1," +
+            "\"name\": \"Luís Ian Teixeira\"," +
+            "\"position\": \"Analista\"," +
+            "\"email\": \"luis-ian@sfranconsultoria.com.br\"," +
+            "\"commercial\": {" +
+            "\"class\": \"tercom\\\\entities\\\\Phone\"," +
+            "\"attributes\": {" +
+            "\"id\": 0," +
+            "\"ddd\": null," +
+            "\"number\": null," +
+            "\"type\": \"celular\"" +
+            "}" +
+            "}," +
+            "\"otherphone\": {" +
+            "\"class\": \"tercom\\\\entities\\\\Phone\"," +
+            "\"attributes\": {" +
+            "\"id\": 0," +
+            "\"ddd\": null," +
+            "\"number\": null," +
+            "\"type\": \"celular\"" +
+            "}" +
+            "}" +
+            "}" +
+            "}," +
+            "{" +
+            "\"class\": \"tercom\\\\entities\\\\ProviderContact\"," +
+            "\"attributes\": {" +
+            "\"id\": 2," +
+            "\"name\": \"Marcelo Henrique Nunes\"," +
+            "\"position\": \"Analista\"," +
+            "\"email\": \"marcelo_henrique@ozzape.com\"," +
+            "\"commercial\": {" +
+            "\"class\": \"tercom\\\\entities\\\\Phone\"," +
+            "\"attributes\": {" +
+            "\"id\": 0," +
+            "\"ddd\": null," +
+            "\"number\": null," +
+            "\"type\": \"celular\"" +
+            "}" +
+            "}," +
+            "\"otherphone\": {" +
+            "\"class\": \"tercom\\\\entities\\\\Phone\"," +
+            "\"attributes\": {" +
+            "\"id\": 0," +
+            "\"ddd\": null," +
+            "\"number\": null," +
+            "\"type\": \"celular\"" +
+            "}" +
+            "}" +
+            "}" +
+            "}" +
+            "]" +
+            "}" +
+            "}" +
+            "}" +
+            "}";
 
 
 

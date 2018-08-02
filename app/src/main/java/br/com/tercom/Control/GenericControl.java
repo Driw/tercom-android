@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import br.com.tercom.Application.AppTercom;
+import br.com.tercom.Entity.ProviderContact;
 import br.com.tercom.Enum.BaseUrl;
 import br.com.tercom.Enum.EnumMethod;
 import br.com.tercom.Enum.EnumWebServices;

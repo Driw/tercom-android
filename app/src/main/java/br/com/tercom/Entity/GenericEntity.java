@@ -10,10 +10,15 @@ import java.util.Iterator;
 
 import br.com.tercom.Annotation.BindObject;
 
+import static br.com.tercom.Util.Util.print;
+
 
 public class GenericEntity
 {
-    public Object toObject(String json) {
+
+
+
+    public <T extends GenericEntity> T toObject(String json, Class<T> selectedClass) {
         try {
             JSONObject jObj = new JSONObject(json);
 
@@ -25,18 +30,19 @@ public class GenericEntity
             Field field;
             while(keys.hasNext())
             {
-                field = this.getClass().getDeclaredField(keys.next());
+                field = selectedClass.getDeclaredField(keys.next());
                 if(field.isAnnotationPresent(BindObject.class))
                 {
                     BindObject bo = field.getAnnotation(BindObject.class);
 
                     if(bo.type() == BindObject.TYPE.OBJECT)
                     {
-                        field.set(this,toObject(jObj.get(bo.value()).toString()));
+                        Class<? extends GenericEntity> classe = (Class<? extends GenericEntity>) field.getType();
+                        field.set(this,classe.newInstance().toObject(jObj.get(bo.value()).toString(),classe));
                     }
                     else
                     {
-                        field.set(this, toList(jObj.get(bo.value()).toString(),field.getType()));
+//                        field.set(this, toList(jObj.get(bo.value()).toString(),field.getType()));
                     }
                 }
                 else
@@ -46,7 +52,7 @@ public class GenericEntity
                 }
             }
 
-            return this;
+            return selectedClass.cast(this);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -57,10 +63,13 @@ public class GenericEntity
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
             return null;
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
-    public <T> ArrayList<T> toList(String json,Class<T> selectedClass) {
+    public <T extends GenericEntity> ArrayList<T> toList(String json,Class<T> selectedClass) {
         try {
 
             JSONObject jObj = new JSONObject(json);
@@ -69,7 +78,7 @@ public class GenericEntity
 
             for(int i = 0; i< jsonArray.length();i++)
             {
-                values.add(selectedClass.cast(toObject(jsonArray.getString(i))));
+                values.add(selectedClass.cast(toObject(jsonArray.getString(i),selectedClass)));
             }
 
             return values;

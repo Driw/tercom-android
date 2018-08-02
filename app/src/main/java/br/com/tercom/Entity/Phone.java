@@ -5,7 +5,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity(tableName = "Phone")
-public class Phone
+public class Phone extends GenericEntity
 {
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -14,10 +14,10 @@ public class Phone
     private  int ddd;
 
     @ColumnInfo(name = "numero")
-    private String numero;
+    private String number;
 
     @ColumnInfo(name = "tipo")
-    private short tipo;
+    private short type;
 
     public int getId() {
         return id;
@@ -35,19 +35,19 @@ public class Phone
         this.ddd = ddd;
     }
 
-    public String getNumero() {
-        return numero;
+    public String getNumber() {
+        return number;
     }
 
-    public void setNumero(String numero) {
-        this.numero = numero;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
-    public short getTipo() {
-        return tipo;
+    public short getType() {
+        return type;
     }
 
-    public void setTipo(short tipo) {
-        this.tipo = tipo;
+    public void setType(short type) {
+        this.type = type;
     }
 }

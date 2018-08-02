@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Boundary.Activity.LoginActivity" />
+        <activity android:name=".Boundary.Activity.LoginActivity" ></activity>
         <activity android:name=".Boundary.Activity.ProviderListActivity" />
         <activity android:name=".Boundary.Activity.AddProviderActivity">
             <intent-filter>
@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Boundary.Activity.AddServiceActivity" />
-        <activity android:name=".Boundary.Activity.AddProductActivity"></activity>
+        <activity android:name=".Boundary.Activity.AddProductActivity" />
     </application>
 
 </manifest>

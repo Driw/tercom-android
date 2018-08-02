@@ -10,10 +10,16 @@ import org.json.JSONObject;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Random;
 
 import br.com.tercom.Annotation.BindObject;
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
+import br.com.tercom.Entity.Provider;
 import br.com.tercom.Entity.ProviderContact;
 import br.com.tercom.Enum.EnumFont;
 import br.com.tercom.R;
@@ -21,7 +27,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static br.com.tercom.Util.CustomTypeFace.overrideFonts;
+import static br.com.tercom.Util.Util.jsonTeste;
 import static br.com.tercom.Util.Util.print;
+import static br.com.tercom.Util.Util.printTAG;
 
 public class AddProviderActivity extends AbstractAppCompatActivity {
 
@@ -44,7 +52,7 @@ public class AddProviderActivity extends AbstractAppCompatActivity {
         npc.setId(1);
         npc.setNome("nome");
         String jsonTest = new Gson().toJson(npc);
-
+        printTAG("RETURN TESTE",jsonTeste);
         Class<ProviderContact> pc = ProviderContact.class;
         //TODO(EXEMPLO DE ANNOTATION!!!)
         for (Field f : pc.getDeclaredFields())
@@ -56,8 +64,10 @@ public class AddProviderActivity extends AbstractAppCompatActivity {
             }
         }
 
-        ProviderContact newPc = new ProviderContact();
-        newPc.toObject(jsonTest);
+        Provider newPc = new Provider();
+        newPc.toObject(jsonTeste,Provider.class);
         String teste = "";
+
     }
+
 }
