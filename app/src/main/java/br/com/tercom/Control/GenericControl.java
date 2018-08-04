@@ -245,6 +245,7 @@ public abstract class GenericControl {
      * @return Retorna a entidade definida em <b>selectedClass</b> preenchida com os seus reespectivos atributos do json.
      */
 
+    //NÃO SENDO UTILIZADO
     protected <T>  T getItem(String json, Class<T> selectedClass){
         return new Gson().fromJson(json,selectedClass);
     }
@@ -258,7 +259,7 @@ public abstract class GenericControl {
      * @return Retorna um array da entidade definida em <b>selectedClass</b> preenchida com os seus reespectivos atributos do json.
      */
 
-
+    //NÃO SENDO UTILIZADO
     protected <T> ArrayList<T> getItems(String json, Class<T> selectedClass){
         ArrayList<T> values = new ArrayList<>();
         try {

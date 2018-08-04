@@ -10,6 +10,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Locale;
 
 import br.com.tercom.Annotation.BindObject;
 
@@ -95,4 +96,54 @@ public class GenericEntity
             return null;
         }
     }
+
+    public void printObjectLog()
+    {
+        print(printObjectLog(this, 0));
+    }
+
+    private static String printObjectLog(Object obj, int identation)
+    {
+        StringBuilder sb = new StringBuilder();
+        if(identation == 0)
+            sb.append(String.format("%s\n", obj.getClass().getName()));
+        for(Field f : obj.getClass().getDeclaredFields())
+        {
+            try {
+                for(int i = 0; i < identation; i++)
+                    sb.append(" ");
+                f.setAccessible(true);
+                if(f.get(obj) != null) {
+                    if (f.isAnnotationPresent(BindObject.class)) {
+                        BindObject bo = f.getAnnotation(BindObject.class);
+                        if (bo.type() == BindObject.TYPE.LIST) {
+                            sb.append(String.format("%s\n[\n", f.getName()));
+                            ArrayList<Object> list = (ArrayList<Object>)f.get(obj);
+                            for(Object o : list)
+                            {
+                                sb.append(printObjectLog(o, identation + 4));
+                            }
+                            sb.append("]");
+                        }
+                        if (bo.type() == BindObject.TYPE.OBJECT) {
+                            sb.append(String.format("%s : %s\n{\n", f.getName(), f.getType().toString()));
+                            sb.append(printObjectLog(f.get(obj), identation + 4));
+                            sb.append("}");
+                        }
+                    } else {
+                        sb.append(String.format(Locale.US, "%s: %s", f.getName(), f.get(obj).toString()));
+                    }
+                }
+                else
+                {
+                    sb.append(String.format(Locale.US, "%s: %s", f.getName(), "NULL"));
+                }
+                sb.append("\n");
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        return sb.toString().replace("\n\n", "\n");
+    }
+
 }

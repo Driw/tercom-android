@@ -13,7 +13,6 @@ public @interface BindObject {
 
 
 
-    String value();
     TYPE type() default TYPE.OBJECT;
 
     public enum TYPE

@@ -48,6 +48,7 @@ public class AddProviderActivity extends AbstractAppCompatActivity {
 
         Provider newPc = new Provider();
         newPc.toObject(jsonTeste,Provider.class);
+        newPc.printObjectLog();
         String teste = "";
 
     }

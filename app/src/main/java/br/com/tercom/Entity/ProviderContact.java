@@ -9,7 +9,6 @@ import br.com.tercom.Annotation.BindObject;
 @Entity(tableName = "ProviderContact")
 public class ProviderContact extends GenericEntity
 {
-    @BindObject(value = "ALOHA235", type = BindObject.TYPE.OBJECT)
     @PrimaryKey(autoGenerate = true)
     private int id;
 
@@ -23,11 +22,11 @@ public class ProviderContact extends GenericEntity
     private String email;
 
     @ColumnInfo(name = "telefone")
-    @BindObject(value = "commercial")
+    @BindObject()
     private Phone commercial;
 
     @ColumnInfo(name = "celular")
-    @BindObject(value = "otherphone")
+    @BindObject()
     private Phone otherphone;
 
 

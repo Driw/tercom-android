@@ -18,7 +18,7 @@ public class Provider extends GenericEntity
     @ColumnInfo(name = "cnpj")
     private String cnpj;
 
-        @ColumnInfo(name = "companyName")
+    @ColumnInfo(name = "companyName")
     private String companyName;
 
     @ColumnInfo(name = "fantasyName")
@@ -30,15 +30,15 @@ public class Provider extends GenericEntity
     @ColumnInfo(name = "spokesman")
     private String spokesman;
 
-    @BindObject(value =  "commercial",type = BindObject.TYPE.OBJECT)
+    @BindObject()
     private Phone commercial;
 
-    @BindObject(value = "otherphone")
+    @BindObject()
     private Phone otherphone;
 
     private boolean inactive;
 
-    @BindObject(value = "contacts",type = BindObject.TYPE.LIST)
+    @BindObject(type = BindObject.TYPE.LIST)
     private ArrayList<ProviderContact> contacts;
 
 
