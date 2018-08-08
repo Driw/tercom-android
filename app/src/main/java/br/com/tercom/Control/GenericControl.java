@@ -20,6 +20,7 @@ import java.util.TreeMap;
 
 import br.com.tercom.Application.AppTercom;
 import br.com.tercom.Entity.ApiResponse;
+import br.com.tercom.Entity.Provider;
 import br.com.tercom.Enum.BaseUrl;
 import br.com.tercom.Enum.EnumMethod;
 import br.com.tercom.Enum.EnumWebServices;
@@ -250,7 +251,7 @@ public abstract class GenericControl {
 
 
     private String getGenericErrorObject(){
-        ApiResponse<String> response = new ApiResponse<>();
+        ApiResponse<Provider> response = new ApiResponse<>();
         response.setStatus(00);
         response.setMessage("Não foi possível completar a ação");
         return new Gson().toJson(response);
