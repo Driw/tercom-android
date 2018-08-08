@@ -20,8 +20,6 @@ import static br.com.tercom.Util.Util.print;
 public class GenericEntity
 {
 
-
-
     public <T extends GenericEntity> T toObject(String json, Class<T> selectedClass) {
         try {
             JSONObject jObj = new JSONObject(json);

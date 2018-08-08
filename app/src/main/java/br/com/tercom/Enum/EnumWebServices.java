@@ -2,7 +2,16 @@ package br.com.tercom.Enum;
 
 public enum EnumWebServices {
 
-    FORNECEDORES("");
+    //CLASS
+    PROVIDER("provider"),
+    SITE("site"),
+
+
+
+
+    //METHODS
+    GET("get");
+
 
     public String path;
 

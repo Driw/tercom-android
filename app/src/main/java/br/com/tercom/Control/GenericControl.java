@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import br.com.tercom.Application.AppTercom;
-import br.com.tercom.Entity.ProviderContact;
+import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Enum.BaseUrl;
 import br.com.tercom.Enum.EnumMethod;
 import br.com.tercom.Enum.EnumWebServices;
@@ -44,6 +44,9 @@ public abstract class GenericControl {
     private final static  int API_PHP_FATAL_ERROR = 97;
     private final static  int API_ERROR_EXCEPTION = 98;
     private final static  int API_ERROR_API_EXCEPTION = 99;
+
+    private final static  boolean RETURN_SUCESS = true;
+    private final static  boolean RETURN_FAIL = false;
 
     /**
      * A URL_BASE é um atributo que contém a base do header da chamada.
@@ -72,8 +75,10 @@ public abstract class GenericControl {
     {
         StringBuilder type = new StringBuilder();
 
-        for(EnumWebServices ws : types)
+        for(EnumWebServices ws : types) {
+            type.append("/");
             type.append(ws.path);
+        }
 
         return String.format(Locale.US,"%s%s",URL_BASE, type);
     }
@@ -86,7 +91,13 @@ public abstract class GenericControl {
      * @return Retorna a url completa que será enviada na chamada do Webservice.
      */
     protected  String getLink(String base, String params){
-        return String.format(Locale.US,"%s%s",base,params);
+        StringBuilder paramBuilder = new StringBuilder();
+        if(params != null && !params.trim().isEmpty()) {
+            paramBuilder.append("/");
+            paramBuilder.append(params);
+        }
+
+        return String.format(Locale.US,"%s%s",base,paramBuilder.toString());
     }
 
 
@@ -201,9 +212,11 @@ public abstract class GenericControl {
      * Os valores retornados dele serão tratados fora desse método, deverão ser tratados onde forem chamados.
      * @see EnumMethod EnumMethod: essa enum é usada para definir o tipo de chamada que será feito, pode ser selecionado GET ou POST e é o valor a ser passado em <i>method</i>
      */
-    protected CustomPair callJson(EnumMethod method, Activity activity, Object link){
+
+    protected CustomPair<String> callJson(EnumMethod method, Activity activity, Object link){
 
         String jsonCalled = "";
+        CustomPair customPair = new CustomPair(false,getGenericErrorObject());
 
         try{
             if(method == EnumMethod.GET) {
@@ -214,27 +227,36 @@ public abstract class GenericControl {
             }
 
             if( !jsonCalled.trim().isEmpty()) {
+
                 if (jsonCalled.startsWith("[")) {
+
                     JSONArray jsonArray = new JSONArray(jsonCalled);
+
                     if(jsonArray.length()!= 0) {
-                        return new CustomPair<>(true,jsonArray.toString());
-                    }else{
-                        return new CustomPair<>(false,"Não há resultados");
-                    }
-                } else {
-                    JSONObject jsonObject = new JSONObject(jsonCalled);
-                    if (jsonObject.getInt("status") == API_FAILURE) {
-                        return new CustomPair<>(false, jsonObject.get("msg"));
-                    }else{
-                        return new CustomPair<>(true,jsonObject.toString());
+                        customPair = new CustomPair<>(RETURN_SUCESS,jsonArray.toString());
                     }
                 }
-            } throw  new Exception("Não há dados no retorno.");
+                else {
+                    JSONObject jsonObject = new JSONObject(jsonCalled);
+                    customPair = new CustomPair<>(RETURN_SUCESS,jsonObject.toString());
+                }
+            }
+            return customPair;
         }catch (Exception e){
             e.printStackTrace();
-            return new CustomPair<>(false,"Erro! Não foi possível fazer o download dos dados.");
+            return customPair;
         }
     }
+
+
+    private String getGenericErrorObject(){
+        ApiResponse<String> response = new ApiResponse<>();
+        response.setStatus(00);
+        response.setMessage("Não foi possível completar a ação");
+        return new Gson().toJson(response);
+
+    }
+
 
 
     /**
