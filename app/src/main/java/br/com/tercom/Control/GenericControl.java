@@ -251,11 +251,11 @@ public abstract class GenericControl {
 
 
     private String getGenericErrorObject(){
-        ApiResponse<Provider> response = new ApiResponse<>();
-        response.setStatus(00);
-        response.setMessage("Não foi possível completar a ação");
-        return new Gson().toJson(response);
-
+//        ApiResponse<Provider> response = new ApiResponse<>(Provider.class);
+//        response.setStatus(00);
+//        response.setMessage("Não foi possível completar a ação");
+//        return new Gson().toJson(response);
+        return "";
     }
 
 

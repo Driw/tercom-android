@@ -78,7 +78,8 @@ public class GenericEntity
         try {
 
             JSONObject jObj = new JSONObject(json);
-            jObj = jObj.getJSONObject("attributes");
+            if(jObj.has("attributes"))
+                jObj = jObj.getJSONObject("attributes");
             JSONArray jsonArray = jObj.getJSONArray("elements");
             ArrayList<T> values = new ArrayList<>();
 
@@ -120,7 +121,7 @@ public class GenericEntity
                             for(Object o : list)
                             {
                                 sb.append(printObjectLog(o, identation + 4));
-                            }
+                        }
                             sb.append("]");
                         }
                         if (bo.type() == BindObject.TYPE.OBJECT) {

@@ -1,6 +1,6 @@
 package br.com.tercom.Entity;
 
-public class User extends ApiResponse<User> {
+public class User extends GenericEntity {
 
     private String email;
     private String senha;

@@ -7,6 +7,7 @@ import java.lang.reflect.ParameterizedType;
 
 public class ApiResponse<T extends GenericEntity> {
 
+
     private Class<T> clazzOfT;
     private int status;
     private String message;
@@ -15,6 +16,11 @@ public class ApiResponse<T extends GenericEntity> {
 
     public T getInstance() throws Exception {
         return clazzOfT.newInstance();
+    }
+
+    public ApiResponse(Class<T> selectedClass)
+    {
+        clazzOfT = selectedClass;
     }
 
 
@@ -49,7 +55,7 @@ public class ApiResponse<T extends GenericEntity> {
     public void setResult(String resultString) {
         try {
 
-            result = getInstance().toObject(resultString,clazzOfT);
+            result = (T) (resultString.startsWith("[") ? getInstance().toList(resultString, clazzOfT) : getInstance().toObject(resultString,clazzOfT));
 
         } catch (InstantiationException e) {
             e.printStackTrace();

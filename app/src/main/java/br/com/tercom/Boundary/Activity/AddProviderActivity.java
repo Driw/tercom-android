@@ -1,10 +1,13 @@
 package br.com.tercom.Boundary.Activity;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Looper;
 import android.widget.Button;
 
 import com.google.gson.Gson;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.annotation.Annotation;
@@ -19,6 +22,8 @@ import java.util.Random;
 
 import br.com.tercom.Annotation.BindObject;
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
+import br.com.tercom.Control.ProviderControl;
+import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.Provider;
 import br.com.tercom.Entity.ProviderContact;
 import br.com.tercom.Enum.EnumFont;
@@ -46,11 +51,27 @@ public class AddProviderActivity extends AbstractAppCompatActivity {
         CreateToolbarWithNavigation(1);
         btnSubmit.setEnabled(false);
 
-        Provider newPc = new Provider();
-        newPc.toObject(jsonTeste,Provider.class);
-        newPc.printObjectLog();
-        String teste = "";
+        ProviderTask task = new ProviderTask();
+        task.execute();
+    }
 
+    private class ProviderTask extends AsyncTask<Void, Void, Void>
+    {
+
+        private ApiResponse<Provider> apiResponse;
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            ProviderControl ctrl = new ProviderControl(AddProviderActivity.this);
+            try {
+                if(Looper.myLooper() == null)
+                    Looper.prepare();
+                apiResponse = ctrl.callJson(1);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
 
 }
