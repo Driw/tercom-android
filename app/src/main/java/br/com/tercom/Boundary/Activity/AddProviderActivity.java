@@ -62,14 +62,10 @@ public class AddProviderActivity extends AbstractAppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
+            if(Looper.myLooper() == null)
+                Looper.prepare();
             ProviderControl ctrl = new ProviderControl(AddProviderActivity.this);
-            try {
-                if(Looper.myLooper() == null)
-                    Looper.prepare();
-                apiResponse = ctrl.callJson(1);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            apiResponse = ctrl.callJsonList();
             return null;
         }
 

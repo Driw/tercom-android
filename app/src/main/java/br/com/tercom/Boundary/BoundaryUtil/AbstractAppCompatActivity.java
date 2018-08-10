@@ -82,12 +82,30 @@ public abstract class AbstractAppCompatActivity extends AppCompatActivity {
                         CreateItem(1, "Menu", Color.BLACK, Color.WHITE, getResources().getColor(R.color.colorAccent), R.drawable.ic_tercom_logo),
                         CreateItem(2, "Produtos", Color.BLACK, Color.WHITE, getResources().getColor(R.color.colorAccent), R.drawable.ic_tercom_logo),
                         CreateItem(3, "Serviços", Color.BLACK, Color.WHITE, getResources().getColor(R.color.colorAccent), R.drawable.ic_tercom_logo),
-                        CreateItem(4, "Cotações", Color.BLACK, Color.WHITE, getResources().getColor(R.color.colorAccent), R.drawable.ic_tercom_logo),
-                        CreateItem(9, "Ajuda", Color.BLACK, Color.WHITE, getResources().getColor(R.color.colorAccent), R.drawable.ic_tercom_logo)
+                        CreateItem(4, "Fornecedores", Color.BLACK, Color.WHITE, getResources().getColor(R.color.colorAccent), R.drawable.ic_tercom_logo),
+                        CreateItem(99, "Ajuda", Color.BLACK, Color.WHITE, getResources().getColor(R.color.colorAccent), R.drawable.ic_tercom_logo)
 
                 ).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        //TODO
+//                        switch (position) {
+//                            case 1:
+//                                createIntentAbs(HomeBoundary.class);
+//                                break;
+//                            case 2:
+//                                createIntentAbs(LoginBoundary.class);
+//                                break;
+//                            case 3:
+//                                createIntentAbs(LocaisBoundary.class);
+//                                break;
+//                            case 5:
+//                                createIntentAbs(AjudaBoundary.class);
+//                                break;
+//                            default:
+//                                Logout(classe);
+//                                break;
+//                        }
                         return true;
                     }
                 }).build();

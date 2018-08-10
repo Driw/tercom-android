@@ -10,7 +10,8 @@ public enum EnumWebServices {
 
 
     //METHODS
-    GET("get");
+    GET("get"),
+    SEARCH("search");
 
 
     public String path;

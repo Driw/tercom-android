@@ -30,4 +30,14 @@ public class ProviderControl extends GenericControl {
         return providerApiResponse;
     }
 
+    //TODO: Testar após Driw disponibilizar o WebService
+    public ApiResponse<Provider> callJsonList() {
+        CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,getLink(getBase(EnumWebServices.SITE,EnumWebServices.PROVIDER,EnumWebServices.SEARCH), null));
+        ApiResponse<Provider> providerApiResponse = new ApiResponse<>(Provider.class);
+        if(jsonResult.first){
+            providerApiResponse = populateApiResponse(providerApiResponse,jsonResult.second);
+        }
+        return providerApiResponse;
+    }
+
 }
