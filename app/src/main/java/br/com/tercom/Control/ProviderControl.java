@@ -21,15 +21,11 @@ public class ProviderControl extends GenericControl {
 
     // id teste = 1
 
-    public ApiResponse<Provider> callJson(int idProvider) throws JSONException {
+    public ApiResponse<Provider> callJson(int idProvider) {
         CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,getLink(getBase(EnumWebServices.SITE,EnumWebServices.PROVIDER,EnumWebServices.GET), String.valueOf(idProvider)));
         ApiResponse<Provider> providerApiResponse = new ApiResponse<>(Provider.class);
         if(jsonResult.first){
-            JSONObject jsonObject = new JSONObject(jsonResult.second);
-            providerApiResponse.setStatus(jsonObject.getInt("status"));
-            providerApiResponse.setMessage(jsonObject.getString("message"));
-            providerApiResponse.setTime(jsonObject.getString("time"));
-            providerApiResponse.setResult(jsonResult.second);
+            providerApiResponse = populateApiResponse(providerApiResponse,jsonResult.second);
         }
         return providerApiResponse;
     }

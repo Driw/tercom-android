@@ -72,6 +72,14 @@ public class AddProviderActivity extends AbstractAppCompatActivity {
             }
             return null;
         }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            print(String.valueOf(apiResponse.getStatus()));
+            print(apiResponse.getMessage());
+            print(apiResponse.getTime());
+            apiResponse.getResult().printObjectLog();
+        }
     }
 
 }

@@ -15,12 +15,18 @@ public class ApiResponse<T extends GenericEntity> {
     private T result;
 
     public T getInstance() throws Exception {
+
         return clazzOfT.newInstance();
     }
 
     public ApiResponse(Class<T> selectedClass)
     {
         clazzOfT = selectedClass;
+    }
+
+    public ApiResponse()
+    {
+
     }
 
 

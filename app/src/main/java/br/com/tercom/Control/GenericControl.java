@@ -20,6 +20,7 @@ import java.util.TreeMap;
 
 import br.com.tercom.Application.AppTercom;
 import br.com.tercom.Entity.ApiResponse;
+import br.com.tercom.Entity.GenericEntity;
 import br.com.tercom.Entity.Provider;
 import br.com.tercom.Enum.BaseUrl;
 import br.com.tercom.Enum.EnumMethod;
@@ -250,12 +251,37 @@ public abstract class GenericControl {
     }
 
 
+    /**
+     * Método usado para gerar um retorno genérico caso não seja possível pegar o retorno do Json
+     * @return retorna um json do objeto ApiResponse com o erro;
+     */
+
+
     private String getGenericErrorObject(){
-//        ApiResponse<Provider> response = new ApiResponse<>(Provider.class);
-//        response.setStatus(00);
-//        response.setMessage("Não foi possível completar a ação");
-//        return new Gson().toJson(response);
-        return "";
+        ApiResponse response = new ApiResponse<>();
+        response.setStatus(100);
+        response.setMessage("Não foi possível completar a ação");
+        return new Gson().toJson(response);
+    }
+
+    /**
+     * Popula o objeto de ApiResponse passado com os valores do Json;
+     * @param response objeto de ApiResponse a ser populado;
+     * @param result json que terá os dados para popular o response
+     * @return um objeto de ApiResponse populado com os dados que foram passados do Json
+     */
+
+    protected ApiResponse  populateApiResponse(ApiResponse response, String result){
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            response.setStatus(jsonObject.getInt("status"));
+            response.setMessage(jsonObject.getString("message"));
+            response.setTime(jsonObject.getString("time"));
+            response.setResult(result);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return response;
     }
 
 
