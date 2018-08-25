@@ -116,24 +116,21 @@ public abstract class GenericControl {
         if(treeMap == null)
             treeMap = new TreeMap<>();
 
-        treeMap.put("origem","android");
-        treeMap.put("timestamp",getTimeStampFormated());
+//        treeMap.put("origem","android");
+//        treeMap.put("timestamp",getTimeStampFormated());
 
 
 
-        StringBuilder tokenBuilder = new StringBuilder();
         StringBuilder valuesBuilder = new StringBuilder();
 
 
         for (Map.Entry<String,String> entry : treeMap.entrySet()) {
-            tokenBuilder.append(entry.getValue());
             valuesBuilder.append(createField(entry.getKey(),URLEncoder.encode(entry.getValue(),"UTF-8")));
             valuesBuilder.append("&");
 
         }
 
-        String encryptedToken =  encrypt(tokenBuilder.toString());
-        return String.format(Locale.US,"%s%s",valuesBuilder.toString(), createField("token",encryptedToken));
+        return valuesBuilder.toString();
     }
 
 
@@ -165,6 +162,21 @@ public abstract class GenericControl {
 
         return result.toString();
     }
+
+
+    /**
+     * Retorna uma GenericEntity feita para caso não haja nenhum retorno do webservice.
+     * @return Generic entity preenchida para um erro padrão
+     */
+
+    protected ApiResponse getErrorResponse(){
+        ApiResponse apiResponse =  new ApiResponse<>();
+        apiResponse.setMessage("Erro");
+        apiResponse.setStatus(0);
+        apiResponse.setResult(null);
+        return apiResponse;
+    }
+
 
 
 
@@ -256,7 +268,6 @@ public abstract class GenericControl {
      * @return retorna um json do objeto ApiResponse com o erro;
      */
 
-
     private String getGenericErrorObject(){
         ApiResponse response = new ApiResponse<>();
         response.setStatus(100);
@@ -283,8 +294,6 @@ public abstract class GenericControl {
         }
         return response;
     }
-
-
 
     /**
      * Recebe um json em formato string e a entidade referente a ele e retorna a entidade preenchida pelos seus respectivos campos no json.

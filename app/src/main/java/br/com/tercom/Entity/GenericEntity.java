@@ -17,8 +17,9 @@ import br.com.tercom.Annotation.BindObject;
 import static br.com.tercom.Util.Util.print;
 
 
-public class GenericEntity
+public abstract class GenericEntity
 {
+
 
     public <T extends GenericEntity> T toObject(String json, Class<T> selectedClass) {
         try {

@@ -55,4 +55,5 @@ public class Phone extends GenericEntity
     public void setType(String type) {
         this.type = type;
     }
+
 }

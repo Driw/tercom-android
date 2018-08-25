@@ -14,7 +14,7 @@ public class ApiResponse<T extends GenericEntity> {
     private String time;
     private T result;
 
-    public T getInstance() throws Exception {
+    private T getInstance() throws Exception {
 
         return clazzOfT.newInstance();
     }
@@ -24,14 +24,15 @@ public class ApiResponse<T extends GenericEntity> {
         clazzOfT = selectedClass;
     }
 
-    public ApiResponse()
-    {
-
-    }
+    public ApiResponse() { }
 
 
     public int getStatus() {
         return status;
+    }
+
+    public boolean getStatusBoolean() {
+        return status == 1;
     }
 
     public void setStatus(int status) {

@@ -41,8 +41,6 @@ public class Provider extends GenericEntity
     @BindObject(type = BindObject.TYPE.LIST)
     private ArrayList<ProviderContact> contacts;
 
-
-
     //TODO(Fix for Phone use)
 //    @ColumnInfo(name = "telefone")
 //    private Phone telefone;

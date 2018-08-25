@@ -77,4 +77,5 @@ public class ProviderContact extends GenericEntity
     public void setOtherphone(Phone otherphone) {
         this.otherphone = otherphone;
     }
+
 }

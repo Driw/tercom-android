@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -32,6 +33,7 @@ import static br.com.tercom.Util.CustomTypeFace.setFontSingleTxt;
  */
 
 public abstract class AbstractAppCompatActivity extends AppCompatActivity {
+
 
     public void createToolbar() {
         Toolbar mToolbar = findViewById(R.id.include_toolbar);

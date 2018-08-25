@@ -29,6 +29,4 @@ public class User extends GenericEntity {
     public void setToken(String token) {
         this.token = token;
     }
-
-
 }
