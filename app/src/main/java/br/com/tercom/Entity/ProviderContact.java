@@ -9,23 +9,17 @@ import br.com.tercom.Annotation.BindObject;
 @Entity(tableName = "ProviderContact")
 public class ProviderContact extends GenericEntity
 {
-    @PrimaryKey(autoGenerate = true)
     private int id;
 
-    @ColumnInfo(name = "nome")
     private String name ;
     
-    @ColumnInfo(name = "cargo")
     private String position;
     
-    @ColumnInfo(name = "email")
     private String email;
 
-    @ColumnInfo(name = "telefone")
     @BindObject()
     private Phone commercial;
 
-    @ColumnInfo(name = "celular")
     @BindObject()
     private Phone otherphone;
 

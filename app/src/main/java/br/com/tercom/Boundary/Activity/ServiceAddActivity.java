@@ -6,11 +6,11 @@ import android.os.Bundle;
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
 import br.com.tercom.R;
 
-public class AddProductActivity extends AbstractAppCompatActivity {
+public class ServiceAddActivity extends AbstractAppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_product);
+        setContentView(R.layout.activity_add_service);
     }
 }

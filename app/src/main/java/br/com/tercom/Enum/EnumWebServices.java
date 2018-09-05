@@ -4,6 +4,7 @@ public enum EnumWebServices {
 
     //SERVICE
     PROVIDER("provider"),
+    PROVIDERCONTACT("providerContact"),
     SITE("site"),
 
 
@@ -12,8 +13,11 @@ public enum EnumWebServices {
     //METHODS
     ADD("add"),
     GET("get"),
+    GETCONTACTS("getContacts"),
     LIST("list"),
-    SEARCH("search");
+    SEARCH("search"),
+    SET("set"),
+    SETPHONE("setPhones");
 
 
     public String path;

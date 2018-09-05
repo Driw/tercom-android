@@ -13,20 +13,24 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Boundary.Activity.ProviderListActivity">
+        <activity android:name=".Boundary.Activity.ProviderListActivity"></activity>
+        <activity android:name=".Boundary.Activity.ProviderAddActivity" />
+        <activity android:name=".Boundary.Activity.ServiceAddActivity" />
+        <activity android:name=".Boundary.Activity.ProductAddActivity" />
+        <activity android:name=".Boundary.Activity.ProviderContactAddActivity" />
+        <activity android:name=".Boundary.Activity.ProviderContactUpdateActivity" />
+        <activity android:name=".Boundary.Activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Boundary.Activity.AddProviderActivity"></activity>
-        <activity android:name=".Boundary.Activity.AddServiceActivity" />
-        <activity android:name=".Boundary.Activity.AddProductActivity" />
-        <activity android:name=".Boundary.Activity.AddProviderContactActivity"></activity>
+        <activity android:name=".Boundary.Activity.ProviderDetails"></activity>
     </application>
 
 </manifest>

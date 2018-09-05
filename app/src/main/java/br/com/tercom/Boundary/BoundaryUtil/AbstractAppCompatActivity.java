@@ -25,6 +25,7 @@ import br.com.tercom.Enum.EnumFont;
 import br.com.tercom.R;
 import br.com.tercom.Util.CustomTypeFace;
 
+import static br.com.tercom.Application.AppTercom.USER_STATIC;
 import static br.com.tercom.Util.CustomTypeFace.overrideFonts;
 import static br.com.tercom.Util.CustomTypeFace.setFontSingleTxt;
 
@@ -70,7 +71,7 @@ public abstract class AbstractAppCompatActivity extends AppCompatActivity {
                 .withProfileImagesVisible(true)
                 .withCompactStyle(true)
                 .withDividerBelowHeader(true)
-                .addProfiles(new ProfileDrawerItem().withEmail("felip.amalf@tercom.com.br").withName("Felipe Amalfi Lima"))
+                .addProfiles(new ProfileDrawerItem().withEmail(USER_STATIC.getEmail()).withName("Felipe Amalfi Lima"))
                 .withTextColor(Color.BLACK)
                 .build();
 
@@ -80,6 +81,7 @@ public abstract class AbstractAppCompatActivity extends AppCompatActivity {
                 .withAccountHeader(headerResult)
                 .withSliderBackgroundColor(Color.WHITE)
                 .withSelectedItem(identifier)
+                .addStickyDrawerItems(CreateItem(6, "Logout", Color.BLACK, Color.BLACK, getResources().getColor(R.color.colorAccent), R.drawable.ic_tercom_logo))
                 .addDrawerItems(
                         CreateItem(1, "Menu", Color.BLACK, Color.WHITE, getResources().getColor(R.color.colorAccent), R.drawable.ic_tercom_logo),
                         CreateItem(2, "Produtos", Color.BLACK, Color.WHITE, getResources().getColor(R.color.colorAccent), R.drawable.ic_tercom_logo),

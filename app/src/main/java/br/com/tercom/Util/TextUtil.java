@@ -1,5 +1,7 @@
 package br.com.tercom.Util;
 
+import java.util.Locale;
+
 public class TextUtil {
 
     public static boolean emptyValidator(String value){
@@ -44,6 +46,11 @@ public class TextUtil {
             }
             return stringBuilder.toString();
         }
+    }
+
+    public static String setCnpjMask(String cnpj){
+        return String.format(Locale.US,"%s.%s.%s/%s-%s",cnpj.substring(0,2),cnpj.substring(2,5),
+                cnpj.substring(5,8),cnpj.substring(8,12),cnpj.substring(12));
     }
 
 }

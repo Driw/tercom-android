@@ -22,6 +22,7 @@ import br.com.tercom.Application.AppTercom;
 import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.GenericEntity;
 import br.com.tercom.Entity.Provider;
+import br.com.tercom.Entity.ProviderContact;
 import br.com.tercom.Enum.BaseUrl;
 import br.com.tercom.Enum.EnumMethod;
 import br.com.tercom.Enum.EnumWebServices;
@@ -113,24 +114,36 @@ public abstract class GenericControl {
 
     protected String getPostValues(@Nullable TreeMap<String,String> treeMap) throws UnsupportedEncodingException {
 
-        if(treeMap == null)
-            treeMap = new TreeMap<>();
-
-//        treeMap.put("origem","android");
-//        treeMap.put("timestamp",getTimeStampFormated());
-
-
-
         StringBuilder valuesBuilder = new StringBuilder();
 
-
+        int position  = 0;
+        int last = treeMap.size()-1;
         for (Map.Entry<String,String> entry : treeMap.entrySet()) {
             valuesBuilder.append(createField(entry.getKey(),URLEncoder.encode(entry.getValue(),"UTF-8")));
-            valuesBuilder.append("&");
+            if(position != last) {
+                valuesBuilder.append("&");
+                position++;
+            }
 
         }
 
         return valuesBuilder.toString();
+    }
+
+
+    /**
+     *
+     * @param key chave do array
+     * @param values os valores do array sendo campo/valor
+     * @return Um treemap para ser enviado no post
+     */
+
+    protected Map<String,String> getArrayParams(String key, ArrayList<Pair<String,String>> values){
+        Map<String,String> map = new TreeMap<>();
+        for(int i = 0; i< values.size(); i++)
+            map.put(String.format(Locale.US,"%s[%s]",key,values.get(i).first),values.get(i).second);
+
+        return map;
     }
 
 

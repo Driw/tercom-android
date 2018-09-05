@@ -200,7 +200,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:background="@drawable/shape_rec_rounder_accent"
+            android:background="@drawable/shape_rec_rounded_accent"
             android:text="Adicionar"
             android:textColor="@color/colorPrimary"
             android:textSize="12sp"

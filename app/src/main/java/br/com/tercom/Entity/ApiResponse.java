@@ -3,7 +3,10 @@ package br.com.tercom.Entity;
 
 import com.google.gson.annotations.Expose;
 
+import org.json.JSONObject;
+
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
 
 public class ApiResponse<T extends GenericEntity> {
 
@@ -60,6 +63,7 @@ public class ApiResponse<T extends GenericEntity> {
     }
 
     public void setResult(String resultString) {
+
         try {
 
             result = (T) (resultString.startsWith("[") ? getInstance().toList(resultString, clazzOfT) : getInstance().toObject(resultString,clazzOfT));

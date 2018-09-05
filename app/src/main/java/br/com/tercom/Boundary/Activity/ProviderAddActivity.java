@@ -1,5 +1,6 @@
 package br.com.tercom.Boundary.Activity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
@@ -11,9 +12,7 @@ import android.widget.EditText;
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
 import br.com.tercom.Control.ProviderControl;
 import br.com.tercom.Entity.ApiResponse;
-import br.com.tercom.Entity.GenericEntity;
 import br.com.tercom.Entity.Provider;
-import br.com.tercom.Entity.ProviderList;
 import br.com.tercom.Enum.EnumDialogOptions;
 import br.com.tercom.Enum.EnumFont;
 import br.com.tercom.R;
@@ -27,12 +26,12 @@ import static br.com.tercom.Util.CustomTypeFace.overrideFonts;
 import static br.com.tercom.Util.TextUtil.emptyValidator;
 import static br.com.tercom.Util.Util.toast;
 
-public class AddProviderActivity extends AbstractAppCompatActivity {
+public class ProviderAddActivity extends AbstractAppCompatActivity {
 
     private AddProviderTask addProviderTask;
 
     //BUTTONS
-    @BindView(R.id.btn_submit)
+    @BindView(R.id.btn_finalize)
     Button btnSubmit;
 
     @BindView(R.id.txtCompanyName)
@@ -41,15 +40,18 @@ public class AddProviderActivity extends AbstractAppCompatActivity {
     EditText txtFantasyName;
     @BindView(R.id.txtCNPJ)
     EditText txtCNPJ;
+    @BindView(R.id.txtSpokesMan)
+    EditText txtSpokesMan;
     @BindView(R.id.txtSite)
     EditText txtSite;
 
-    @OnClick(R.id.btn_submit) void next(){
-        CustomPair<String> result = verifyData(txtCompanyName.getText().toString(),txtFantasyName.getText().toString(),txtCNPJ.getText().toString(),txtSite.getText().toString());
+    @OnClick(R.id.btn_finalize) void next(){
+        CustomPair<String> result = verifyData(txtCompanyName.getText().toString(),txtFantasyName.getText().toString(),
+                txtCNPJ.getText().toString(),txtSite.getText().toString(),txtSpokesMan.getText().toString());
         if(result.first){
-            initAddTask(txtCompanyName.getText().toString(),txtFantasyName.getText().toString(),txtCNPJ.getText().toString(),txtSite.getText().toString());
+            initAddTask(txtCompanyName.getText().toString(),txtFantasyName.getText().toString(),txtCNPJ.getText().toString(),txtSite.getText().toString(),txtSpokesMan.getText().toString());
         }else{
-            toast(AddProviderActivity.this,result.second);
+            toast(ProviderAddActivity.this,result.second);
         }
     }
 
@@ -61,10 +63,9 @@ public class AddProviderActivity extends AbstractAppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         ButterKnife.bind(this);
         overrideFonts(this,getWindow().getDecorView().getRootView(), EnumFont.FONT_ROBOTO_REGULAR);
-        CreateToolbarWithNavigation(1);
     }
 
-    private CustomPair<String> verifyData(String companyName, String fantasyName, String cnpj, String site){
+    private CustomPair<String> verifyData(String companyName, String fantasyName, String cnpj, String site,String spokesman){
 
         if(!emptyValidator(companyName))
             return new CustomPair<>(false,"Razão Social inválida");
@@ -78,12 +79,15 @@ public class AddProviderActivity extends AbstractAppCompatActivity {
         if(!emptyValidator(site))
             return new CustomPair<>(false,"Site inválido");
 
+        if(!emptyValidator(spokesman))
+            return new CustomPair<>(false,"Nome do responsável inválido");
+
         return new CustomPair<>(true,"Ok");
     }
 
-    private void initAddTask(String companyName, String fantasyName, String cnpj, String site){
+    private void initAddTask(String companyName, String fantasyName, String cnpj, String site, String spokesman){
         if(addProviderTask == null || addProviderTask.getStatus() != AsyncTask.Status.RUNNING){
-            addProviderTask = new AddProviderTask(companyName,fantasyName,cnpj,site);
+            addProviderTask = new AddProviderTask(companyName,fantasyName,cnpj,site,spokesman);
             addProviderTask.execute();
         }
     }
@@ -95,33 +99,38 @@ public class AddProviderActivity extends AbstractAppCompatActivity {
         private String fantasyName;
         private String cnpj;
         private String site;
+        private String spokesman;
 
-        public AddProviderTask(String companyName, String FantasyName, String cnpj, String site){
+        public AddProviderTask(String companyName, String FantasyName, String cnpj, String site, String spokesman){
 
             this.companyName = companyName;
             fantasyName = FantasyName;
             this.cnpj = cnpj;
             this.site = site;
+            this.spokesman = spokesman;
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
             if(Looper.myLooper() == null)
                 Looper.prepare();
-            ProviderControl providerControl = new ProviderControl(AddProviderActivity.this);
-            apiResponse = providerControl.callJsonAddProvider(companyName,fantasyName,cnpj,site);
+            ProviderControl providerControl = new ProviderControl(ProviderAddActivity.this);
+            apiResponse = providerControl.addProvider(companyName,fantasyName,cnpj,site,spokesman);
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            DialogConfirm dialogConfirm = new DialogConfirm(AddProviderActivity.this);
+            DialogConfirm dialogConfirm = new DialogConfirm(ProviderAddActivity.this);
             if(apiResponse.getStatusBoolean()){
                 dialogConfirm.init(EnumDialogOptions.CONFIRM,apiResponse.getMessage(),"Adicionar Contatos");
                 dialogConfirm.onClickChanges(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        createIntentAbs(AddProviderContactActivity.class);
+                        Intent intent = new Intent();
+                        intent.setClass(ProviderAddActivity.this,ProviderContactAddActivity.class);
+                        intent.putExtra("idProvider",apiResponse.getResult().getId());
+                        startActivity(intent);
                     }
                 });
             }else{

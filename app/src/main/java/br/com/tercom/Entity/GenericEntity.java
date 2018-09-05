@@ -29,6 +29,16 @@ public abstract class GenericEntity
                 jObj = jObj.getJSONObject("result");
 
             jObj = jObj.getJSONObject("attributes");
+
+            if(jObj.has("elements")){
+                Field field =  selectedClass.getDeclaredField("list");
+                field.setAccessible(true);
+                ParameterizedType listType = (ParameterizedType) field.getGenericType();
+                Class<? extends GenericEntity> classe = (Class<? extends GenericEntity>) listType.getActualTypeArguments()[0];
+                field.set(this, toList(jObj.toString(),classe));
+                return selectedClass.cast(this);
+            }
+
             Iterator<String> keys = jObj.keys();
             Field field;
             while(keys.hasNext())

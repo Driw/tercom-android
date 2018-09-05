@@ -8,26 +8,22 @@ import java.util.ArrayList;
 
 import br.com.tercom.Annotation.BindObject;
 
+import static br.com.tercom.Util.TextUtil.setCnpjMask;
+
 @Entity(tableName = "Provider")
 public class Provider extends GenericEntity
 {
 
-    @PrimaryKey(autoGenerate = true)
     private int id;
     
-    @ColumnInfo(name = "cnpj")
     private String cnpj;
 
-    @ColumnInfo(name = "companyName")
     private String companyName;
 
-    @ColumnInfo(name = "fantasyName")
     private String fantasyName;
 
-    @ColumnInfo(name = "site")
     private String site;
     
-    @ColumnInfo(name = "spokesman")
     private String spokesman;
 
     @BindObject()
@@ -41,10 +37,89 @@ public class Provider extends GenericEntity
     @BindObject(type = BindObject.TYPE.LIST)
     private ArrayList<ProviderContact> contacts;
 
-    //TODO(Fix for Phone use)
-//    @ColumnInfo(name = "telefone")
-//    private Phone telefone;
-//
-//    @ColumnInfo(name = "celular")
-//    private Phone celular;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getCnpj() {
+        if(cnpj == null)
+            return "Não informado";
+        return setCnpjMask(cnpj);
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getFantasyName() {
+        if(fantasyName == null)
+            return "Não informado";
+        return fantasyName;
+    }
+
+    public void setFantasyName(String fantasyName) {
+        this.fantasyName = fantasyName;
+    }
+
+    public String getSite() {
+        return site;
+    }
+
+    public void setSite(String site) {
+        this.site = site;
+    }
+
+    public String getSpokesman() {
+        if(spokesman == null)
+            return "Representante não informado";
+        return spokesman;
+    }
+
+    public void setSpokesman(String spokesman) {
+        this.spokesman = spokesman;
+    }
+
+    public Phone getCommercial() {
+        return commercial;
+    }
+
+    public void setCommercial(Phone commercial) {
+        this.commercial = commercial;
+    }
+
+    public Phone getOtherphone() {
+        return otherphone;
+    }
+
+    public void setOtherphone(Phone otherphone) {
+        this.otherphone = otherphone;
+    }
+
+    public boolean isInactive() {
+        return inactive;
+    }
+
+    public void setInactive(boolean inactive) {
+        this.inactive = inactive;
+    }
+
+    public ArrayList<ProviderContact> getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(ArrayList<ProviderContact> contacts) {
+        this.contacts = contacts;
+    }
 }
