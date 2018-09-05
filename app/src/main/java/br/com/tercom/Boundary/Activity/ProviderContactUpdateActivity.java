@@ -186,7 +186,7 @@ public class ProviderContactUpdateActivity extends AbstractAppCompatActivity {
         protected Void doInBackground(Void... voids) {
             if(Looper.myLooper() == null)
                 Looper.prepare();
-            apiResponse = providerControl.updateProviderContact(idProvider,providerContact.getName(),providerContact.getEmail(),providerContact.getPosition());
+            apiResponse = providerControl.updateProviderContact(idProvider,providerContact.getName(),providerContact.getEmail(),providerContact.getPosition(),contact.getId());
             return null;
         }
 

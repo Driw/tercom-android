@@ -134,12 +134,13 @@ public class ProviderControl extends GenericControl {
         }
     }
 
-    public ApiResponse updateProviderContact(int idProvider, String name, String email, String position) {
+    public ApiResponse updateProviderContact(int idProvider, String name, String email, String position, int id) {
 
         TreeMap<String,String> map = new TreeMap<>();
         map.put("name", name);
         map.put("email", email);
         map.put("position",position);
+        map.put("id", String.valueOf(id));
 
         try {
         String link = getLink(getBase(EnumWebServices.SITE,EnumWebServices.PROVIDERCONTACT, EnumWebServices.SET), String.valueOf(idProvider));
