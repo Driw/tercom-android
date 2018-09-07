@@ -25,7 +25,7 @@ import br.com.tercom.Entity.Provider;
 import br.com.tercom.Entity.ProviderContact;
 import br.com.tercom.Enum.BaseUrl;
 import br.com.tercom.Enum.EnumMethod;
-import br.com.tercom.Enum.EnumWebServices;
+import br.com.tercom.Enum.EnumREST;
 import br.com.tercom.Util.CustomPair;
 import br.com.tercom.Util.HttpUtil;
 
@@ -74,11 +74,11 @@ public abstract class GenericControl {
      * @return Retorna uma String com a base do header. Sendo formado por url base + caminho.
      */
 
-    protected  String getBase(EnumWebServices... types)
+    protected  String getBase(EnumREST... types)
     {
         StringBuilder type = new StringBuilder();
 
-        for(EnumWebServices ws : types) {
+        for(EnumREST ws : types) {
             type.append("/");
             type.append(ws.path);
         }

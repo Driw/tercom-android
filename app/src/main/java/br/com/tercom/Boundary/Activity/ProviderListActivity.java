@@ -38,7 +38,7 @@ public class ProviderListActivity extends AbstractAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_provider_list_boundary);
         ButterKnife.bind(this);
-        CreateToolbarWithNavigation(1);
+        CreateToolbarWithNavigation(4);
         initProviderTask(1);
     }
 
@@ -84,7 +84,7 @@ public class ProviderListActivity extends AbstractAppCompatActivity {
             if(Looper.myLooper() == null)
                 Looper.prepare();
             ProviderControl providerControl = new ProviderControl(ProviderListActivity.this);
-            apiResponse = providerControl.callJsonList(page);
+            apiResponse = providerControl.getProviderList(page);
             return null;
         }
 

@@ -12,7 +12,7 @@ import br.com.tercom.Entity.ProviderContact;
 import br.com.tercom.Entity.ProviderContactList;
 import br.com.tercom.Entity.ProviderList;
 import br.com.tercom.Enum.EnumMethod;
-import br.com.tercom.Enum.EnumWebServices;
+import br.com.tercom.Enum.EnumREST;
 import br.com.tercom.Util.CustomPair;
 
 public class ProviderControl extends GenericControl {
@@ -23,10 +23,9 @@ public class ProviderControl extends GenericControl {
         this.activity = activity;
     }
 
-    // id teste = 1
 
-    public ApiResponse callJson(int idProvider) {
-        CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,getLink(getBase(EnumWebServices.SITE,EnumWebServices.PROVIDER,EnumWebServices.GET), String.valueOf(idProvider)));
+    public ApiResponse getSingleProvider(int idProvider) {
+        CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,getLink(getBase(EnumREST.SITE, EnumREST.PROVIDER, EnumREST.GET), String.valueOf(idProvider)));
         ApiResponse<Provider> providerApiResponse = new ApiResponse<>(Provider.class);
         if(jsonResult.first){
             providerApiResponse = populateApiResponse(providerApiResponse,jsonResult.second);
@@ -34,8 +33,8 @@ public class ProviderControl extends GenericControl {
         return providerApiResponse;
     }
 
-    public ApiResponse callJsonList(int page) {
-        CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,getLink(getBase(EnumWebServices.SITE,EnumWebServices.PROVIDER,EnumWebServices.LIST), String.valueOf(page)));
+    public ApiResponse getProviderList(int page) {
+        CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,getLink(getBase(EnumREST.SITE, EnumREST.PROVIDER, EnumREST.LIST), String.valueOf(page)));
         ApiResponse<ProviderList> providerApiResponse = new ApiResponse<>(ProviderList.class);
         if(jsonResult.first){
             providerApiResponse = populateApiResponse(providerApiResponse,jsonResult.second);
@@ -53,7 +52,7 @@ public class ProviderControl extends GenericControl {
         map.put("site", site);
 
         try {
-        String link = getBase(EnumWebServices.SITE,EnumWebServices.PROVIDER, EnumWebServices.ADD);
+        String link = getBase(EnumREST.SITE, EnumREST.PROVIDER, EnumREST.ADD);
             Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
         CustomPair<String> jsonResult =  callJson(EnumMethod.POST,activity,completePost);
         ApiResponse<Provider> providerApiResponse = new ApiResponse<>(Provider.class);
@@ -77,7 +76,7 @@ public class ProviderControl extends GenericControl {
         map.put("site", site);
 
         try {
-        String link = getLink(getBase(EnumWebServices.SITE,EnumWebServices.PROVIDER, EnumWebServices.SET), String.valueOf(idProvider));
+        String link = getLink(getBase(EnumREST.SITE, EnumREST.PROVIDER, EnumREST.SET), String.valueOf(idProvider));
             Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
         CustomPair<String> jsonResult =  callJson(EnumMethod.POST,activity,completePost);
         ApiResponse<Provider> providerApiResponse = new ApiResponse<>(Provider.class);
@@ -99,7 +98,7 @@ public class ProviderControl extends GenericControl {
         map.put("position",position);
 
         try {
-        String link = getLink(getBase(EnumWebServices.SITE,EnumWebServices.PROVIDERCONTACT, EnumWebServices.ADD), String.valueOf(idProvider));
+        String link = getLink(getBase(EnumREST.SITE, EnumREST.PROVIDERCONTACT, EnumREST.ADD), String.valueOf(idProvider));
             Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
         CustomPair<String> jsonResult =  callJson(EnumMethod.POST,activity,completePost);
         ApiResponse<ProviderContact> providerApiResponse = new ApiResponse<>(ProviderContact.class);
@@ -114,14 +113,9 @@ public class ProviderControl extends GenericControl {
     }
 
     public ApiResponse getContacts(int id) {
-//
-//        TreeMap<String,String> map = new TreeMap<>();
-//        map.put("id", String.valueOf(id));
-
 
         try {
-        String link = getLink(getBase(EnumWebServices.SITE,EnumWebServices.PROVIDERCONTACT, EnumWebServices.GETCONTACTS), String.valueOf(id));
-//            Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
+        String link = getLink(getBase(EnumREST.SITE, EnumREST.PROVIDERCONTACT, EnumREST.GETCONTACTS), String.valueOf(id));
         CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,link);
         ApiResponse<ProviderContactList> providerApiResponse = new ApiResponse<>(ProviderContactList.class);
         if(jsonResult.first){
@@ -143,7 +137,7 @@ public class ProviderControl extends GenericControl {
         map.put("id", String.valueOf(id));
 
         try {
-        String link = getLink(getBase(EnumWebServices.SITE,EnumWebServices.PROVIDERCONTACT, EnumWebServices.SET), String.valueOf(idProvider));
+        String link = getLink(getBase(EnumREST.SITE, EnumREST.PROVIDERCONTACT, EnumREST.SET), String.valueOf(idProvider));
             Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
         CustomPair<String> jsonResult =  callJson(EnumMethod.POST,activity,completePost);
         ApiResponse<ProviderContact> providerApiResponse = new ApiResponse<>(ProviderContact.class);
@@ -165,7 +159,7 @@ public class ProviderControl extends GenericControl {
         map.putAll(getArrayParams("otherphone",otherPhoneValues));
 
         try {
-        String link = getLink(getBase(EnumWebServices.SITE,EnumWebServices.PROVIDERCONTACT, EnumWebServices.SETPHONE), String.valueOf(idProvider));
+        String link = getLink(getBase(EnumREST.SITE, EnumREST.PROVIDERCONTACT, EnumREST.SETPHONE), String.valueOf(idProvider));
             Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
         CustomPair<String> jsonResult =  callJson(EnumMethod.POST,activity,completePost);
         ApiResponse<ProviderContact> providerApiResponse = new ApiResponse<>(ProviderContact.class);

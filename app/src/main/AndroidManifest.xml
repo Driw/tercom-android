@@ -17,7 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Boundary.Activity.ProviderListActivity"></activity>
+        <activity android:name=".Boundary.Activity.ProviderListActivity" />
         <activity android:name=".Boundary.Activity.ProviderAddActivity" />
         <activity android:name=".Boundary.Activity.ServiceAddActivity" />
         <activity android:name=".Boundary.Activity.ProductAddActivity" />
@@ -30,7 +30,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Boundary.Activity.ProviderDetails"></activity>
+        <activity android:name=".Boundary.Activity.ProviderDetails" />
+        <activity android:name=".Boundary.Activity.ProductListActivity" />
+        <activity android:name=".Boundary.Activity.ServiceListActivity" />
+        <activity android:name=".Boundary.Activity.ProductCategoryAddActivity"></activity>
     </application>
 
 </manifest>

@@ -1,7 +1,5 @@
 package br.com.tercom.Entity;
 
-import com.google.gson.Gson;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,7 +41,12 @@ public abstract class GenericEntity
             Field field;
             while(keys.hasNext())
             {
-                field = selectedClass.getDeclaredField(keys.next());
+                String key = keys.next();
+                try{
+                    field = selectedClass.getDeclaredField(key);
+                }catch (NoSuchFieldException e ){
+                    field = selectedClass.getSuperclass().getDeclaredField(key);
+                }
                 field.setAccessible(true);
                 if(field.isAnnotationPresent(BindObject.class))
                 {
@@ -64,7 +67,7 @@ public abstract class GenericEntity
                 else
                 {
                     if(!jObj.isNull(field.getName()))
-                    field.set(this,jObj.get(field.getName()));
+                        field.set(this,jObj.get(field.getName()));
                 }
             }
 
@@ -132,7 +135,7 @@ public abstract class GenericEntity
                             for(Object o : list)
                             {
                                 sb.append(printObjectLog(o, identation + 4));
-                        }
+                            }
                             sb.append("]");
                         }
                         if (bo.type() == BindObject.TYPE.OBJECT) {

@@ -21,6 +21,12 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import br.com.tercom.Application.AppTercom;
+import br.com.tercom.Boundary.Activity.LoginActivity;
+import br.com.tercom.Boundary.Activity.ProductAddActivity;
+import br.com.tercom.Boundary.Activity.ProductListActivity;
+import br.com.tercom.Boundary.Activity.ProviderListActivity;
+import br.com.tercom.Boundary.Activity.ServiceAddActivity;
+import br.com.tercom.Boundary.Activity.ServiceListActivity;
 import br.com.tercom.Enum.EnumFont;
 import br.com.tercom.R;
 import br.com.tercom.Util.CustomTypeFace;
@@ -42,7 +48,22 @@ public abstract class AbstractAppCompatActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         TextView textTitle = mToolbar.findViewById(R.id.textTitle);
          textTitle.setTypeface(setFontSingleTxt(AppTercom.getContext(),EnumFont.FONT_RNS));
+         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return (true);
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+
 
 
     public void createIntentAbs(Class classe){
@@ -83,33 +104,33 @@ public abstract class AbstractAppCompatActivity extends AppCompatActivity {
                 .withSelectedItem(identifier)
                 .addStickyDrawerItems(CreateItem(6, "Logout", Color.BLACK, Color.BLACK, getResources().getColor(R.color.colorAccent), R.drawable.ic_tercom_logo))
                 .addDrawerItems(
-                        CreateItem(1, "Menu", Color.BLACK, Color.WHITE, getResources().getColor(R.color.colorAccent), R.drawable.ic_tercom_logo),
-                        CreateItem(2, "Produtos", Color.BLACK, Color.WHITE, getResources().getColor(R.color.colorAccent), R.drawable.ic_tercom_logo),
-                        CreateItem(3, "Serviços", Color.BLACK, Color.WHITE, getResources().getColor(R.color.colorAccent), R.drawable.ic_tercom_logo),
-                        CreateItem(4, "Fornecedores", Color.BLACK, Color.WHITE, getResources().getColor(R.color.colorAccent), R.drawable.ic_tercom_logo),
-                        CreateItem(99, "Ajuda", Color.BLACK, Color.WHITE, getResources().getColor(R.color.colorAccent), R.drawable.ic_tercom_logo)
+                        CreateItem(1, "Perfil", Color.BLACK, Color.WHITE, getResources().getColor(R.color.colorAccent), R.drawable.ic_profile),
+                        CreateItem(2, "Produtos", Color.BLACK, Color.WHITE, getResources().getColor(R.color.colorAccent), R.drawable.ic_box),
+                        CreateItem(3, "Serviços", Color.BLACK, Color.WHITE, getResources().getColor(R.color.colorAccent), R.drawable.ic_tools),
+                        CreateItem(4, "Fornecedores", Color.BLACK, Color.WHITE, getResources().getColor(R.color.colorAccent), R.drawable.ic_truck),
+                        CreateItem(5, "Fabricantes", Color.BLACK, Color.WHITE, getResources().getColor(R.color.colorAccent), R.drawable.ic_industry)
 
                 ).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         //TODO
-//                        switch (position) {
-//                            case 1:
-//                                createIntentAbs(HomeBoundary.class);
-//                                break;
-//                            case 2:
-//                                createIntentAbs(LoginBoundary.class);
-//                                break;
-//                            case 3:
-//                                createIntentAbs(LocaisBoundary.class);
-//                                break;
-//                            case 5:
-//                                createIntentAbs(AjudaBoundary.class);
-//                                break;
-//                            default:
-//                                Logout(classe);
-//                                break;
-//                        }
+                        switch (position) {
+                            case 1:
+                                createIntentAbs(LoginActivity.class);
+                                break;
+                            case 2:
+                                createIntentAbs(ProductListActivity.class);
+                                break;
+                            case 3:
+                                createIntentAbs(ServiceListActivity.class);
+                                break;
+                            case 4:
+                                createIntentAbs(ProviderListActivity.class);
+                                break;
+                            default:
+                                createIntentAbs(LoginActivity.class);
+                                break;
+                        }
                         return true;
                     }
                 }).build();
