@@ -21,11 +21,11 @@ public class ProductSubGroupControl extends GenericControl {
     }
 
 
-    public ApiResponse add(int idProductSubGroup, String name) {
+    public ApiResponse add(int idProductGroup, String name) {
 
         TreeMap<String,String> map = new TreeMap<>();
         map.put("name", name);
-        map.put("idProductSubGroup", String.valueOf(idProductSubGroup));
+        map.put("idProductGroup", String.valueOf(idProductGroup));
 
         try {
             String link = getBase(EnumREST.SITE, EnumREST.PRODUCTSUBGROUP, EnumREST.ADD);
@@ -96,9 +96,9 @@ public class ProductSubGroupControl extends GenericControl {
 
     public ApiResponse getSubSubGroups(int idProductSubGroup) {
         try {
-            String link = getLink(getBase(EnumREST.SITE, EnumREST.PRODUCTSUBGROUP, EnumREST.GETPRODUCTSUBSUBGROUP), String.valueOf(idProductSubGroup));
+            String link = getLink(getBase(EnumREST.SITE, EnumREST.PRODUCTSUBGROUP, EnumREST.GETPRODUCTSECTOR), String.valueOf(idProductSubGroup));
             CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,link);
-            ApiResponse<ProductSubGroupList> providerApiResponse = new ApiResponse<>(ProductSubGroupList.class);
+            ApiResponse<ProductSubGroup> providerApiResponse = new ApiResponse<>(ProductSubGroup.class);
             if(jsonResult.first){
                 providerApiResponse = populateApiResponse(providerApiResponse,jsonResult.second);
             }

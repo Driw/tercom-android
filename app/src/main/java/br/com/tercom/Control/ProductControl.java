@@ -8,6 +8,7 @@ import java.util.TreeMap;
 import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.Product;
 import br.com.tercom.Entity.ProductList;
+import br.com.tercom.Entity.ProductSend;
 import br.com.tercom.Enum.EnumMethod;
 import br.com.tercom.Enum.EnumREST;
 import br.com.tercom.Util.CustomPair;
@@ -20,13 +21,13 @@ public class ProductControl extends GenericControl {
         this.activity = activity;
     }
 
-    public ApiResponse add(String name,String description, String utility,TreeMap<String, String> mapId) {
+    public ApiResponse add(ProductSend product) {
 
         TreeMap<String,String> map = new TreeMap<>();
-        map.put("name", name);
-        map.put("description", description);
-        map.put("utility", utility);
-        map.putAll(mapId);
+        map.put("name", product.getName());
+        map.put("description", product.getDescription());
+        map.put("utility", product.getUtility());
+        map.putAll(product.getTreeMap());
        
 
         try {

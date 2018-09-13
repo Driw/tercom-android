@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
 import br.com.tercom.Entity.Product;
 import br.com.tercom.Entity.ProductCategory;
+import br.com.tercom.Entity.ProductSend;
 import br.com.tercom.Enum.EnumDialogOptions;
 import br.com.tercom.R;
 import br.com.tercom.Util.CustomPair;
@@ -29,8 +30,6 @@ public class ProductAddActivity extends AbstractAppCompatActivity {
     EditText txtDescription;
     @BindView(R.id.txtApplication)
     EditText txtApplication;
-    @BindView(R.id.txtBarCode)
-    EditText txtBarCode;
 
     @OnClick(R.id.btnNext) void next(){
 
@@ -40,10 +39,10 @@ public class ProductAddActivity extends AbstractAppCompatActivity {
 
         CustomPair<String> result = verify(values[0],values[1],values[2]);
         if(result.first){
-            Product product = new Product();
+            ProductSend product = new ProductSend();
             product.setName(values[0]);
-            product.setDescription(values[0]);
-            product.setUtility(values[0]);
+            product.setDescription(values[1]);
+            product.setUtility(values[2]);
             Intent intent = new Intent();
             intent.setClass(this, ProductCategoryAddActivity.class);
             intent.putExtra("product",new Gson().toJson(product));

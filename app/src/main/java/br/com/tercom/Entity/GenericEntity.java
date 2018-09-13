@@ -42,11 +42,7 @@ public abstract class GenericEntity
             while(keys.hasNext())
             {
                 String key = keys.next();
-                try{
-                    field = selectedClass.getDeclaredField(key);
-                }catch (NoSuchFieldException e ){
-                    field = selectedClass.getSuperclass().getDeclaredField(key);
-                }
+                field = selectedClass.getDeclaredField(key);
                 field.setAccessible(true);
                 if(field.isAnnotationPresent(BindObject.class))
                 {

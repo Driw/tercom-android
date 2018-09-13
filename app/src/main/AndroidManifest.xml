@@ -33,7 +33,9 @@
         <activity android:name=".Boundary.Activity.ProviderDetails" />
         <activity android:name=".Boundary.Activity.ProductListActivity" />
         <activity android:name=".Boundary.Activity.ServiceListActivity" />
-        <activity android:name=".Boundary.Activity.ProductCategoryAddActivity"></activity>
+        <activity android:name=".Boundary.Activity.ProductCategoryAddActivity" />
+        <activity android:name=".Boundary.Activity.ManufacturerActivity" />
+        <activity android:name=".Boundary.Activity.ProductDetailsActivity"></activity>
     </application>
 
 </manifest>

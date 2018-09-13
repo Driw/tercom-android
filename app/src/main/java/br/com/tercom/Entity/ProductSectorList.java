@@ -7,13 +7,13 @@ import br.com.tercom.Annotation.BindObject;
 public class ProductSectorList extends GenericEntity{
 
     @BindObject(type = BindObject.TYPE.LIST)
-    private ArrayList<ProductSector>  productSectores;
+    private ArrayList<ProductSector>  list;
 
-    public ArrayList<ProductSector> getProductSectores() {
-        return productSectores;
+    public ArrayList<ProductSector> getList() {
+        return list;
     }
 
-    public void setProductSectores(ArrayList<ProductSector> productSectores) {
-        this.productSectores = productSectores;
+    public void setList(ArrayList<ProductSector> productSectores) {
+        this.list = productSectores;
     }
 }

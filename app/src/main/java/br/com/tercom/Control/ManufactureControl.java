@@ -7,6 +7,7 @@ import java.util.TreeMap;
 
 import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.Manufacture;
+import br.com.tercom.Entity.ManufactureList;
 import br.com.tercom.Enum.EnumMethod;
 import br.com.tercom.Enum.EnumREST;
 import br.com.tercom.Util.CustomPair;
@@ -97,7 +98,7 @@ public class ManufactureControl extends GenericControl {
         try {
             String link = getLink(getBase(EnumREST.SITE, EnumREST.MANUFACTURE, EnumREST.SEARCH,EnumREST.FANTASYNAME), value);
             CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,link);
-            ApiResponse<Manufacture> providerApiResponse = new ApiResponse<>(Manufacture.class);
+            ApiResponse<ManufactureList> providerApiResponse = new ApiResponse<>(ManufactureList.class);
             if(jsonResult.first){
                 providerApiResponse = populateApiResponse(providerApiResponse,jsonResult.second);
             }

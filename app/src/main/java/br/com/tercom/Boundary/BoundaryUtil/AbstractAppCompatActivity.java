@@ -22,6 +22,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import br.com.tercom.Application.AppTercom;
 import br.com.tercom.Boundary.Activity.LoginActivity;
+import br.com.tercom.Boundary.Activity.ManufacturerActivity;
 import br.com.tercom.Boundary.Activity.ProductAddActivity;
 import br.com.tercom.Boundary.Activity.ProductListActivity;
 import br.com.tercom.Boundary.Activity.ProviderListActivity;
@@ -74,7 +75,7 @@ public abstract class AbstractAppCompatActivity extends AppCompatActivity {
 
 
 
-    public void CreateToolbarWithNavigation(int index) {
+    public void createToolbarWithNavigation(int index) {
         Toolbar mToolbar = findViewById(R.id.include_toolbar);
         mToolbar.setTitleTextColor(Color.WHITE);
         mToolbar.setTitleMarginBottom(10);
@@ -102,7 +103,7 @@ public abstract class AbstractAppCompatActivity extends AppCompatActivity {
                 .withAccountHeader(headerResult)
                 .withSliderBackgroundColor(Color.WHITE)
                 .withSelectedItem(identifier)
-                .addStickyDrawerItems(CreateItem(6, "Logout", Color.BLACK, Color.BLACK, getResources().getColor(R.color.colorAccent), R.drawable.ic_tercom_logo))
+                .addStickyDrawerItems(CreateItem(6, "Logout", Color.BLACK, Color.BLACK, getResources().getColor(R.color.colorAccent), R.drawable.ic_logout))
                 .addDrawerItems(
                         CreateItem(1, "Perfil", Color.BLACK, Color.WHITE, getResources().getColor(R.color.colorAccent), R.drawable.ic_profile),
                         CreateItem(2, "Produtos", Color.BLACK, Color.WHITE, getResources().getColor(R.color.colorAccent), R.drawable.ic_box),
@@ -126,6 +127,9 @@ public abstract class AbstractAppCompatActivity extends AppCompatActivity {
                                 break;
                             case 4:
                                 createIntentAbs(ProviderListActivity.class);
+                                break;
+                            case 5:
+                                createIntentAbs(ManufacturerActivity.class);
                                 break;
                             default:
                                 createIntentAbs(LoginActivity.class);

@@ -10,6 +10,7 @@ import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
 import br.com.tercom.Control.ProductGroupControl;
 import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.ProductGroup;
+import br.com.tercom.Entity.ProductList;
 import br.com.tercom.Entity.User;
 import br.com.tercom.R;
 import butterknife.BindView;
@@ -32,7 +33,7 @@ public class LoginActivity extends AbstractAppCompatActivity {
         USER_STATIC = new User();
         USER_STATIC.setEmail(txtEmail.getText().toString());
         USER_STATIC.setSenha(txtPass.getText().toString());
-        createIntentAbs(ProviderListActivity.class);
+        createIntentAbs(ProductListActivity.class);
 
     }
 

@@ -97,7 +97,7 @@ public class ProductFamilyControl extends GenericControl {
         try {
             String link = getLink(getBase(EnumREST.SITE, EnumREST.PRODUCTFAMILY, EnumREST.GETGROUPS), String.valueOf(idProductFamily));
             CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,link);
-            ApiResponse<ProductFamilyList> providerApiResponse = new ApiResponse<>(ProductFamilyList.class);
+            ApiResponse<ProductFamily> providerApiResponse = new ApiResponse<>(ProductFamily.class);
             if(jsonResult.first){
                 providerApiResponse = populateApiResponse(providerApiResponse,jsonResult.second);
             }

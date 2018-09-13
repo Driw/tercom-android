@@ -6,6 +6,8 @@ import android.util.Pair;
 import java.util.TreeMap;
 
 import br.com.tercom.Entity.ApiResponse;
+import br.com.tercom.Entity.ProductSector;
+import br.com.tercom.Entity.ProductSectorList;
 import br.com.tercom.Entity.ProductSubGroup;
 import br.com.tercom.Entity.ProductSubGroupList;
 import br.com.tercom.Enum.EnumMethod;
@@ -31,7 +33,7 @@ public class ProductSectorControl extends GenericControl {
             String link = getBase(EnumREST.SITE, EnumREST.PRODUCTSECTOR, EnumREST.ADD);
             Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
             CustomPair<String> jsonResult =  callJson(EnumMethod.POST,activity,completePost);
-            ApiResponse<ProductSubGroup> providerApiResponse = new ApiResponse<>(ProductSubGroup.class);
+            ApiResponse<ProductSector> providerApiResponse = new ApiResponse<>(ProductSector.class);
             if(jsonResult.first){
                 providerApiResponse = populateApiResponse(providerApiResponse,jsonResult.second);
             }
@@ -53,7 +55,7 @@ public class ProductSectorControl extends GenericControl {
             String link = getLink(getBase(EnumREST.SITE, EnumREST.PRODUCTSECTOR, EnumREST.SET), String.valueOf(idProductSector));
             Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
             CustomPair<String> jsonResult =  callJson(EnumMethod.POST,activity,completePost);
-            ApiResponse<ProductSubGroup> providerApiResponse = new ApiResponse<>(ProductSubGroup.class);
+            ApiResponse<ProductSector> providerApiResponse = new ApiResponse<>(ProductSector.class);
             if(jsonResult.first){
                 providerApiResponse = populateApiResponse(providerApiResponse,jsonResult.second);
             }
@@ -68,7 +70,7 @@ public class ProductSectorControl extends GenericControl {
         try {
             String link = getLink(getBase(EnumREST.SITE, EnumREST.PRODUCTSECTOR, EnumREST.REMOVE), String.valueOf(idProductSector));
             CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,link);
-            ApiResponse<ProductSubGroup> providerApiResponse = new ApiResponse<>(ProductSubGroup.class);
+            ApiResponse<ProductSector> providerApiResponse = new ApiResponse<>(ProductSector.class);
             if(jsonResult.first){
                 providerApiResponse = populateApiResponse(providerApiResponse,jsonResult.second);
             }
@@ -84,7 +86,7 @@ public class ProductSectorControl extends GenericControl {
         try {
             String link = getLink(getBase(EnumREST.SITE, EnumREST.PRODUCTSECTOR, EnumREST.GET), String.valueOf(idProductSector));
             CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,link);
-            ApiResponse<ProductSubGroup> providerApiResponse = new ApiResponse<>(ProductSubGroup.class);
+            ApiResponse<ProductSector> providerApiResponse = new ApiResponse<>(ProductSector.class);
             if(jsonResult.first){
                 providerApiResponse = populateApiResponse(providerApiResponse,jsonResult.second);
             }
@@ -99,7 +101,7 @@ public class ProductSectorControl extends GenericControl {
         try {
             String link = getLink(getBase(EnumREST.SITE, EnumREST.PRODUCTSECTOR, EnumREST.GETGROUPS), String.valueOf(idProductSector));
             CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,link);
-            ApiResponse<ProductSubGroupList> providerApiResponse = new ApiResponse<>(ProductSubGroupList.class);
+            ApiResponse<ProductSectorList> providerApiResponse = new ApiResponse<>(ProductSectorList.class);
             if(jsonResult.first){
                 providerApiResponse = populateApiResponse(providerApiResponse,jsonResult.second);
             }
@@ -115,7 +117,7 @@ public class ProductSectorControl extends GenericControl {
         try {
             String link = getLink(getBase(EnumREST.SITE, EnumREST.PRODUCTSECTOR, EnumREST.SEARCH,EnumREST.NAME), value);
             CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,link);
-            ApiResponse<ProductSubGroupList> providerApiResponse = new ApiResponse<>(ProductSubGroupList.class);
+            ApiResponse<ProductSectorList> providerApiResponse = new ApiResponse<>(ProductSectorList.class);
             if(jsonResult.first){
                 providerApiResponse = populateApiResponse(providerApiResponse,jsonResult.second);
             }

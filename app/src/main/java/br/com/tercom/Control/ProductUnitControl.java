@@ -94,6 +94,21 @@ public class ProductUnitControl extends GenericControl {
             return getErrorResponse();
         }
     }
+
+    public ApiResponse getAll() {
+        try {
+            String link = getBase(EnumREST.SITE, EnumREST.PRODUCTUNIT, EnumREST.GETALL);
+            CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,link);
+            ApiResponse<ProductUnitList> providerApiResponse = new ApiResponse<>(ProductUnitList.class);
+            if(jsonResult.first){
+                providerApiResponse = populateApiResponse(providerApiResponse,jsonResult.second);
+            }
+            return providerApiResponse;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return getErrorResponse();
+        }
+    }
     
 
     public ApiResponse search(String value) {
@@ -110,4 +125,5 @@ public class ProductUnitControl extends GenericControl {
             return getErrorResponse();
         }
     }
+
 }

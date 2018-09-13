@@ -1,14 +1,32 @@
 package br.com.tercom.Entity;
 
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
+
+import br.com.tercom.Annotation.BindObject;
+
 public class Product extends GenericEntity {
+
+    private int id;
     private String name;
     private String description;
     private String utility;
-    private int idProductUnit;
-    private int idProductFamily;
-    private int idProductGroup;
-    private int idProductSubGroup;
-    private int idProductSector;
+    private boolean inactive;
+    @BindObject
+    private ProductUnit unit;
+    @BindObject
+    private Category category;
+    @BindObject(type = BindObject.TYPE.LIST)
+    private ArrayList<Price> prices;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -34,43 +52,28 @@ public class Product extends GenericEntity {
         this.utility = utility;
     }
 
-    public int getIdProductUnit() {
-        return idProductUnit;
+    public boolean isInactive() {
+        return inactive;
     }
 
-    public void setIdProductUnit(int idProductUnit) {
-        this.idProductUnit = idProductUnit;
+    public void setInactive(boolean inactive) {
+        this.inactive = inactive;
     }
 
-    public int getIdProductFamily() {
-        return idProductFamily;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setIdProductFamily(int idProductFamily) {
-        this.idProductFamily = idProductFamily;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
-    public int getIdProductGroup() {
-        return idProductGroup;
+    public ArrayList<Price> getPrices() {
+        return prices;
     }
 
-    public void setIdProductGroup(int idProductGroup) {
-        this.idProductGroup = idProductGroup;
-    }
-
-    public int getIdProductSubGroup() {
-        return idProductSubGroup;
-    }
-
-    public void setIdProductSubGroup(int idProductSubGroup) {
-        this.idProductSubGroup = idProductSubGroup;
-    }
-
-    public int getIdProductSector() {
-        return idProductSector;
-    }
-
-    public void setIdProductSector(int idProductSector) {
-        this.idProductSector = idProductSector;
+    public void setPrices(ArrayList<Price> prices) {
+        this.prices = prices;
     }
 }
+

@@ -21,11 +21,12 @@ public enum EnumREST {
     //METHODS
     ADD("add"),
     GET("get"),
+    GETALL("getAll"),
     GETCONTACTS("getContacts"),
     GETGROUPS("getGroups"),
     GETPRODUCTSUBGROUP("getSubGroups"),
     GETPRODUCTSUBSECTOR("getSubSectors"),
-    GETPRODUCTSUBSUBGROUP("getSubSubGroups"),
+    GETPRODUCTSECTOR("getSector"),
     LIST("list"),
     REMOVE("remove"),
     SEARCH("search"),

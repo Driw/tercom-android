@@ -38,7 +38,7 @@ public class ProviderListActivity extends AbstractAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_provider_list_boundary);
         ButterKnife.bind(this);
-        CreateToolbarWithNavigation(4);
+        createToolbarWithNavigation(4);
         initProviderTask(1);
     }
 
