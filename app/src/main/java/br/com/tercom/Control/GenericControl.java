@@ -191,15 +191,12 @@ public abstract class GenericControl {
     }
 
 
-
-
     /**
      *  Usado em GET e POST, ele gera os parametros baseado no formato formato (key=valor&key=valor). Usando o "&" como separador padrão;
      * @param keys É um array de Strings que contém todas as chaves(key) dos valores que serão citados a seguir. Segue as respectivas posições do array(1-1...);
      * @param values  É um array de strings que contém todos os valores necessários para a chamada.
      * @return Retorna uma string concatenada com todos valores e chaves dos arrays combinados.
      * @throws UnsupportedEncodingException Se faz necessário para previnir erros quando o URLEncoder estiver em ação
-
      * @method URLEncoder.encode usado para evitar que algum parâmetro seja inválido, independete do caractér existente nele. Padrão usado: UTF-8
      */
     protected  String generateParamsWithKey(String[] keys, String[] values) throws UnsupportedEncodingException {

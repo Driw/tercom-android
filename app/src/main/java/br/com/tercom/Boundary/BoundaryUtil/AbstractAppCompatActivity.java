@@ -117,7 +117,7 @@ public abstract class AbstractAppCompatActivity extends AppCompatActivity {
                         //TODO
                         switch (position) {
                             case 1:
-                                createIntentAbs(LoginActivity.class);
+//                                createIntentAbs(LoginActivity.class);
                                 break;
                             case 2:
                                 createIntentAbs(ProductListActivity.class);

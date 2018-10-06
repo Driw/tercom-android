@@ -8,6 +8,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
+import br.com.tercom.Boundary.BoundaryUtil.Mask;
 import br.com.tercom.Control.ProviderControl;
 import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.Phone;
@@ -27,6 +28,7 @@ import static br.com.tercom.Util.TextUtil.emailValidator;
 import static br.com.tercom.Util.TextUtil.emptyValidator;
 import static br.com.tercom.Util.TextUtil.nameValidator;
 import static br.com.tercom.Util.TextUtil.phoneValidator;
+import static br.com.tercom.Util.Util.toast;
 
 public class ProviderContactAddActivity extends AbstractAppCompatActivity {
 
@@ -60,21 +62,22 @@ public class ProviderContactAddActivity extends AbstractAppCompatActivity {
     RecyclerView lv_Contact;
 
     @OnClick(R.id.btn_finalize) void finalizeContact(){
-        createIntentAbs(ProviderList.class);
+        createIntentAbs(ProviderListActivity.class);
     }
 
 
     @OnClick(R.id.btn_submit) void sendContact(){
-        CustomPair<String> result  = verifyData(txtContactName.getText().toString(),txtPosition.getText().toString(), txtEmail.getText().toString(), txtDDDPhone.getText().toString(),
-                txtPhone.getText().toString(), txtDDDCel.getText().toString(), txtCel.getText().toString());
+        CustomPair<String> result  = verifyData(txtContactName.getText().toString(),txtPosition.getText().toString(),
+                txtEmail.getText().toString(),Mask.unmask(txtDDDPhone.getText().toString()),
+                Mask.unmask(txtPhone.getText().toString()),Mask.unmask(txtDDDCel.getText().toString()),Mask.unmask(txtCel.getText().toString()));
         if(result.first){
             Phone commercial = new Phone();
-            commercial.setDdd(Integer.parseInt(txtDDDPhone.getText().toString()));
-            commercial.setNumber(txtPhone.getText().toString());
+            commercial.setDdd(Integer.parseInt(Mask.unmask(txtDDDPhone.getText().toString())));
+            commercial.setNumber(Mask.unmask(txtPhone.getText().toString()));
             commercial.setType(PhoneType.COMMERCIAL.type);
             Phone otherPhone = new Phone();
-            otherPhone.setDdd(Integer.parseInt(txtDDDCel.getText().toString()));
-            otherPhone.setNumber(txtCel.getText().toString());
+            otherPhone.setDdd(Integer.parseInt(Mask.unmask(txtDDDCel.getText().toString())));
+            otherPhone.setNumber(Mask.unmask(txtCel.getText().toString()));
             otherPhone.setType(PhoneType.CELLPHONE.type);
             ProviderContact providerContact = new ProviderContact();
             providerContact.setEmail(txtEmail.getText().toString());
@@ -95,12 +98,20 @@ public class ProviderContactAddActivity extends AbstractAppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         ButterKnife.bind(this);
         providerControl = new ProviderControl(this);
+        insertMask();
         try{
             idProvider = getIntent().getExtras().getInt("idProvider");
         }catch (Exception e){
             e.printStackTrace();
         }
 
+    }
+
+    private void insertMask() {
+        txtDDDPhone.addTextChangedListener(Mask.insert("(##)",txtDDDPhone));
+        txtDDDCel.addTextChangedListener(Mask.insert("(##)",txtDDDCel));
+        txtPhone.addTextChangedListener(Mask.insert("####-####",txtPhone));
+        txtCel.addTextChangedListener(Mask.insert("#####-####",txtCel));
     }
 
     private CustomPair<String> verifyData(String contactName, String position, String email, String dddPhone, String phone, String dddCel, String cel){
@@ -163,11 +174,10 @@ public class ProviderContactAddActivity extends AbstractAppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             if(apiResponse.getStatusBoolean()){
-                apiResponse.getResult().printObjectLog();
                 providerContact.setId(apiResponse.getResult().getId());
                 initPhoneTask(providerContact);
             }else{
-
+                toast(ProviderContactAddActivity.this,apiResponse.getMessage());
             }
         }
     }
@@ -196,6 +206,7 @@ public class ProviderContactAddActivity extends AbstractAppCompatActivity {
             DialogConfirm dialogConfirm = new DialogConfirm(ProviderContactAddActivity.this);
             if(apiResponse.getStatusBoolean()){
                 dialogConfirm.init(EnumDialogOptions.CONFIRM,apiResponse.getMessage());
+
             }else{
                 dialogConfirm.init(EnumDialogOptions.FAIL,apiResponse.getMessage());
 

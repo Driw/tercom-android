@@ -34,6 +34,7 @@ import br.com.tercom.Entity.ProductCategory;
 import br.com.tercom.Entity.ProductFamily;
 import br.com.tercom.Entity.ProductFamilyList;
 import br.com.tercom.Entity.ProductGroup;
+import br.com.tercom.Entity.ProductSector;
 import br.com.tercom.Entity.ProductSend;
 import br.com.tercom.Entity.ProductSubGroup;
 import br.com.tercom.Entity.ProductUnitList;
@@ -204,11 +205,14 @@ public class ProductCategoryAddActivity extends AbstractAppCompatActivity {
         txtType.setText(categories[step]);
         if(step == 1)
             btnAdd.setVisibility(View.VISIBLE);
+        if(step == 2 )
+            txtSearch.setVisibility(View.GONE);
         if(step == 3 || step == 4 || step == 5) {
             btnNext.setVisibility(View.VISIBLE);
 
             if (step == 5) {
                 btnAdd.setVisibility(View.GONE);
+                txtSearch.setVisibility(View.GONE);
                 btnNext.setBackgroundColor(this.getResources().getColor(R.color.colorGreenLogin));
                 btnNext.setText("Adicionar Produto");
             }
@@ -655,7 +659,7 @@ public class ProductCategoryAddActivity extends AbstractAppCompatActivity {
 
     private class AddSectorTask extends AsyncTask<Void,Void,Void>{
 
-        private ApiResponse<ProductSubGroup> apiResponse;
+        private ApiResponse<ProductSector> apiResponse;
         private String name;
         private int id;
 

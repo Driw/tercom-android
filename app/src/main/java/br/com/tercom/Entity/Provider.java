@@ -48,7 +48,8 @@ public class Provider extends GenericEntity
     public String getCnpj() {
         if(cnpj == null)
             return "Não informado";
-        return setCnpjMask(cnpj);
+//        return setCnpjMask(cnpj);
+        return cnpj;
     }
 
     public void setCnpj(String cnpj) {

@@ -50,6 +50,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="CNPJ"
+                    android:inputType="number"
                     android:singleLine="true"
                     android:textSize="12sp" />
             </android.support.design.widget.TextInputLayout>

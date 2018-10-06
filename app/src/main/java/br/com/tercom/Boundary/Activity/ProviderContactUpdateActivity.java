@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
+import br.com.tercom.Boundary.BoundaryUtil.Mask;
 import br.com.tercom.Control.ProviderControl;
 import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.Phone;
@@ -64,16 +65,16 @@ public class ProviderContactUpdateActivity extends AbstractAppCompatActivity {
 
         if(isEnable){
 
-        CustomPair<String> result  = verifyData(txtContactName.getText().toString(),txtPosition.getText().toString(), txtEmail.getText().toString(), txtDDDPhone.getText().toString(),
-                txtPhone.getText().toString(), txtDDDCel.getText().toString(), txtCel.getText().toString());
+        CustomPair<String> result  = verifyData(txtContactName.getText().toString(),txtPosition.getText().toString(), txtEmail.getText().toString(),
+                Mask.unmask(txtDDDPhone.getText().toString()), Mask.unmask(txtPhone.getText().toString()),Mask.unmask(txtDDDCel.getText().toString()),Mask.unmask( txtCel.getText().toString()));
         if(result.first){
             Phone commercial = new Phone();
-            commercial.setDdd(Integer.parseInt(txtDDDPhone.getText().toString()));
-            commercial.setNumber(txtPhone.getText().toString());
+            commercial.setDdd(Integer.parseInt(Mask.unmask(txtDDDPhone.getText().toString())));
+            commercial.setNumber(Mask.unmask(txtPhone.getText().toString()));
             commercial.setType(PhoneType.COMMERCIAL.type);
             Phone otherPhone = new Phone();
-            otherPhone.setDdd(Integer.parseInt(txtDDDCel.getText().toString()));
-            otherPhone.setNumber(txtCel.getText().toString());
+            otherPhone.setDdd(Integer.parseInt(Mask.unmask(txtDDDCel.getText().toString())));
+            otherPhone.setNumber(Mask.unmask(txtCel.getText().toString()));
             otherPhone.setType(PhoneType.CELLPHONE.type);
             ProviderContact providerContact = new ProviderContact();
             providerContact.setEmail(txtEmail.getText().toString());
@@ -98,6 +99,7 @@ public class ProviderContactUpdateActivity extends AbstractAppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         ButterKnife.bind(this);
         setEnable(false);
+        insertMask();
         providerControl = new ProviderControl(this);
         try{
             idProvider = getIntent().getExtras().getInt("idProvider");
@@ -119,6 +121,15 @@ public class ProviderContactUpdateActivity extends AbstractAppCompatActivity {
         txtCel.setText(String.valueOf(contact.getOtherphone().getNumber()), TextView.BufferType.EDITABLE);
 
     }
+
+
+    private void insertMask() {
+        txtDDDPhone.addTextChangedListener(Mask.insert("(##)",txtDDDPhone));
+        txtDDDCel.addTextChangedListener(Mask.insert("(##)",txtDDDCel));
+        txtPhone.addTextChangedListener(Mask.insert("####-####",txtPhone));
+        txtCel.addTextChangedListener(Mask.insert("#####-####",txtCel));
+    }
+
 
 
     private void setEnable(boolean enable){

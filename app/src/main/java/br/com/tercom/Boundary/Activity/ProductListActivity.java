@@ -77,6 +77,10 @@ public class ProductListActivity extends AbstractAppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+
+    }
 
     private void createListProviders(final ProductList result) {
         ProductAdapter productAdapter = new ProductAdapter(this,result.getList());

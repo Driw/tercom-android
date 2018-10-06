@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 
 import br.com.tercom.Adapter.ContactAdapter;
+import br.com.tercom.Boundary.BoundaryUtil.Mask;
 import br.com.tercom.Control.ProviderControl;
 import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.Provider;
@@ -66,9 +67,9 @@ public class ProviderDetails extends AppCompatActivity {
     @OnClick(R.id.btn_update) void update(){
         if(isEnable){
             CustomPair<String> result = verifyData(txtCompanyName.getText().toString(),txtFantasyName.getText().toString(),
-                    txtCnpj.getText().toString(),txtSite.getText().toString(),txtSpokesMan.getText().toString());
+                    Mask.unmask(txtCnpj.getText().toString()),txtSite.getText().toString(),txtSpokesMan.getText().toString());
             if(result.first){
-                initAddTask(txtCompanyName.getText().toString(),txtFantasyName.getText().toString(),txtCnpj.getText().toString(),
+                initAddTask(txtCompanyName.getText().toString(),txtFantasyName.getText().toString(),Mask.unmask(txtCnpj.getText().toString()),
                         txtSite.getText().toString(),txtSpokesMan.getText().toString(),selectedProvider.getId());
                 setEnable(false);
             }else{
@@ -93,6 +94,7 @@ public class ProviderDetails extends AppCompatActivity {
     }
 
     private void populate(Provider selectedProvider) {
+        txtCnpj.addTextChangedListener(Mask.insert("##.###.###/####-##",txtCnpj));
         txtCnpj.setText(selectedProvider.getCnpj(), TextView.BufferType.EDITABLE);
         txtCompanyName.setText(selectedProvider.getCompanyName(), TextView.BufferType.EDITABLE);
         txtFantasyName.setText(selectedProvider.getFantasyName(), TextView.BufferType.EDITABLE);

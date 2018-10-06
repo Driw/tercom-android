@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
+import br.com.tercom.Boundary.BoundaryUtil.Mask;
 import br.com.tercom.Control.ProviderControl;
 import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.Provider;
@@ -62,7 +63,9 @@ public class ProviderAddActivity extends AbstractAppCompatActivity {
         setContentView(R.layout.activity_add_provider);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         ButterKnife.bind(this);
+        createToolbar();
         overrideFonts(this,getWindow().getDecorView().getRootView(), EnumFont.FONT_ROBOTO_REGULAR);
+        txtCNPJ.addTextChangedListener(Mask.insert("##.###.###/####-##",txtCNPJ));
     }
 
     private CustomPair<String> verifyData(String companyName, String fantasyName, String cnpj, String site,String spokesman){

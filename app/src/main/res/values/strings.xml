@@ -5,6 +5,6 @@
     <string name="senha">Senha</string>
     <string name="cadastrar">Cadastrar</string>
     <string name="nome">Nome</string>
-    <string name="facilita_busca">Aqui você deverá adicionar até 3 tags que ajudarão na busca.Atenção, ela deverá ser formada por somente uma palavra! Exemplo: Serviço de entrega de madeira, coloque as tags Entregae Madeirapara facilitar a busca.</string>
+    <string name="facilita_busca">Aqui você deverá adicionar até 3 tags que ajudarão na busca.</string>
     <string name="novo_fornecedor">Novo Fornecedor</string>
 </resources>

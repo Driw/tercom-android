@@ -14,7 +14,7 @@ public class HMAC {
 
     public static String encrypt(String message) {
         try {
-            final String hashingAlgorithm = "HmacSHA256"; //or "HmacSHA1", "HmacSHA512"
+            final String hashingAlgorithm = "HmacSHA256";
 
             byte[] bytes = hmac(hashingAlgorithm, HASH.getBytes(), message.getBytes());
 
