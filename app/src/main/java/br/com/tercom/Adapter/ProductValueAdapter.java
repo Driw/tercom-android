@@ -34,7 +34,7 @@ public class ProductValueAdapter extends RecyclerView.Adapter<ProductValueAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.productName.setText(productValues.get(position).getName());
         holder.productPackage.setText(String.format(Locale.getDefault(),"%s %s",productValues.get(position).getAmount(),productValues.get(position).getProduct().getName()));
-        holder.productPrice.setText(String.format(Locale.getDefault(),"R$ %.2f",productValues.get(position).getPrice()));
+        holder.productPrice.setText(String.format(Locale.getDefault(),"R$ %.2f",productValues.get(position).getPrice()).replace(".", ","));
         holder.productManufacturer.setText(productValues.get(position).getManufacture().getFantasyName());
         holder.productProvider.setText(productValues.get(position).getProvider().getFantasyName());
     }

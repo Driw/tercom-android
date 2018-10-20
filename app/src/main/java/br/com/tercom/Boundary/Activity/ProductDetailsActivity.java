@@ -1,5 +1,6 @@
 package br.com.tercom.Boundary.Activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.EditText;
@@ -40,7 +41,9 @@ public class ProductDetailsActivity extends AbstractAppCompatActivity {
     EditText txtSector;
 
     @OnClick(R.id.btn_prices) void seePrices(){
-
+        Intent intent = new Intent(ProductDetailsActivity.this, ProductValueListActivity.class);
+        intent.putExtra("idProduct", product.getId());
+        startActivity(intent);
     }
 
     @OnClick(R.id.btn_update) void update(){
