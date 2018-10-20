@@ -15,14 +15,14 @@ public class ProductValue extends GenericEntity {
     @BindObject
     private Manufacture manufacture;
     @BindObject
-    private Package mPackage;
+    private ProductPackage mPackage;
     @BindObject
     private ProductType type;
     @BindObject
     private LastUpdate lastUpdate;
     private String name;
     private int amount;
-    private double price;
+    private float price;
 
 
     public int getId() {
@@ -57,11 +57,11 @@ public class ProductValue extends GenericEntity {
         this.manufacture = manufacture;
     }
 
-    public Package get_package() {
+    public ProductPackage getPackage() {
         return mPackage;
     }
 
-    public void set_package(Package _package) {
+    public void setPackage(ProductPackage _package) {
         this.mPackage = _package;
     }
 
@@ -89,11 +89,11 @@ public class ProductValue extends GenericEntity {
         this.amount = amount;
     }
 
-    public double getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 
