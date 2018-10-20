@@ -39,8 +39,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Boundary.Activity.LoginActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".Boundary.Activity.ProviderDetails"
             android:screenOrientation="portrait" />
@@ -68,6 +67,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Boundary.Activity.ProductValueDetails"></activity>
     </application>
 
 </manifest>

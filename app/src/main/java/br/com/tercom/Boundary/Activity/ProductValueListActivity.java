@@ -13,6 +13,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 
 import br.com.tercom.Adapter.ProductValueAdapter;
@@ -24,6 +26,7 @@ import br.com.tercom.Entity.ProductValue;
 import br.com.tercom.Entity.ProductValueList;
 import br.com.tercom.Entity.Provider;
 import br.com.tercom.Enum.EnumDialogOptions;
+import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.R;
 import br.com.tercom.Util.DialogConfirm;
 import butterknife.BindView;
@@ -31,6 +34,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ProductValueListActivity extends AbstractAppCompatActivity {
+
+    private GetAllProductValueTask getAll;
 
     @BindView(R.id.rv_productvalue)
     RecyclerView rv_productValues;
@@ -40,14 +45,6 @@ public class ProductValueListActivity extends AbstractAppCompatActivity {
         //prox tela
     }
 
-    private void createList(ProductValueList productValue){
-
-        ProductValueAdapter productValueAdapter = new ProductValueAdapter(this, productValue.getList());
-        GridLayoutManager gridLayoutManager =  new GridLayoutManager(this, 2);
-        rv_productValues.setLayoutManager(gridLayoutManager);
-        rv_productValues.setAdapter(productValueAdapter);
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,21 +52,33 @@ public class ProductValueListActivity extends AbstractAppCompatActivity {
         setContentView(R.layout.activity_product_value_list);
         ButterKnife.bind(this);
         createToolbar();
-
-        ArrayList<ProductValue> productValues = new ArrayList<>();
-        for(int i = 0; i < 11; i++)
-        {
-            ProductValue p = new ProductValue();
-            p.setName("Nome: " + i);
-            productValues.add(p);
-        }
-
-        GetAllProductValueTask getAll = new GetAllProductValueTask(7);
-        getAll.execute();
+        int idProduct = getIntent().getExtras().getInt("idProduct");
+        initTask(idProduct);
     }
 
-    private void createListProductValues(ProductValueList list)
-    {
+    private void initTask(int idProduct){
+        if(getAll == null || getAll.getStatus() !=  AsyncTask.Status.RUNNING){
+            getAll = new GetAllProductValueTask(idProduct);
+            getAll.execute();
+        }
+    }
+
+
+    private void createList(final ProductValueList productValue){
+
+        ProductValueAdapter productValueAdapter = new ProductValueAdapter(this, productValue.getList());
+        GridLayoutManager gridLayoutManager =  new GridLayoutManager(this, 2);
+        productValueAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
+            @Override
+            public void onClickListener(View view, int position) {
+                Intent intent = new Intent();
+                intent.putExtra("productValue",new Gson().toJson(productValue.getList().get(position)));
+                intent.setClass(ProductValueListActivity.this, ProductValueDetails.class);
+                startActivity(intent);
+            }
+        });
+        rv_productValues.setLayoutManager(gridLayoutManager);
+        rv_productValues.setAdapter(productValueAdapter);
 
     }
 
