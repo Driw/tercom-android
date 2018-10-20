@@ -7,4 +7,5 @@
     <string name="nome">Nome</string>
     <string name="facilita_busca">Aqui você deverá adicionar até 3 tags que ajudarão na busca.</string>
     <string name="novo_fornecedor">Novo Fornecedor</string>
+    <string name="title_activity_product_value_list">ProductValueListActivity</string>
 </resources>

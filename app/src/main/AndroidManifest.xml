@@ -17,25 +17,56 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Boundary.Activity.ProviderListActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".Boundary.Activity.ProviderAddActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".Boundary.Activity.ServiceAddActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".Boundary.Activity.ProductAddActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".Boundary.Activity.ProviderContactAddActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".Boundary.Activity.ProviderContactUpdateActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".Boundary.Activity.LoginActivity" android:screenOrientation="portrait">
+        <activity
+            android:name=".Boundary.Activity.ProviderListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Boundary.Activity.ProviderAddActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Boundary.Activity.ServiceAddActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Boundary.Activity.ProductAddActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Boundary.Activity.ProviderContactAddActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Boundary.Activity.ProviderContactUpdateActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Boundary.Activity.LoginActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".Boundary.Activity.ProviderDetails"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Boundary.Activity.ProductListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Boundary.Activity.ServiceListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Boundary.Activity.ProductCategoryAddActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Boundary.Activity.ManufacturerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Boundary.Activity.ProductDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Boundary.Activity.ProductValueListActivity"
+            android:label="@string/title_activity_product_value_list"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Boundary.Activity.ProviderDetails" android:screenOrientation="portrait"/>
-        <activity android:name=".Boundary.Activity.ProductListActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".Boundary.Activity.ServiceListActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".Boundary.Activity.ProductCategoryAddActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".Boundary.Activity.ManufacturerActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".Boundary.Activity.ProductDetailsActivity" android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
