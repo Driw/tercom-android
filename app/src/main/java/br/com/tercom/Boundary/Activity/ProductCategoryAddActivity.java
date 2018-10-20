@@ -222,7 +222,7 @@ public class ProductCategoryAddActivity extends AbstractAppCompatActivity {
 
     }
 
-    public   void createList(ArrayList<? extends  IProductCategory> categories, RecyclerViewOnClickListenerHack rvClick){
+    public void createList(ArrayList<? extends  IProductCategory> categories, RecyclerViewOnClickListenerHack rvClick){
         CategoryAdapter categoryAdapter = new CategoryAdapter(this,categories);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
         categoryAdapter.setmRecyclerViewOnClickListenerHack(rvClick);
