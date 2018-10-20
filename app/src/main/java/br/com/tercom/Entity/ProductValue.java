@@ -22,7 +22,7 @@ public class ProductValue extends GenericEntity {
     private LastUpdate lastUpdate;
     private String name;
     private int amount;
-    private float price;
+    private double price;
 
 
     public int getId() {
@@ -89,11 +89,11 @@ public class ProductValue extends GenericEntity {
         this.amount = amount;
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

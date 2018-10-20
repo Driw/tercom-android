@@ -26,16 +26,16 @@ public class ProductValueAdapter extends RecyclerView.Adapter<ProductValueAdapte
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = layoutInflater.inflate(R.layout.item_provider,parent,false);
+        View v = layoutInflater.inflate(R.layout.list_item_product_value,parent,false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.productName.setText(productValues.get(position).getName());
-        holder.productPackage.setText(String.format(Locale.getDefault(),"%s %s",productValues.get(position).getAmount(),productValues.get(position).getPackage().getName()));
+        holder.productPackage.setText(String.format(Locale.getDefault(),"%s %s",productValues.get(position).getAmount(),productValues.get(position).getProduct().getName()));
         holder.productPrice.setText(String.format(Locale.getDefault(),"R$ %.2f",productValues.get(position).getPrice()));
-        holder.productManufacturer.setText(productValues.get(position).getName());
+        holder.productManufacturer.setText(productValues.get(position).getManufacture().getFantasyName());
         holder.productProvider.setText(productValues.get(position).getProvider().getFantasyName());
     }
     @Override
@@ -48,6 +48,7 @@ public class ProductValueAdapter extends RecyclerView.Adapter<ProductValueAdapte
         public TextView productPrice;
         public TextView productManufacturer;
         public TextView productProvider;
+
         public ViewHolder(View itemView) {
             super(itemView);
             productName = itemView.findViewById(R.id.productName);

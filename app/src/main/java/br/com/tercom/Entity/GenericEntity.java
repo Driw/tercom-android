@@ -39,31 +39,27 @@ public abstract class GenericEntity
 
             Iterator<String> keys = jObj.keys();
             Field field;
-            while(keys.hasNext())
-            {
-                String key = keys.next();
-                field = selectedClass.getDeclaredField(key);
-                field.setAccessible(true);
-                if(field.isAnnotationPresent(BindObject.class))
-                {
-                    BindObject bo = field.getAnnotation(BindObject.class);
+            while(keys.hasNext()) {
 
-                    if(bo.type() == BindObject.TYPE.OBJECT)
-                    {
-                        Class<? extends GenericEntity> classe = (Class<? extends GenericEntity>) field.getType();
-                        field.set(this,classe.newInstance().toObject(jObj.getJSONObject(field.getName()).toString(),classe));
+                String key = keys.next();
+                if (!key.equalsIgnoreCase("package")) {
+                field = selectedClass.getDeclaredField(key);
+                    field.setAccessible(true);
+                    if (field.isAnnotationPresent(BindObject.class)) {
+                        BindObject bo = field.getAnnotation(BindObject.class);
+
+                        if (bo.type() == BindObject.TYPE.OBJECT) {
+                            Class<? extends GenericEntity> classe = (Class<? extends GenericEntity>) field.getType();
+                            field.set(this, classe.newInstance().toObject(jObj.getJSONObject(field.getName()).toString(), classe));
+                        } else {
+                            ParameterizedType listType = (ParameterizedType) field.getGenericType();
+                            Class<? extends GenericEntity> classe = (Class<? extends GenericEntity>) listType.getActualTypeArguments()[0];
+                            field.set(this, toList(jObj.get(field.getName()).toString(), classe));
+                        }
+                    } else {
+                        if (!jObj.isNull(field.getName()))
+                            field.set(this, jObj.get(field.getName()));
                     }
-                    else
-                    {
-                        ParameterizedType listType = (ParameterizedType) field.getGenericType();
-                        Class<? extends GenericEntity> classe = (Class<? extends GenericEntity>) listType.getActualTypeArguments()[0];
-                        field.set(this, toList(jObj.get(field.getName()).toString(),classe));
-                    }
-                }
-                else
-                {
-                    if(!jObj.isNull(field.getName()))
-                        field.set(this,jObj.get(field.getName()));
                 }
             }
 

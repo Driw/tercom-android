@@ -66,10 +66,6 @@ public class ProductValueListActivity extends AbstractAppCompatActivity {
 
         GetAllProductValueTask getAll = new GetAllProductValueTask(7);
         getAll.execute();
-        ProductValueAdapter recyclerAdapter = new ProductValueAdapter(this, productValues);
-        LinearLayoutManager llmanager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        rv_productValues.setLayoutManager(llmanager);
-        rv_productValues.setAdapter(recyclerAdapter);
     }
 
     private void createListProductValues(ProductValueList list)
@@ -99,7 +95,7 @@ public class ProductValueListActivity extends AbstractAppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             if(apiResponse.getStatusBoolean()){
-                createListProductValues(apiResponse.getResult());
+                createList(apiResponse.getResult());
             }
         }
     }
