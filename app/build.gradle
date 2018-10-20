@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 27
-    buildToolsVersion '28.0.2'
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "br.com.tercom"
         minSdkVersion 17
         targetSdkVersion 27
         versionCode 16
-        versionName "0.0.16"
+        versionName "0.0.17"
         multiDexEnabled true
     }
     buildTypes {
