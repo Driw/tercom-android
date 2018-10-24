@@ -1,11 +1,11 @@
 package br.com.tercom.Boundary.Activity;
 
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
 import br.com.tercom.R;
 
-public class ProductValueDetails extends AbstractAppCompatActivity {
+public class ProductValueAddActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
