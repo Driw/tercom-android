@@ -10,6 +10,7 @@ import br.com.tercom.Annotation.BindObject;
 import br.com.tercom.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ProductValueAddActivity extends AppCompatActivity {
 
@@ -37,5 +38,8 @@ public class ProductValueAddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_value_generic);
         ButterKnife.bind(this);
+
     }
+
+
 }

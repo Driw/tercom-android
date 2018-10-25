@@ -2,7 +2,9 @@ package br.com.tercom.Entity;
 
 import java.util.ArrayList;
 
-public class Manufacture extends GenericEntity {
+import br.com.tercom.Interface.IProductValueItem;
+
+public class Manufacture extends GenericEntity implements IProductValueItem {
 
     private int id;
     private String fantasyName;
@@ -21,5 +23,10 @@ public class Manufacture extends GenericEntity {
 
     public void setFantasyName(String fantasyName) {
         this.fantasyName = fantasyName;
+    }
+
+    @Override
+    public String getName() {
+        return fantasyName;
     }
 }
