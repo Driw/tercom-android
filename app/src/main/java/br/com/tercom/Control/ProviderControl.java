@@ -42,6 +42,15 @@ public class ProviderControl extends GenericControl {
         return providerApiResponse;
     }
 
+    public ApiResponse search(String name) {
+            CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,getLink(getBase(EnumREST.SITE, EnumREST.PROVIDER, EnumREST.SEARCH, EnumREST.NAME), name));
+        ApiResponse<ProviderList> providerApiResponse = new ApiResponse<>(ProviderList.class);
+        if(jsonResult.first){
+            providerApiResponse = populateApiResponse(providerApiResponse,jsonResult.second);
+        }
+        return providerApiResponse;
+    }
+
     public ApiResponse addProvider(String companyName, String fantasyName, String cnpj, String site,String spokesman) {
 
         TreeMap<String,String> map = new TreeMap<>();
