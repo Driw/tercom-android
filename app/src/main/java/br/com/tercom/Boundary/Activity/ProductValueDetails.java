@@ -30,6 +30,7 @@ import br.com.tercom.Control.ProviderControl;
 import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.ManufactureList;
 import br.com.tercom.Entity.ProductValue;
+import br.com.tercom.Entity.ProductValueSend;
 import br.com.tercom.Entity.Provider;
 import br.com.tercom.Entity.ProviderList;
 import br.com.tercom.Enum.EnumDialogOptions;
@@ -56,7 +57,7 @@ public class ProductValueDetails extends AbstractAppCompatActivity {
     private static final int REFERENCE_TYPE = 4;
 
     private ManufactureTask manufactureTask;
-    private ProductValue productValue;
+    private ProductValueSend productValue;
 
 
     @BindView(R.id.txtName)
@@ -92,7 +93,7 @@ public class ProductValueDetails extends AbstractAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_value_generic);
         ButterKnife.bind(this);
-        productValue = new ProductValue();
+        productValue = new ProductValueSend();
 
     }
 
@@ -135,19 +136,20 @@ public class ProductValueDetails extends AbstractAppCompatActivity {
 
     }
 
-    private void setStringReference(int reference, String value){
+    private void setReference(int reference, IProductValueItem value){
         switch (reference){
             case REFERENCE_PROVIDER:
-                txtProvider.setText(getStringFormated("Fornecedor",value));
+                txtProvider.setText(getStringFormated("Fornecedor",value.getName()));
                 break;
             case REFERENCE_MANUFACTURER:
-                txtManufacturer.setText(getStringFormated("Fabricante",value));
+                txtManufacturer.setText(getStringFormated("Fabricante",value.getName()));
+                productValue.setIdManufacture(value.getId());
                 break;
             case REFERENCE_PACKAGE:
-                txtPackage.setText(getStringFormated("Embalagem",value));
+                txtPackage.setText(getStringFormated("Embalagem",value.getName()));
                 break;
             case REFERENCE_TYPE:
-                txtType.setText(getStringFormated("Tipo",value));
+                txtType.setText(getStringFormated("Tipo",value.getName()));
                 break;
         }
 
@@ -190,7 +192,8 @@ public class ProductValueDetails extends AbstractAppCompatActivity {
         productValueItensAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
             @Override
             public void onClickListener(View view, int position) {
-                setStringReference(reference, itens.get(position).getName());
+                setReference(reference, itens.get(position));
+
             }
         });
         rvSearch.setLayoutManager(layoutManager);

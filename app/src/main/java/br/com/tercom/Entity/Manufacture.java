@@ -9,6 +9,7 @@ public class Manufacture extends GenericEntity implements IProductValueItem {
     private int id;
     private String fantasyName;
 
+    @Override
     public int getId() {
         return id;
     }
