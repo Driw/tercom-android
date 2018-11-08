@@ -1,8 +1,5 @@
 package br.com.tercom.Entity;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import br.com.tercom.Annotation.BindObject;
 
 public class ProductValue extends GenericEntity {
@@ -15,9 +12,9 @@ public class ProductValue extends GenericEntity {
     @BindObject
     private Manufacture manufacture;
     @BindObject
-    private ProductPackage mPackage;
+    private ProductPackage productPackage;
     @BindObject
-    private ProductType type;
+    private ProductType productType;
     @BindObject
     private LastUpdate lastUpdate;
     private String name;
@@ -58,19 +55,19 @@ public class ProductValue extends GenericEntity {
     }
 
     public ProductPackage getPackage() {
-        return mPackage;
+        return productPackage;
     }
 
     public void setPackage(ProductPackage _package) {
-        this.mPackage = _package;
+        this.productPackage = _package;
     }
 
-    public ProductType getType() {
-        return type;
+    public ProductType getProductType() {
+        return productType;
     }
 
-    public void setType(ProductType type) {
-        this.type = type;
+    public void setProductType(ProductType productType) {
+        this.productType = productType;
     }
 
     public String getName() {

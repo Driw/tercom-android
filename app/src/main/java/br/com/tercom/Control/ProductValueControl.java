@@ -5,12 +5,9 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Pair;
 
-import java.util.ArrayList;
 import java.util.TreeMap;
 
 import br.com.tercom.Entity.ApiResponse;
-import br.com.tercom.Entity.ProductFamily;
-import br.com.tercom.Entity.ProductFamilyList;
 import br.com.tercom.Entity.ProductValue;
 import br.com.tercom.Entity.ProductValueList;
 import br.com.tercom.Enum.EnumMethod;

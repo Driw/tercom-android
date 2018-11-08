@@ -4,31 +4,19 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
-
 import br.com.tercom.Adapter.ProductValueAdapter;
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
 import br.com.tercom.Control.ProductValueControl;
-import br.com.tercom.Control.ProviderControl;
 import br.com.tercom.Entity.ApiResponse;
-import br.com.tercom.Entity.ProductValue;
 import br.com.tercom.Entity.ProductValueList;
-import br.com.tercom.Entity.Provider;
-import br.com.tercom.Enum.EnumDialogOptions;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.R;
-import br.com.tercom.Util.DialogConfirm;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
