@@ -68,7 +68,6 @@
             android:name=".Boundary.Activity.ProductValueListActivity"
             android:theme="@style/AppTheme"></activity>
         <activity android:name=".Boundary.Activity.ProductValueDetails" />
-        <activity android:name=".Boundary.Activity.ProductValueAddActivity"></activity>
     </application>
 
 </manifest>
