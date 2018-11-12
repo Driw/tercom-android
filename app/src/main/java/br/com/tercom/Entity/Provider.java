@@ -7,11 +7,12 @@ import android.arch.persistence.room.PrimaryKey;
 import java.util.ArrayList;
 
 import br.com.tercom.Annotation.BindObject;
+import br.com.tercom.Interface.IProductValueItem;
 
 import static br.com.tercom.Util.TextUtil.setCnpjMask;
 
 @Entity(tableName = "Provider")
-public class Provider extends GenericEntity
+public class Provider extends GenericEntity implements IProductValueItem
 {
 
     private int id;
@@ -36,6 +37,11 @@ public class Provider extends GenericEntity
 
     @BindObject(type = BindObject.TYPE.LIST)
     private ArrayList<ProviderContact> contacts;
+
+    @Override
+    public String getName() {
+        return fantasyName;
+    }
 
     public int getId() {
         return id;

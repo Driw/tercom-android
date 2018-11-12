@@ -2,6 +2,7 @@ package br.com.tercom.Entity;
 
 public class ProductValueSend {
 
+    private int id;
     private int idProvider;
     private  int idManufacture;
     private int idProductPackage;
@@ -9,6 +10,10 @@ public class ProductValueSend {
     private String name;
     private int amount;
     private float price;
+
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
 
     public int getIdProvider() {
         return idProvider;

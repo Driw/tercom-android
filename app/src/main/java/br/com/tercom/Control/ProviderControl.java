@@ -43,7 +43,8 @@ public class ProviderControl extends GenericControl {
     }
 
     public ApiResponse search(String name) {
-            CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,getLink(getBase(EnumREST.SITE, EnumREST.PROVIDER, EnumREST.SEARCH, EnumREST.NAME), name));
+        //TODO DESCOMENTAR
+        CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,getLink(getBase(EnumREST.SITE, EnumREST.PROVIDER, EnumREST.SEARCH, EnumREST.FANTASYNAME), name));
         ApiResponse<ProviderList> providerApiResponse = new ApiResponse<>(ProviderList.class);
         if(jsonResult.first){
             providerApiResponse = populateApiResponse(providerApiResponse,jsonResult.second);

@@ -1,6 +1,8 @@
 package br.com.tercom.Entity;
 
-public class ProductType extends GenericEntity {
+import br.com.tercom.Interface.IProductValueItem;
+
+public class ProductType extends GenericEntity implements IProductValueItem {
     private int id;
     private String name;
 

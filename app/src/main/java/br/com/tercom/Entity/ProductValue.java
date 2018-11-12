@@ -62,11 +62,11 @@ public class ProductValue extends GenericEntity {
         this.productPackage = _package;
     }
 
-    public ProductType getProductType() {
+    public ProductType getType() {
         return productType;
     }
 
-    public void setProductType(ProductType productType) {
+    public void setType(ProductType productType) {
         this.productType = productType;
     }
 

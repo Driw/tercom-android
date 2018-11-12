@@ -8,7 +8,7 @@ public class ProviderList extends GenericEntity {
 
     private int pageCount;
     @BindObject(type = BindObject.TYPE.LIST)
-    private ArrayList<Provider> providers;
+    private ArrayList<Provider> list;
 
     public int getPageCount() {
         return pageCount;
@@ -19,10 +19,10 @@ public class ProviderList extends GenericEntity {
     }
 
     public ArrayList<Provider> getProviders() {
-        return providers;
+        return list;
     }
 
     public void setProviders(ArrayList<Provider> providers) {
-        this.providers = providers;
+        this.list = providers;
     }
 }

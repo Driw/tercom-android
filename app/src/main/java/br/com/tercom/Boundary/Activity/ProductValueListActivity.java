@@ -30,7 +30,10 @@ public class ProductValueListActivity extends AbstractAppCompatActivity {
 
     @OnClick(R.id.fab_AddProductValue) void click()
     {
-        //prox tela
+        Intent intent = new Intent();
+        intent.putExtra("idProduct", getIntent().getExtras().getInt("idProduct"));
+        intent.setClass(ProductValueListActivity.this, ProductValueListActivity.class);
+        startActivity(intent);
     }
 
 

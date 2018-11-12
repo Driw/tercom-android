@@ -23,16 +23,17 @@ public class ProductValueControl extends GenericControl {
     }
 
 
-    public ApiResponse add(int idProduct, int idProvider, int idProductPackage, int idProductType, int amount, float price, @Nullable String name) {
+    public ApiResponse add(int idProduct, int idProvider, int idProductPackage, int idProductType, int amount, double price, @Nullable String name, int idManufacturer) {
 
         TreeMap<String,String> map = new TreeMap<>();
         map.put("idProduct", String.valueOf(idProduct));
         map.put("idProvider", String.valueOf(idProvider));
         map.put("amount", String.valueOf(amount));
         map.put("price", String.valueOf(price));
-        map.put("name", String.valueOf(idProductPackage));
+        map.put("name", String.valueOf(name));
         map.put("idProductType", String.valueOf(idProductType));
-        map.put("idProductPackage", String.valueOf(name));
+        map.put("idProductPackage", String.valueOf(idProductPackage));
+        map.put("idManufacture", String.valueOf(idManufacturer));
 
         try {
             String link = getLink(getBase(EnumREST.SITE, EnumREST.PRODUCTVALUE, EnumREST.ADD), String.valueOf(idProduct));
@@ -123,10 +124,27 @@ public class ProductValueControl extends GenericControl {
         }
     }
 
-    //TODO("Ver com o Driw: Como fazer esse search?")
-    public ApiResponse search(String value) {
+    public ApiResponse searchByName(String value) {
         try {
             String link = getLink(getBase(EnumREST.SITE, EnumREST.PRODUCTFAMILY, EnumREST.SEARCH,EnumREST.NAME), value);
+            CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,link);
+            ApiResponse<ProductValueList> providerApiResponse = new ApiResponse<>(ProductValueList.class);
+            if(jsonResult.first){
+                providerApiResponse = populateApiResponse(providerApiResponse,jsonResult.second);
+            }
+            return providerApiResponse;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return getErrorResponse();
+        }
+    }
+
+    public ApiResponse searchByProduct(String value, int idProvider) {
+        try {
+            TreeMap<String, String> map = new TreeMap<>();
+            map.put("idProvider", String.valueOf(idProvider));
+            String link = getLink(getBase(EnumREST.SITE, EnumREST.PRODUCTFAMILY, EnumREST.SEARCH,EnumREST.PRODUCT), value);
+            Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
             CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,link);
             ApiResponse<ProductValueList> providerApiResponse = new ApiResponse<>(ProductValueList.class);
             if(jsonResult.first){

@@ -15,6 +15,7 @@ public enum EnumREST {
     PROVIDERCONTACT("providerContact"),
     PRODUCTVALUE("productPrice"),
     SITE("site"),
+    PRODUCTTYPE("productType"),
 
 
 

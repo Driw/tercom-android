@@ -6,8 +6,10 @@ import android.util.Pair;
 import java.util.TreeMap;
 
 import br.com.tercom.Entity.ApiResponse;
+import br.com.tercom.Entity.PackageList;
 import br.com.tercom.Entity.ProductCategory;
 import br.com.tercom.Entity.ProductFamily;
+import br.com.tercom.Entity.ProductPackage;
 import br.com.tercom.Enum.EnumMethod;
 import br.com.tercom.Enum.EnumREST;
 import br.com.tercom.Util.CustomPair;
@@ -99,7 +101,7 @@ public class ProductPackageControl extends GenericControl {
         try {
             String link = getLink(getBase(EnumREST.SITE, EnumREST.PRODUCTPACKAGE, EnumREST.SEARCH,EnumREST.NAME), value);
             CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,link);
-            ApiResponse<ProductFamily> providerApiResponse = new ApiResponse<>(ProductFamily.class);
+            ApiResponse<PackageList> providerApiResponse = new ApiResponse<>(PackageList.class);
             if(jsonResult.first){
                 providerApiResponse = populateApiResponse(providerApiResponse,jsonResult.second);
             }
