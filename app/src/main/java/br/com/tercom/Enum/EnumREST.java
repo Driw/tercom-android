@@ -27,6 +27,7 @@ public enum EnumREST {
     ADD("add"),
     GET("get"),
     GETALL("getAll"),
+    GETCATEGORIES("getCategories"),
     GETCONTACTS("getContacts"),
     GETGROUPS("getGroups"),
     GETPRODUCTSUBGROUP("getSubGroups"),

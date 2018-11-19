@@ -1,15 +1,19 @@
 package br.com.tercom.Boundary.Activity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -22,6 +26,7 @@ import br.com.tercom.Entity.Services;
 import br.com.tercom.Entity.ServicesList;
 import br.com.tercom.Enum.EnumDialogOptions;
 import br.com.tercom.Enum.EnumREST;
+import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.R;
 import br.com.tercom.Util.DialogConfirm;
 import butterknife.BindView;
@@ -57,9 +62,18 @@ public class ServiceListActivity extends AbstractAppCompatActivity {
         }
     };
 
-    private void createList(ArrayList<Services> list) {
+    private void createList(final ArrayList<Services> list) {
         ServiceAdapter adapter = new ServiceAdapter(this,list);
         LinearLayoutManager llmanager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        adapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
+            @Override
+            public void onClickListener(View view, int position) {
+                Intent intent = new Intent();
+                intent.setClass(ServiceListActivity.this,ServiceDetailsActivity.class);
+                intent.putExtra("selectedService",new Gson().toJson(list.get(position)));
+                startActivity(intent);
+            }
+        });
         rv_services.setAdapter(adapter);
         rv_services.setLayoutManager(llmanager);
     }

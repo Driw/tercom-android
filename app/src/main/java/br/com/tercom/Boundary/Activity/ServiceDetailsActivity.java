@@ -2,11 +2,9 @@ package br.com.tercom.Boundary.Activity;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.inputmethodservice.Keyboard;
 import android.os.AsyncTask;
 import android.os.Looper;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,13 +12,13 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
-import br.com.tercom.Adapter.ManufacturerAdapter;
 import br.com.tercom.Adapter.TagAdapter;
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
 import br.com.tercom.Control.ServiceControl;
@@ -31,18 +29,20 @@ import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.R;
 import br.com.tercom.Util.CustomPair;
 import br.com.tercom.Util.DialogConfirm;
-import br.com.tercom.Util.TextUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static br.com.tercom.Util.GsonUtil.getItem;
 import static br.com.tercom.Util.Util.toast;
 
-public class ServiceAddActivity extends AbstractAppCompatActivity {
+public class ServiceDetailsActivity extends AbstractAppCompatActivity {
 
     private ArrayList<String> tags;
     private TagAdapter tagAdapter;
-    private AddServiceTask addServiceTask;
+    private UpdateServiceTask updateServiceTask;
+    private Services selectedService;
+    private boolean isEnable;
 
     @BindView(R.id.rv_tag)
     RecyclerView rvTag;
@@ -52,24 +52,32 @@ public class ServiceAddActivity extends AbstractAppCompatActivity {
     EditText editNameService;
     @BindView(R.id.editDescriptionService)
     EditText editDescriptionService;
+    @BindView(R.id.btnAddService)
+    Button btnUpdate;
+    @BindView(R.id.btnAddTag)
+    Button btnAddTag;
 
     @OnClick(R.id.btnAddTag) void addTag(){
-            hideKeyboard();
-            if(!editTag.getText().toString().trim().isEmpty()){
-                tags.add(editTag.getText().toString());
-                tagAdapter.notifyDataSetChanged();
-                editTag.setText("", TextView.BufferType.EDITABLE);
-                toast(ServiceAddActivity.this,String.format(Locale.US,"%s adicionado com sucesso.",editTag.getText().toString()));
-            }else{
-                toast(ServiceAddActivity.this,"Digite algum valor antes de inserir uma tag.");
-            }
+        hideKeyboard();
+        if(!editTag.getText().toString().trim().isEmpty()){
+            tags.add(editTag.getText().toString());
+            tagAdapter.notifyDataSetChanged();
+            editTag.setText("", TextView.BufferType.EDITABLE);
+            toast(ServiceDetailsActivity.this,String.format(Locale.US,"%s adicionado com sucesso.",editTag.getText().toString()));
+        }else{
+            toast(ServiceDetailsActivity.this,"Digite algum valor antes de inserir uma tag.");
+        }
     }
 
-    @OnClick(R.id.btnAddService) void addServices(){
-        if(verifyEmptyFields().first){
-            initAddTask(editNameService.getText().toString(),editDescriptionService.getText().toString(),tags);
+    @OnClick(R.id.btnAddService) void updateService(){
+        if(isEnable) {
+            if (verifyEmptyFields().first) {
+                initUpdateTask(editNameService.getText().toString(), editDescriptionService.getText().toString(), tags);
+            } else {
+                toast(ServiceDetailsActivity.this, verifyEmptyFields().second);
+            }
         }else{
-            toast(ServiceAddActivity.this,verifyEmptyFields().second);
+            setEnable(true);
         }
     }
 
@@ -82,7 +90,9 @@ public class ServiceAddActivity extends AbstractAppCompatActivity {
 
         return verified;
 
+
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,9 +101,41 @@ public class ServiceAddActivity extends AbstractAppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         ButterKnife.bind(this);
         createToolbar();
-        tags = new ArrayList<>();
+        configureActivity();
         initList();
     }
+
+    private void configureActivity() {
+        try {
+            selectedService = getItem(getIntent().getExtras().getString("selectedService"), Services.class);
+        }catch (Exception e){
+            e.printStackTrace();
+            toast(this, "Não foi possível ver os detalhes deste serviço.");
+            finish();
+        }
+        btnUpdate.setText("Atualizar Serviço");
+        tags = new ArrayList<>();
+        setEnable(false);
+        populate();
+
+    }
+
+    private void populate(){
+        editNameService.setText(selectedService.getName());
+        editDescriptionService.setText(selectedService.getDescription());
+
+    }
+
+    private void setEnable(boolean enable){
+        isEnable = enable;
+        editNameService.setEnabled(enable);
+        editDescriptionService.setEnabled(enable);
+        rvTag.setClickable(enable);
+        editTag.setVisibility(enable? View.VISIBLE : View.GONE);
+        btnAddTag.setVisibility(enable? View.VISIBLE : View.GONE);
+
+    }
+
 
     private void hideKeyboard(){
         View view = this.getCurrentFocus();
@@ -104,12 +146,13 @@ public class ServiceAddActivity extends AbstractAppCompatActivity {
     }
 
     private void initList() {
+        tags.addAll(selectedService.getTags().getList());
         tagAdapter = new TagAdapter(this,tags);
         LinearLayoutManager llmanager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         tagAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
             @Override
             public void onClickListener(View view, final int position) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(ServiceAddActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ServiceDetailsActivity.this);
                 builder.setTitle("Excluir tag");
                 builder.setMessage(String.format(Locale.US,"Deseja realmente exluir a tag '%s'?", tags.get(position)));
                 builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
@@ -132,38 +175,40 @@ public class ServiceAddActivity extends AbstractAppCompatActivity {
         rvTag.setAdapter(tagAdapter);
     }
 
-    private void initAddTask(String name, String description, ArrayList<String> tags){
-        if(addServiceTask == null || addServiceTask.getStatus() == AsyncTask.Status.RUNNING){
-            addServiceTask = new AddServiceTask(tags,name,description);
-            addServiceTask.execute();
+    private void initUpdateTask(String name, String description, ArrayList<String> tags){
+        if(updateServiceTask == null || updateServiceTask.getStatus() == AsyncTask.Status.RUNNING){
+            updateServiceTask = new UpdateServiceTask(tags,name,description, selectedService.getId());
+            updateServiceTask.execute();
         }
     }
 
-    private class AddServiceTask extends AsyncTask<Void,Void,Void>{
+    private class UpdateServiceTask extends AsyncTask<Void,Void,Void>{
 
         private ArrayList<String> tag;
         private String name;
         private String description;
         private ApiResponse<Services> apiResponse;
+        private int idService;
 
-        public AddServiceTask(ArrayList<String> tag, String name, String description) {
+        public UpdateServiceTask(ArrayList<String> tag, String name, String description, int idService) {
             this.tag = tag;
             this.name = name;
             this.description = description;
+            this.idService = idService;
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
             if(Looper.myLooper() == null)
                 Looper.prepare();
-            ServiceControl serviceControl = new ServiceControl(ServiceAddActivity.this);
-            apiResponse = serviceControl.add(name,description,tags);
+            ServiceControl serviceControl = new ServiceControl(ServiceDetailsActivity.this);
+            apiResponse = serviceControl.update(idService,name,description,tags);
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            final DialogConfirm dialogConfirm = new DialogConfirm(ServiceAddActivity.this);
+            final DialogConfirm dialogConfirm = new DialogConfirm(ServiceDetailsActivity.this);
             if(apiResponse.getStatusBoolean()){
                 dialogConfirm.init(EnumDialogOptions.CONFIRM,apiResponse.getMessage());
                 dialogConfirm.onClickChanges(new View.OnClickListener() {

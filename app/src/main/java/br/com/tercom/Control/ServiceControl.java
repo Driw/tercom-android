@@ -58,7 +58,7 @@ public class ServiceControl extends GenericControl {
     }
 
 
-    public ApiResponse update(int idService, String name, String description, ArrayList<String> tags, boolean inactive) {
+    public ApiResponse update(int idService, String name, String description, ArrayList<String> tags) {
 
 
         TreeMap<String,String> map = new TreeMap<>();

@@ -66,8 +66,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Boundary.Activity.ProductValueListActivity"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity android:name=".Boundary.Activity.ProductValueDetails" />
+        <activity android:name=".Boundary.Activity.ServiceDetailsActivity"></activity>
     </application>
 
 </manifest>
