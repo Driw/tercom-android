@@ -1,5 +1,10 @@
 package br.com.tercom.Entity;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+
+import com.google.gson.JsonArray;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,6 +24,7 @@ public abstract class GenericEntity
 {
 
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public <T extends GenericEntity> T toObject(String json, Class<T> selectedClass) {
         try {
             JSONObject jObj = new JSONObject(json);
@@ -32,18 +38,29 @@ public abstract class GenericEntity
                 Field field =  selectedClass.getDeclaredField("list");
                 field.setAccessible(true);
                 ParameterizedType listType = (ParameterizedType) field.getGenericType();
-                Class<? extends GenericEntity> classe = (Class<? extends GenericEntity>) listType.getActualTypeArguments()[0];
-                field.set(this, toList(jObj.toString(),classe));
-                return selectedClass.cast(this);
+                Class<?> classe = (Class<?>) listType.getActualTypeArguments()[0];
+                if(classe.equals(String.class)){
+                    JSONArray jsonArray = new JSONArray(jObj.get("elements").toString());
+                    ArrayList<String> strings =  new ArrayList<>();
+                    for(int i = 0; i < jsonArray.length(); i++ ){
+                        strings.add(jsonArray.getString(i));
+                    }
+                    field.set(this,strings);
+
+                }else {
+                    ParameterizedType listTypeObject = (ParameterizedType) field.getGenericType();
+                    Class<? extends GenericEntity> classInto = (Class<? extends GenericEntity>) listTypeObject.getActualTypeArguments()[0];
+                    field.set(this, toList(jObj.toString(), classInto));
+                    return selectedClass.cast(this);
+                }
             }
 
             Iterator<String> keys = jObj.keys();
             Field field;
             while(keys.hasNext()) {
-
                 String key = keys.next();
-                if (!key.equalsIgnoreCase("package")) {
-                field = selectedClass.getDeclaredField(key);
+                if (!key.equalsIgnoreCase("elements") && !key.equalsIgnoreCase("list")) {
+                    field = selectedClass.getDeclaredField(key);
                     field.setAccessible(true);
                     if (field.isAnnotationPresent(BindObject.class)) {
                         BindObject bo = field.getAnnotation(BindObject.class);
@@ -80,21 +97,32 @@ public abstract class GenericEntity
         }
     }
 
-    public <T extends GenericEntity> ArrayList<?> toList(String json,Class<T> selectedClass) {
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public <T extends GenericEntity> ArrayList<?> toList(String json, Class<T> selectedClass) {
         try {
 
             JSONObject jObj = new JSONObject(json);
             if(jObj.has("attributes"))
                 jObj = jObj.getJSONObject("attributes");
             JSONArray jsonArray = jObj.getJSONArray("elements");
-            ArrayList<T> values = new ArrayList<>();
+            String a = "";
+            if( !selectedClass.getTypeParameters().equals(String.class)) {
 
-            for(int i = 0; i < jsonArray.length();i++)
-            {
-                values.add(selectedClass.newInstance().toObject(jsonArray.getJSONObject(i).toString(),selectedClass));
+                ArrayList<T> values = new ArrayList<>();
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    values.add(selectedClass.newInstance().toObject(jsonArray.getJSONObject(i).toString(), selectedClass));
+                }
+                return values;
+            }else{
+
+                ArrayList<String> values = new ArrayList<>();
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    values.add(jsonArray.getJSONObject(i).toString());
+                }
+                return values;
             }
 
-            return values;
+
 
         } catch (Exception e) {
             e.printStackTrace();

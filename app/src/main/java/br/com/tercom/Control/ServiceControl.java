@@ -3,6 +3,7 @@ package br.com.tercom.Control;
 import android.app.Activity;
 import android.util.Pair;
 
+import java.util.ArrayList;
 import java.util.TreeMap;
 
 import br.com.tercom.Entity.ApiResponse;
@@ -23,7 +24,7 @@ public class ServiceControl extends GenericControl {
         this.activity = activity;
     }
 
-    public ApiResponse add(String name, String description, String[] tags, boolean inactive) {
+    public ApiResponse add(String name, String description, ArrayList<String> tags) {
 
         TreeMap<String,String> map = new TreeMap<>();
         map.put("name", name);
@@ -46,18 +47,18 @@ public class ServiceControl extends GenericControl {
         }
     }
 
-    private String createTags(String[] values){
+    private String createTags(ArrayList<String> values){
         StringBuilder stringBuilder = new StringBuilder();
-        for(int i = 0; i < values.length; i++ ){
-            stringBuilder.append(values[i]);
-            if(i != (values.length-1))
+        for(int i = 0; i < values.size(); i++ ){
+            stringBuilder.append(values.get(i));
+            if(i != (values.size()-1))
                 stringBuilder.append(";");
         }
         return stringBuilder.toString();
     }
 
 
-    public ApiResponse update(int idService, String name, String description, String[] tags, boolean inactive) {
+    public ApiResponse update(int idService, String name, String description, ArrayList<String> tags, boolean inactive) {
 
 
         TreeMap<String,String> map = new TreeMap<>();

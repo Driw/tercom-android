@@ -22,4 +22,6 @@ public class ServiceListActivity extends AbstractAppCompatActivity {
         ButterKnife.bind(this);
         createToolbarWithNavigation(3);
     }
+
+
 }

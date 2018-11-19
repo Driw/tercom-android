@@ -1,17 +1,13 @@
 package br.com.tercom.Entity;
 
+import java.util.ArrayList;
+
+import br.com.tercom.Annotation.BindObject;
+
 public class Tags extends GenericEntity{
 
-    private String[] elements;
+    private ArrayList<String> list;
     private String generic;
-
-    public String[] getElements() {
-        return elements;
-    }
-
-    public void setElements(String[] elements) {
-        this.elements = elements;
-    }
 
     public String getGeneric() {
         return generic;

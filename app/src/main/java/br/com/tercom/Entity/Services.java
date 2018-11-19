@@ -10,8 +10,8 @@ public class Services extends GenericEntity{
     private int id;
     private String name;
     private String description;
-    @BindObject(type = BindObject.TYPE.LIST)
-    private ArrayList<Tags> tags;
+    @BindObject()
+    private Tags tags;
     private boolean inactive;
 
 
@@ -39,11 +39,11 @@ public class Services extends GenericEntity{
         this.description = description;
     }
 
-    public ArrayList<Tags> getTags() {
+    public Tags getTags() {
         return tags;
     }
 
-    public void setTags(ArrayList<Tags> tags) {
+    public void setTags(Tags tags) {
         this.tags = tags;
     }
 
