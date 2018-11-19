@@ -75,5 +75,13 @@ public class Product extends GenericEntity {
     public void setPrices(ArrayList<Price> prices) {
         this.prices = prices;
     }
+
+    public ProductUnit getUnit() {
+        return unit;
+    }
+
+    public void setUnit(ProductUnit unit) {
+        this.unit = unit;
+    }
 }
 

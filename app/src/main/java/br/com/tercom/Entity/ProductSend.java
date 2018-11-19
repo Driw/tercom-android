@@ -81,7 +81,7 @@ public class ProductSend extends GenericEntity {
         Integer[] arrayValues={idProductUnit,idProductFamily,idProductGroup,idProductSubGroup,idProductSector};
         TreeMap<String,String> treeMap = new TreeMap<>();
         for(int i = 0; i<arrayValues.length;i++){
-            if(arrayValues[i] != null)
+            if(arrayValues[i] != null && arrayValues[i] != 0)
                 treeMap.put(arrayNames[i],String.valueOf(arrayValues[i]));
         }
         return treeMap;

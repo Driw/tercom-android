@@ -16,8 +16,6 @@ import br.com.tercom.Enum.EnumFont;
 public class CustomTypeFace {
 
 
-
-
         public static final Typeface setFontSingleTxt( Context assets,EnumFont font)
         {
             return Typeface.createFromAsset(assets.getAssets(), font.path);

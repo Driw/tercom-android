@@ -3,6 +3,7 @@ package br.com.tercom.Enum;
 public enum EnumREST {
 
     //SERVICE
+    AVALIABLE("avaliable"),
     MANUFACTURE("manufacture"),
     PRODUCT("product"),
     PRODUCTFAMILY("productFamily"),
@@ -14,6 +15,7 @@ public enum EnumREST {
     PROVIDER("provider"),
     PROVIDERCONTACT("providerContact"),
     PRODUCTVALUE("productPrice"),
+    SERVICE("service"),
     SITE("site"),
     PRODUCTTYPE("productType"),
 

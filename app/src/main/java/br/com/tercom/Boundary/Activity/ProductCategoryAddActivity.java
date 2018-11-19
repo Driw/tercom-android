@@ -30,7 +30,6 @@ import br.com.tercom.Control.ProductSubGroupControl;
 import br.com.tercom.Control.ProductUnitControl;
 import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.Product;
-import br.com.tercom.Entity.ProductCategory;
 import br.com.tercom.Entity.ProductFamily;
 import br.com.tercom.Entity.ProductFamilyList;
 import br.com.tercom.Entity.ProductGroup;
@@ -484,7 +483,7 @@ public class ProductCategoryAddActivity extends AbstractAppCompatActivity {
             if(Looper.myLooper() == null)
                 Looper.prepare();
             ProductSubGroupControl productSubGroupControl = new ProductSubGroupControl(ProductCategoryAddActivity.this);
-            apiResponse = productSubGroupControl.getSubSubGroups(id);
+            apiResponse = productSubGroupControl.getSectors(id);
             return null;
         }
 

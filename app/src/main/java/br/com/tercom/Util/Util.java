@@ -62,7 +62,9 @@ public class Util {
         Log.d(tag,msg);
     }
 
-
+    public static void logEnter(int value){
+        Log.i("ENTROU",String.valueOf(value));
+    }
 
     public static void OpenDialDialog(String[] dialArray, final Activity activity){
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(activity);
@@ -106,6 +108,8 @@ public class Util {
             return stringBuilder.toString();
         }
     }
+
+
 
 
 

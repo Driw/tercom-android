@@ -46,10 +46,13 @@ public class ProductControl extends GenericControl {
     }
 
 
-    public ApiResponse update(int idProduct,String name,String description, String utility,TreeMap<String, String> mapId) {
+    public ApiResponse update(int idProduct,String name,String description, String utility,TreeMap<String, String> mapValues) {
 
         TreeMap<String,String> map = new TreeMap<>();
         map.put("name", name);
+        map.put("description",description);
+        map.put("utility",utility);
+        map.putAll(mapValues);
 
         try {
             String link = getLink(getBase(EnumREST.SITE, EnumREST.PRODUCT, EnumREST.SET), String.valueOf(idProduct));
