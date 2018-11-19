@@ -60,6 +60,8 @@ public class ServiceAddActivity extends AbstractAppCompatActivity {
                 tagAdapter.notifyDataSetChanged();
                 editTag.setText("", TextView.BufferType.EDITABLE);
                 toast(ServiceAddActivity.this,String.format(Locale.US,"%s adicionado com sucesso.",editTag.getText().toString()));
+            }else{
+                toast(ServiceAddActivity.this,"Digite algum valor antes de inserir uma tag.");
             }
     }
 

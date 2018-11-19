@@ -113,7 +113,7 @@ public class ServiceControl extends GenericControl {
 
     public ApiResponse search(String value, EnumREST filter) {
         try {
-            String link = getLink(getBase(EnumREST.SITE, EnumREST.SERVICE,EnumREST.AVALIABLE, EnumREST.SEARCH,filter), value);
+            String link = getLink(getBase(EnumREST.SITE, EnumREST.SERVICE,EnumREST.SEARCH,filter), value);
             CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,link);
             ApiResponse<ServicesList> providerApiResponse = new ApiResponse<>(ServicesList.class);
             if(jsonResult.first){
