@@ -23,10 +23,11 @@ public class ProductValueControl extends GenericControl {
     }
 
 
-    public ApiResponse add(int idProduct, int idProvider, int idProductPackage, int idProductType, int amount, double price, @Nullable String name, int idManufacturer) {
+    public ApiResponse add(int idProduct, int idProductPrice, int idProvider, int idProductPackage, int idProductType, int amount, double price, @Nullable String name, int idManufacturer) {
 
         TreeMap<String,String> map = new TreeMap<>();
         map.put("idProduct", String.valueOf(idProduct));
+        map.put("idProductPrice", String.valueOf(idProductPrice));
         map.put("idProvider", String.valueOf(idProvider));
         map.put("amount", String.valueOf(amount));
         map.put("price", String.valueOf(price));
@@ -52,7 +53,7 @@ public class ProductValueControl extends GenericControl {
 
 
     public ApiResponse update(int idProductPrice, @Nullable Integer idProvider, @Nullable Integer idManufacture, @Nullable Integer idProductPackage, @Nullable Integer idProductType,
-                              @Nullable String name, @Nullable Integer amount, @Nullable Float price) {
+                              @Nullable String name, @Nullable Integer amount, @Nullable Double price) {
 
         TreeMap<String,String> map = new TreeMap<>();
         if(idProvider != null) map.put("idProvider", String.valueOf(idProvider));

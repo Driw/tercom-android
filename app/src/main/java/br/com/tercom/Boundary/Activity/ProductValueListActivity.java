@@ -14,6 +14,8 @@ import br.com.tercom.Adapter.ProductValueAdapter;
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
 import br.com.tercom.Control.ProductValueControl;
 import br.com.tercom.Entity.ApiResponse;
+import br.com.tercom.Entity.Product;
+import br.com.tercom.Entity.ProductValue;
 import br.com.tercom.Entity.ProductValueList;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.R;
@@ -31,8 +33,11 @@ public class ProductValueListActivity extends AbstractAppCompatActivity {
     @OnClick(R.id.fab_AddProductValue) void click()
     {
         Intent intent = new Intent();
-        intent.putExtra("idProduct", getIntent().getExtras().getInt("idProduct"));
-        intent.setClass(ProductValueListActivity.this, ProductValueListActivity.class);
+        ProductValue productValue = new ProductValue();
+        productValue.getProduct().setId(getIntent().getExtras().getInt("idProduct"));
+        intent.putExtra("productValue", new Gson().toJson(productValue));
+        //intent.putExtra("idProduct", getIntent().getExtras().getInt("idProduct"));
+        intent.setClass(ProductValueListActivity.this, ProductValueDetails.class);
         startActivity(intent);
     }
 
@@ -54,6 +59,11 @@ public class ProductValueListActivity extends AbstractAppCompatActivity {
         }
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        initTask(getIntent().getExtras().getInt("idProduct"));
+    }
 
     private void createList(final ProductValueList productValue){
 

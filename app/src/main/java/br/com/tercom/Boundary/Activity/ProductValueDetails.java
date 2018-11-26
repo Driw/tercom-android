@@ -61,23 +61,20 @@ public class ProductValueDetails extends AbstractAppCompatActivity {
      * Devem ser feitos isso para cada um dos tipos e depois um para o atualizar nessa classe e adicionar na outra.
      */
 
-    public ProductValueDetails()
-    {
-        control = new ProductValueControl(ProductValueDetails.this);
-    }
-
     private static final int REFERENCE_PROVIDER = 1;
     private static final int REFERENCE_MANUFACTURER = 2;
     private static final int REFERENCE_PACKAGE = 3;
     private static final int REFERENCE_TYPE = 4;
 
-    private ProductValueControl control;
     private ProviderTask providerTask;
     private ManufactureTask manufactureTask;
     private PackageTask packageTask;
     private TypeTask typeTask;
     private ProductValueSend productValue;
 
+    private ProductValue jsonProductValue;
+
+    private boolean update = false;
 
     @BindView(R.id.txtName)
     EditText txtName;
@@ -115,8 +112,8 @@ public class ProductValueDetails extends AbstractAppCompatActivity {
             productValue.setAmount(Integer.parseInt(txtAmount.getText().toString()));
             productValue.setPrice(Float.parseFloat(txtValue.getText().toString()));
             productValue.setName(txtName.getText().toString());
-            control.add(productValue.getId(), productValue.getIdProvider(), productValue.getIdProductPackage(), productValue.getIdProductType(), productValue.getAmount(),
-                    productValue.getPrice(), productValue.getName(), productValue.getIdManufacture());
+            TaskSave task = new TaskSave();
+            task.execute();
         }
         else
         {
@@ -130,9 +127,39 @@ public class ProductValueDetails extends AbstractAppCompatActivity {
         setContentView(R.layout.activity_product_value_generic);
         ButterKnife.bind(this);
         productValue = new ProductValueSend();
-        //TODO Continuar parse do JSON para o productValue.
-        ProductValue jsonProductValue = GsonUtil.getItem(getIntent().getExtras().get("productValue").toString(), ProductValue.class);
+        //TODO: Ao clicar no fab de Adiconar, passar um novo ProductPrice no intent, contendo apenas o ID do ProductPrice
+        jsonProductValue = GsonUtil.getItem(getIntent().getExtras().get("productValue").toString(), ProductValue.class);
+        //TODO: Converter de ProductValue para ProductValueSend.
+        if(jsonProductValue.getId() != 0)
+        {
+            update = true;
+            fillProductValueSend(jsonProductValue);
+            fillViewFields();
+        }
         productValue.setId(jsonProductValue.getId());
+        productValue.setIdProduct(jsonProductValue.getProduct().getId());
+    }
+
+    private void fillProductValueSend(ProductValue jsonProductValue)
+    {
+        productValue.setAmount(jsonProductValue.getAmount());
+        productValue.setIdManufacture(jsonProductValue.getManufacture().getId());
+        productValue.setIdProductPackage(jsonProductValue.getPackage().getId());
+        productValue.setIdProductType(jsonProductValue.getType().getId());
+        productValue.setIdProvider(jsonProductValue.getProvider().getId());
+        productValue.setName(jsonProductValue.getName());
+        productValue.setPrice(jsonProductValue.getPrice());
+    }
+
+    private void fillViewFields()
+    {
+        txtAmount.setText(String.valueOf(productValue.getAmount()));
+        txtName.setText(productValue.getName());
+        txtValue.setText(String.valueOf(productValue.getPrice()));
+        txtManufacturer.setText("Fabricante: " + jsonProductValue.getManufacture().getName());
+        txtPackage.setText("Embalagem: " + jsonProductValue.getPackage().getName());
+        txtProvider.setText("Fornecedor: " + jsonProductValue.getProvider().getName());
+        txtType.setText("Tipo: " + jsonProductValue.getType().getName());
     }
 
 
@@ -326,6 +353,7 @@ public class ProductValueDetails extends AbstractAppCompatActivity {
                 toast(ProductValueDetails.this,"Nenhum item encontrado.");
             }
         }
+
     }
 
     private class PackageTask extends AsyncTask<Void, Void, Void>
@@ -408,5 +436,32 @@ public class ProductValueDetails extends AbstractAppCompatActivity {
         if(!emptyValidator(txtValue.getText().toString()))
             return new CustomPair<>(false, "Preço inválido");
         return new CustomPair<>(true,"Ok");
+    }
+
+    private class TaskSave extends AsyncTask<Void, Void, Void>
+    {
+        public TaskSave()
+        {
+            control = new ProductValueControl(ProductValueDetails.this);
+        }
+
+        private ProductValueControl control;
+        @Override
+        protected Void doInBackground(Void... voids) {
+            if(update)
+                control.update(productValue.getId(), productValue.getIdProvider(), productValue.getIdManufacture(), productValue.getIdProductPackage(), productValue.getIdProductType(),
+                        productValue.getName(), productValue.getAmount(), productValue.getPrice());
+            else
+                control.add(productValue.getIdProduct(), productValue.getId(), productValue.getIdProvider(), productValue.getIdProductPackage(), productValue.getIdProductType(), productValue.getAmount(),
+                    productValue.getPrice(), productValue.getName(), productValue.getIdManufacture());
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid)
+        {
+            super.onPostExecute(aVoid);
+            finish();
+        }
     }
 }

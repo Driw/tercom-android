@@ -3,21 +3,27 @@ package br.com.tercom.Entity;
 public class ProductValueSend {
 
     private int id;
+    private int idProduct;
     private int idProvider;
     private  int idManufacture;
     private int idProductPackage;
     private int idProductType;
     private String name;
     private int amount;
-    private float price;
+    private double price;
 
     public int getId() { return id; }
 
     public void setId(int id) { this.id = id; }
 
+    public int getIdProduct() { return idProduct; }
+
+    public void setIdProduct(int idProduct) { this.idProduct = idProduct; }
+
     public int getIdProvider() {
         return idProvider;
     }
+
 
     public void setIdProvider(int idProvider) {
         this.idProvider = idProvider;
@@ -63,11 +69,11 @@ public class ProductValueSend {
         this.amount = amount;
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 }

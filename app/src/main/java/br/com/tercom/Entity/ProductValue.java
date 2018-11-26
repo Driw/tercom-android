@@ -31,6 +31,8 @@ public class ProductValue extends GenericEntity {
     }
 
     public Product getProduct() {
+        if(product == null)
+            product = new Product();
         return product;
     }
 
