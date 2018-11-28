@@ -47,6 +47,7 @@ import br.com.tercom.R;
 import br.com.tercom.Util.CustomPair;
 import br.com.tercom.Util.DialogConfirm;
 import br.com.tercom.Util.GsonUtil;
+import br.com.tercom.Util.PriceMask;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -126,6 +127,8 @@ public class ProductValueDetails extends AbstractAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_value_generic);
         ButterKnife.bind(this);
+        PriceMask mask = new PriceMask(txtValue);
+        txtValue.addTextChangedListener(mask);
         productValue = new ProductValueSend();
         //TODO: Ao clicar no fab de Adiconar, passar um novo ProductPrice no intent, contendo apenas o ID do ProductPrice
         jsonProductValue = GsonUtil.getItem(getIntent().getExtras().get("productValue").toString(), ProductValue.class);
@@ -448,6 +451,8 @@ public class ProductValueDetails extends AbstractAppCompatActivity {
         private ProductValueControl control;
         @Override
         protected Void doInBackground(Void... voids) {
+            if(Looper.myLooper() == null)
+                Looper.prepare();
             if(update)
                 control.update(productValue.getId(), productValue.getIdProvider(), productValue.getIdManufacture(), productValue.getIdProductPackage(), productValue.getIdProductType(),
                         productValue.getName(), productValue.getAmount(), productValue.getPrice());
