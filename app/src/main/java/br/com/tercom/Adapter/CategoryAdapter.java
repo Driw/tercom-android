@@ -56,7 +56,7 @@ public class CategoryAdapter extends  RecyclerView.Adapter<CategoryAdapter.ViewH
         public ConstraintLayout ct_category;
 
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(final View itemView) {
             super(itemView);
             txtCategory = itemView.findViewById(R.id.txtCategory);
             ct_category = itemView.findViewById(R.id.ct_category);
