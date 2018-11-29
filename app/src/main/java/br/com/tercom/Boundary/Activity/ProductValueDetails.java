@@ -1,13 +1,11 @@
 package br.com.tercom.Boundary.Activity;
 
 import android.app.Dialog;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -15,7 +13,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethod;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -31,14 +28,11 @@ import br.com.tercom.Control.ProductTypeControl;
 import br.com.tercom.Control.ProductValueControl;
 import br.com.tercom.Control.ProviderControl;
 import br.com.tercom.Entity.ApiResponse;
-import br.com.tercom.Entity.Manufacture;
 import br.com.tercom.Entity.ManufactureList;
 import br.com.tercom.Entity.PackageList;
-import br.com.tercom.Entity.ProductType;
 import br.com.tercom.Entity.ProductTypeList;
 import br.com.tercom.Entity.ProductValue;
 import br.com.tercom.Entity.ProductValueSend;
-import br.com.tercom.Entity.Provider;
 import br.com.tercom.Entity.ProviderList;
 import br.com.tercom.Enum.EnumDialogOptions;
 import br.com.tercom.Interface.IProductValueItem;
@@ -52,13 +46,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static br.com.tercom.Util.PriceMask.unmaskPrice;
 import static br.com.tercom.Util.TextUtil.emptyValidator;
 import static br.com.tercom.Util.Util.toast;
 
 public class ProductValueDetails extends AbstractAppCompatActivity {
     /**
      * Todas as classes de referencia devem implementar a interface IProductvalueItem para ser usada no adapter.
-     * Tem os exemplos de cada coisa que deve ser feita: clique, dialog (genérico para qualquer tipo, só passar a referencia), método de search, task e inicialização da task.
+     * Tem os exemplos de cada coisa que deve ser feita: clique, dialog (genérico para qualquer tipo, só passar a referencia), método de search, taskSave e inicialização da taskSave.
      * Devem ser feitos isso para cada um dos tipos e depois um para o atualizar nessa classe e adicionar na outra.
      */
 
@@ -74,6 +69,8 @@ public class ProductValueDetails extends AbstractAppCompatActivity {
     private ProductValueSend productValue;
 
     private ProductValue jsonProductValue;
+    private DeleteTask deleteTask;
+    private TaskSave taskSave;
 
     private boolean update = false;
 
@@ -111,14 +108,24 @@ public class ProductValueDetails extends AbstractAppCompatActivity {
         if(result.first)
         {
             productValue.setAmount(Integer.parseInt(txtAmount.getText().toString()));
-            productValue.setPrice(Float.parseFloat(txtValue.getText().toString()));
+            productValue.setPrice(unmaskPrice(txtValue.getText().toString()));
             productValue.setName(txtName.getText().toString());
-            TaskSave task = new TaskSave();
-            task.execute();
+            if(taskSave == null || taskSave.getStatus() != AsyncTask.Status.RUNNING) {
+                taskSave = new TaskSave(productValue);
+                taskSave.execute();
+            }
         }
         else
         {
             toast(ProductValueDetails.this,result.second);
+        }
+    }
+
+
+    @OnClick(R.id.btn_delete) void delete(){
+        if(deleteTask == null || deleteTask.getStatus() != AsyncTask.Status.RUNNING){
+            deleteTask = new DeleteTask(jsonProductValue.getId());
+            deleteTask.execute();
         }
     }
 
@@ -138,6 +145,9 @@ public class ProductValueDetails extends AbstractAppCompatActivity {
             update = true;
             fillProductValueSend(jsonProductValue);
             fillViewFields();
+        }else{
+            btn_function.setBackgroundColor(getResources().getColor(R.color.colorGreenLogin));
+            btn_function.setText("Adicionar");
         }
         productValue.setId(jsonProductValue.getId());
         productValue.setIdProduct(jsonProductValue.getProduct().getId());
@@ -190,6 +200,8 @@ public class ProductValueDetails extends AbstractAppCompatActivity {
         dialog.show();
 
     }
+
+
 
     /**
      * para cada uma das tasks deve ter um desse para inicializa-la
@@ -253,11 +265,11 @@ public class ProductValueDetails extends AbstractAppCompatActivity {
 
 
     /**
-     * Baseado na referencia, ele direciona para a task necessária;
+     * Baseado na referencia, ele direciona para a taskSave necessária;
      * @param reference tipo da chamada, passará uma das constantes dessa classe.
      */
     private void search(int reference, String value, Dialog dialog) {
-                // TODO(aqui devem ir as chamadas de async task reference a cada uma das chamadas feitas no dialog, assim ela retornará a lista que irá no adapter.)
+        // TODO(aqui devem ir as chamadas de async taskSave reference a cada uma das chamadas feitas no dialog, assim ela retornará a lista que irá no adapter.)
         switch (reference){
             case REFERENCE_PROVIDER:
                 initProviderTask(value, dialog);
@@ -443,8 +455,13 @@ public class ProductValueDetails extends AbstractAppCompatActivity {
 
     private class TaskSave extends AsyncTask<Void, Void, Void>
     {
-        public TaskSave()
+
+        private ApiResponse<ProductValue> apiResponse;
+        private ProductValueSend productValue;
+
+        public TaskSave(ProductValueSend productValue)
         {
+            this.productValue = productValue;
             control = new ProductValueControl(ProductValueDetails.this);
         }
 
@@ -454,19 +471,69 @@ public class ProductValueDetails extends AbstractAppCompatActivity {
             if(Looper.myLooper() == null)
                 Looper.prepare();
             if(update)
-                control.update(productValue.getId(), productValue.getIdProvider(), productValue.getIdManufacture(), productValue.getIdProductPackage(), productValue.getIdProductType(),
+                apiResponse = control.update(productValue.getId(), productValue.getIdProvider(), productValue.getIdManufacture(), productValue.getIdProductPackage(), productValue.getIdProductType(),
                         productValue.getName(), productValue.getAmount(), productValue.getPrice());
             else
-                control.add(productValue.getIdProduct(), productValue.getId(), productValue.getIdProvider(), productValue.getIdProductPackage(), productValue.getIdProductType(), productValue.getAmount(),
-                    productValue.getPrice(), productValue.getName(), productValue.getIdManufacture());
+                apiResponse = control.add(productValue.getIdProduct(), productValue.getId(), productValue.getIdProvider(), productValue.getIdProductPackage(), productValue.getIdProductType(), productValue.getAmount(),
+                        productValue.getPrice(), productValue.getName(), productValue.getIdManufacture());
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid)
         {
-            super.onPostExecute(aVoid);
-            finish();
+            DialogConfirm dialogConfirm = new DialogConfirm(ProductValueDetails.this);
+            if(apiResponse.getStatusBoolean()){
+                dialogConfirm.init(EnumDialogOptions.CONFIRM,apiResponse.getMessage());
+                dialogConfirm.onClickChanges(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        finish();
+                    }
+                });
+            }else{
+                dialogConfirm.init(EnumDialogOptions.FAIL,apiResponse.getMessage());
+            }
         }
     }
+
+
+    private class DeleteTask extends AsyncTask<Void,Void,Void> {
+
+        private ApiResponse<ProductValue> apiResponse;
+        private int id;
+
+        public DeleteTask(int id) {
+            this.id = id;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            if(Looper.myLooper() == null)
+                Looper.prepare();
+            ProductValueControl productValueControl = new ProductValueControl(ProductValueDetails.this);
+            apiResponse = productValueControl.remove(id);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            DialogConfirm dialogConfirm = new DialogConfirm(ProductValueDetails.this);
+            if(apiResponse.getStatusBoolean()){
+                dialogConfirm.init(EnumDialogOptions.CONFIRM,apiResponse.getMessage());
+                dialogConfirm.onClickChanges(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        finish();
+                    }
+                });
+            }
+            else{
+                dialogConfirm.init(EnumDialogOptions.FAIL,apiResponse.getMessage());
+            }
+        }
+    }
+
+
+
 }
