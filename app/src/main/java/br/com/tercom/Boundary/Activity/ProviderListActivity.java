@@ -16,6 +16,7 @@ import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
 import br.com.tercom.Control.ProviderControl;
 import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.ProviderList;
+import br.com.tercom.Entity.Providers;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.R;
 import butterknife.BindView;
@@ -51,15 +52,15 @@ public class ProviderListActivity extends AbstractAppCompatActivity {
     }
 
 
-    private void createListProviders(final ProviderList result) {
-        ProviderAdapter providerAdapter = new ProviderAdapter(this,result.getProviders());
+    private void createListProviders(final Providers result) {
+        ProviderAdapter providerAdapter = new ProviderAdapter(this,result.getProviders().getList());
         LinearLayoutManager llmanager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         providerAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
             @Override
             public void onClickListener(View view, int position) {
                 Intent intent = new Intent();
                 intent.setClass(ProviderListActivity.this, ProviderDetails.class);
-                intent.putExtra("details", new Gson().toJson(result.getProviders().get(position)));
+                intent.putExtra("details", new Gson().toJson(result.getProviders().getList().get(position)));
                 startActivity(intent);
 
             }
@@ -71,7 +72,7 @@ public class ProviderListActivity extends AbstractAppCompatActivity {
     private class ProviderTask extends AsyncTask<Void, Void, Void>
     {
 
-        private ApiResponse<ProviderList> apiResponse;
+        private ApiResponse<Providers> apiResponse;
         private int page;
 
         public ProviderTask(int page){

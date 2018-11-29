@@ -134,6 +134,7 @@ public class ProductValueDetails extends AbstractAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_value_generic);
         ButterKnife.bind(this);
+        createToolbar();
         PriceMask mask = new PriceMask(txtValue);
         txtValue.addTextChangedListener(mask);
         productValue = new ProductValueSend();
@@ -146,6 +147,7 @@ public class ProductValueDetails extends AbstractAppCompatActivity {
             fillProductValueSend(jsonProductValue);
             fillViewFields();
         }else{
+            btn_delete.setVisibility(View.INVISIBLE);
             btn_function.setBackgroundColor(getResources().getColor(R.color.colorGreenLogin));
             btn_function.setText("Adicionar");
         }
@@ -335,7 +337,7 @@ public class ProductValueDetails extends AbstractAppCompatActivity {
         protected void onPostExecute(Void aVoid)
         {
             if(apiResponse.getStatusBoolean())
-                createList(REFERENCE_PROVIDER, apiResponse.getResult().getProviders(), dialog);
+                createList(REFERENCE_PROVIDER, apiResponse.getResult().getList(), dialog);
             else
                 toast(ProductValueDetails.this, "Nenhum item encontrado");
         }
