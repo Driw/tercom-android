@@ -18,6 +18,7 @@ public enum EnumREST {
     SERVICE("service"),
     SITE("site"),
     PRODUCTTYPE("productType"),
+    SERVICEPRICE("servicePrice"),
 
 
 
