@@ -17,11 +17,13 @@ public class ServicePriceControl extends GenericControl {
 
     public ServicePriceControl(Activity activitiy) { this.activity = activitiy; }
 
-    public ApiResponse add(int idService, int idProvider, float price, String name){
+    public ApiResponse add(int idService, int idProvider, float price, String name,String additionalDescription){
         TreeMap<String,String> map = new TreeMap<>();
         map.put("idService", String.valueOf(idService));
         map.put("idProvider", String.valueOf(idProvider));
         map.put("name", name);
+        map.put("additionalDescription", additionalDescription);
+        map.put("price", String.valueOf(price));
 
         try {
             String link = getBase(EnumREST.SITE, EnumREST.SERVICEPRICE, EnumREST.ADD);

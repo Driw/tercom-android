@@ -23,6 +23,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import br.com.tercom.Application.AppTercom;
 import br.com.tercom.Boundary.Activity.LoginActivity;
 import br.com.tercom.Boundary.Activity.ManufacturerActivity;
+import br.com.tercom.Boundary.Activity.MenuActivity;
 import br.com.tercom.Boundary.Activity.ProductAddActivity;
 import br.com.tercom.Boundary.Activity.ProductListActivity;
 import br.com.tercom.Boundary.Activity.ProviderListActivity;
@@ -117,7 +118,7 @@ public abstract class AbstractAppCompatActivity extends AppCompatActivity {
                         //TODO
                         switch (position) {
                             case 1:
-//                                createIntentAbs(LoginActivity.class);
+                                createIntentAbs(MenuActivity.class);
                                 break;
                             case 2:
                                 createIntentAbs(ProductListActivity.class);
