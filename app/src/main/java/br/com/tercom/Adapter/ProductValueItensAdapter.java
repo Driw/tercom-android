@@ -36,7 +36,7 @@ public class ProductValueItensAdapter extends  RecyclerView.Adapter<ProductValue
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = layoutInflater.inflate(R.layout.item_category,parent,false);
+        View v = layoutInflater.inflate(R.layout.item_category_white,parent,false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorGrayBG"
-    tools:context=".Boundary.Activity.ServicePriceActivity">
+    tools:context=".Boundary.Activity.ServicePriceDetailsActivity">
 
     <include
         android:id="@+id/include_toolbar"
@@ -71,9 +71,13 @@
                 android:id="@+id/btnProvider"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:text="Adicionar Fornecedor"
                 android:backgroundTint="@color/colorAccent"
+                android:ellipsize="end"
+                android:maxLength="40"
+                android:text="Adicionar Fornecedor"
                 android:textColor="@color/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

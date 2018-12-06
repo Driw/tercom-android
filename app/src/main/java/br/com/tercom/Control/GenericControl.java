@@ -55,7 +55,7 @@ public abstract class GenericControl {
      * A URL_BASE é um atributo que contém a base do header da chamada.
      * @see BaseUrl é uma enum que tem a base da url, sendo ela de dev ou a real(mais tipos podem ser adicionados se necessário)
      */
-    private final  String URL_BASE = BaseUrl.URL_IMPROVISADA.path;
+    private final  String URL_BASE = BaseUrl.URL_DEV.path;
 
 
     /**
