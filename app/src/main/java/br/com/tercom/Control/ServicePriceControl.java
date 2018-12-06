@@ -6,7 +6,6 @@ import android.util.Pair;
 import java.util.TreeMap;
 
 import br.com.tercom.Entity.ApiResponse;
-import br.com.tercom.Entity.ProductGroup;
 import br.com.tercom.Entity.ServicePrice;
 import br.com.tercom.Enum.EnumMethod;
 import br.com.tercom.Enum.EnumREST;
@@ -22,6 +21,7 @@ public class ServicePriceControl extends GenericControl {
         map.put("idService", String.valueOf(idService));
         map.put("idProvider", String.valueOf(idProvider));
         map.put("name", name);
+        map.put("price", String.valueOf(price));
 
         try {
             String link = getBase(EnumREST.SITE, EnumREST.SERVICEPRICE, EnumREST.ADD);
@@ -37,4 +37,54 @@ public class ServicePriceControl extends GenericControl {
             return getErrorResponse();
         }
     }
+
+    public ApiResponse set(int idServicePrice, String name, Float price, String additionalDescription)
+    {
+        TreeMap<String, String> map = new TreeMap<>();
+        map.put("name", name);
+        map.put("price", String.valueOf(price));
+        map.put("additionalDescription", additionalDescription);
+        try
+        {
+            String link = getLink(getBase(EnumREST.SITE, EnumREST.SERVICEPRICE, EnumREST.SET), String.valueOf(idServicePrice));
+            Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
+            CustomPair<String> jsonResult = callJson(EnumMethod.POST, activity, completePost);
+            ApiResponse<ServicePrice> servicePriceApiResponse = new ApiResponse<>(ServicePrice.class);
+            if(jsonResult.first)
+            {
+                servicePriceApiResponse = populateApiResponse(servicePriceApiResponse, jsonResult.second);
+            }
+            return servicePriceApiResponse;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            return getErrorResponse();
+        }
+    }
+
+    public ApiResponse remove(int idServicePrice)
+    {
+        try
+        {
+            String link = getLink(getBase(EnumREST.SITE, EnumREST.SERVICEPRICE, EnumREST.REMOVE), String.valueOf(idServicePrice));
+            CustomPair<String> jsonResult = callJson(EnumMethod.GET, activity, link);
+            ApiResponse<ServicePrice> servicePriceApiResponse = new ApiResponse<>(ServicePrice.class);
+            if(jsonResult.first)
+            {
+                servicePriceApiResponse = populateApiResponse(servicePriceApiResponse, jsonResult.second);
+            }
+            return servicePriceApiResponse;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            return getErrorResponse();
+        }
+    }
+
+//    public ApiResponse get(int idServicePrice)
+//    {
+//
+//    }
 }
