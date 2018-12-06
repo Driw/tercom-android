@@ -57,6 +57,7 @@ public class ServicePriceDetailsActivity extends AbstractAppCompatActivity {
     private RecyclerView rvSearch;
     private EditText editSearch;
     private ProviderTask providerTask;
+    private DeleteTask deleteTask;
 
     @BindView(R.id.editName)
     EditText editName;
@@ -68,6 +69,19 @@ public class ServicePriceDetailsActivity extends AbstractAppCompatActivity {
     Button btnAdd;
     @BindView(R.id.btnProvider)
     Button btnProvider;
+    @BindView(R.id.btn_delete)
+    Button btnDelete;
+
+    @OnClick(R.id.btn_delete) void delete(){
+        initDeleteTask();
+    }
+
+    private void initDeleteTask() {
+        if(deleteTask ==null || deleteTask.getStatus() != AsyncTask.Status.RUNNING){
+            deleteTask = new DeleteTask(idService);
+            deleteTask.execute();
+        }
+    }
 
     @OnClick(R.id.btnProvider) void getProvider(){
         initDialog();
@@ -307,6 +321,41 @@ public class ServicePriceDetailsActivity extends AbstractAppCompatActivity {
                 });
             } else {
                 dialogConfirm.init(EnumDialogOptions.FAIL, apiResponse.getMessage());
+            }
+        }
+    }
+
+    private class DeleteTask extends AsyncTask<Void,Void,Void>{
+
+        private ApiResponse<ServicePrice> apiResponse;
+        private int idService;
+
+        public DeleteTask(int idService) {
+            this.idService = idService;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            if(Looper.myLooper() == null)
+                Looper.prepare();
+            ServicePriceControl servicePriceControl = new ServicePriceControl(ServicePriceDetailsActivity.this);
+            apiResponse = servicePriceControl.remove(idService);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            DialogConfirm dialogConfirm = new DialogConfirm(ServicePriceDetailsActivity.this);
+            if(apiResponse.getStatusBoolean()){
+                dialogConfirm.init(EnumDialogOptions.CONFIRM,apiResponse.getMessage());
+                dialogConfirm.onClickChanges(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        finish();
+                    }
+                });
+            }else{
+                dialogConfirm.init(EnumDialogOptions.FAIL,apiResponse.getMessage());
             }
         }
     }

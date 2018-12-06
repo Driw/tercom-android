@@ -16,15 +16,16 @@ public class ServicePriceControl extends GenericControl {
 
     public ServicePriceControl(Activity activitiy) { this.activity = activitiy; }
 
-    public ApiResponse add(int idService, int idProvider, float price, String name){
+    public ApiResponse add(int idService, int idProvider, float price, String name, String additionalDescription){
         TreeMap<String,String> map = new TreeMap<>();
         map.put("idService", String.valueOf(idService));
         map.put("idProvider", String.valueOf(idProvider));
         map.put("name", name);
         map.put("price", String.valueOf(price));
+        map.put("additionalDescription", additionalDescription);
 
         try {
-            String link = getBase(EnumREST.SITE, EnumREST.SERVICEPRICE, EnumREST.ADD);
+            String link = getLink(getBase(EnumREST.SITE, EnumREST.SERVICEPRICE, EnumREST.ADD), String.valueOf(idService));
             Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
             CustomPair<String> jsonResult =  callJson(EnumMethod.POST,activity,completePost);
             ApiResponse<ServicePrice> servicePriceApiResponse = new ApiResponse<>(ServicePrice.class);
