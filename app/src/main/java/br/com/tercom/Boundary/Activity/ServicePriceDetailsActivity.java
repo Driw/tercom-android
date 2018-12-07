@@ -1,6 +1,7 @@
 package br.com.tercom.Boundary.Activity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -112,6 +113,15 @@ public class ServicePriceDetailsActivity extends AbstractAppCompatActivity {
                 }
         }
     }
+
+    @OnClick(R.id.btn_option) void addPrice(){
+        Intent intent = new Intent();
+        intent.setClass(this,ServicePriceDetailsActivity.class);
+        intent.putExtra("id",idService);
+        startActivity(intent);
+    }
+
+
 
 
     @Override
@@ -289,7 +299,6 @@ public class ServicePriceDetailsActivity extends AbstractAppCompatActivity {
         private String observations;
         private float price;
         private int idProvider;
-
 
         public UpdatePriceTask(int idService, String name, String observations, float price, int idProvider) {
             this.idService = idService;

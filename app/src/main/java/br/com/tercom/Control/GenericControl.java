@@ -67,7 +67,6 @@ public abstract class GenericControl {
         return new String[] {AppTercom.USER_STATIC.getEmail(), AppTercom.USER_STATIC.getSenha()};
     }
 
-
     /**
      * Webservice feito para formar o header usando padrão RESTFUL.
      * @param types 1...* valores da enum EnumWebServices, ajudando a formar o header da chamada.

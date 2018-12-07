@@ -9,10 +9,13 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.gson.Gson;
+
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
 import br.com.tercom.Boundary.BoundaryUtil.Mask;
 import br.com.tercom.Control.ProviderControl;
 import br.com.tercom.Entity.ApiResponse;
+import br.com.tercom.Entity.Price;
 import br.com.tercom.Entity.Provider;
 import br.com.tercom.Enum.EnumDialogOptions;
 import br.com.tercom.Enum.EnumFont;
@@ -24,6 +27,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static br.com.tercom.Util.CustomTypeFace.overrideFonts;
+import static br.com.tercom.Util.GsonUtil.getItem;
 import static br.com.tercom.Util.TextUtil.emptyValidator;
 import static br.com.tercom.Util.Util.toast;
 
@@ -138,6 +142,7 @@ public class ProviderAddActivity extends AbstractAppCompatActivity {
                 });
             }else{
                 dialogConfirm.init(EnumDialogOptions.FAIL,apiResponse.getMessage());
+               Price price = getItem(getIntent().getExtras().getString("a"),Price.class);
             }
         }
     }

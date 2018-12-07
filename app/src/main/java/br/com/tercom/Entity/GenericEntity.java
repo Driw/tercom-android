@@ -64,7 +64,6 @@ public abstract class GenericEntity
                     field.setAccessible(true);
                     if (field.isAnnotationPresent(BindObject.class)) {
                         BindObject bo = field.getAnnotation(BindObject.class);
-
                         if (bo.type() == BindObject.TYPE.OBJECT) {
                             Class<? extends GenericEntity> classe = (Class<? extends GenericEntity>) field.getType();
                             field.set(this, classe.newInstance().toObject(jObj.getJSONObject(field.getName()).toString(), classe));
