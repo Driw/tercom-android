@@ -16,12 +16,13 @@ public class ServicePriceControl extends GenericControl {
 
     public ServicePriceControl(Activity activitiy) { this.activity = activitiy; }
 
-    public ApiResponse add(int idService, int idProvider, float price, String name){
+    public ApiResponse add(int idService, int idProvider, float price, String name, String additionalDescription){
         TreeMap<String,String> map = new TreeMap<>();
         map.put("idService", String.valueOf(idService));
         map.put("idProvider", String.valueOf(idProvider));
         map.put("name", name);
         map.put("price", String.valueOf(price));
+        map.put("additionalDescription", additionalDescription);
 
         try {
             String link = getBase(EnumREST.SITE, EnumREST.SERVICEPRICE, EnumREST.ADD);
@@ -53,7 +54,7 @@ public class ServicePriceControl extends GenericControl {
             if(jsonResult.first)
             {
                 servicePriceApiResponse = populateApiResponse(servicePriceApiResponse, jsonResult.second);
-            }
+        }
             return servicePriceApiResponse;
         }
         catch(Exception e)
@@ -83,8 +84,63 @@ public class ServicePriceControl extends GenericControl {
         }
     }
 
-//    public ApiResponse get(int idServicePrice)
-//    {
-//
-//    }
+    public ApiResponse get(int idServicePrice)
+    {
+        try
+        {
+            String link = getLink(getBase(EnumREST.SITE, EnumREST.SERVICEPRICE, EnumREST.GET), String.valueOf(idServicePrice));
+            CustomPair<String> jsonResult = callJson(EnumMethod.GET, activity, link);
+            ApiResponse<ServicePrice> servicePriceApiResponse = new ApiResponse<>(ServicePrice.class);
+            if(jsonResult.first)
+            {
+                servicePriceApiResponse = populateApiResponse(servicePriceApiResponse, jsonResult.second);
+            }
+            return servicePriceApiResponse;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            return getErrorResponse();
+        }
+    }
+
+    public ApiResponse getService(int idService)
+    {
+        try
+        {
+            String link = getLink(getBase(EnumREST.SITE, EnumREST.SERVICEPRICE, EnumREST.GETSERVICE), String.valueOf(idService));
+            CustomPair<String> jsonResult = callJson(EnumMethod.GET, activity, link);
+            ApiResponse<ServicePrice> servicePriceApiResponse = new ApiResponse<>(ServicePrice.class);
+            if(jsonResult.first)
+            {
+                servicePriceApiResponse = populateApiResponse(servicePriceApiResponse, jsonResult.second);
+            }
+            return servicePriceApiResponse;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            return getErrorResponse();
+        }
+    }
+
+    public ApiResponse getProvider(int idService, int idProvider)
+    {
+        try
+        {
+            String link = getLink(getBase(EnumREST.SITE, EnumREST.SERVICEPRICE, EnumREST.GETSERVICE), getMultiplesParameters(String.valueOf(idService), String.valueOf(idProvider)));
+            CustomPair<String> jsonResult = callJson(EnumMethod.GET, activity, link);
+            ApiResponse<ServicePrice> servicePriceApiResponse = new ApiResponse<>(ServicePrice.class);
+            if(jsonResult.first)
+            {
+                servicePriceApiResponse = populateApiResponse(servicePriceApiResponse, jsonResult.second);
+            }
+            return servicePriceApiResponse;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            return getErrorResponse();
+        }
+    }
 }
