@@ -25,7 +25,7 @@ public class ServicePriceControl extends GenericControl {
         map.put("additionalDescription", additionalDescription);
 
         try {
-            String link = getBase(EnumREST.SITE, EnumREST.SERVICEPRICE, EnumREST.ADD);
+            String link = getLink(getBase(EnumREST.SITE, EnumREST.SERVICEPRICE, EnumREST.ADD), String.valueOf(idService));
             Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
             CustomPair<String> jsonResult =  callJson(EnumMethod.POST,activity,completePost);
             ApiResponse<ServicePrice> servicePriceApiResponse = new ApiResponse<>(ServicePrice.class);
