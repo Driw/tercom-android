@@ -305,7 +305,7 @@ public class ServicePriceDetailsActivity extends AbstractAppCompatActivity {
             if (Looper.myLooper() == null)
                 Looper.prepare();
             ServicePriceControl servicePriceControl = new ServicePriceControl(ServicePriceDetailsActivity.this);
-            apiResponse = servicePriceControl.set(idService, name,price, observations);
+            apiResponse = servicePriceControl.set(servicePrice.getId(), name,price, observations);
             return null;
         }
 
