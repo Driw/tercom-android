@@ -7,6 +7,7 @@ import java.util.TreeMap;
 
 import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.ServicePrice;
+import br.com.tercom.Entity.ServicePriceList;
 import br.com.tercom.Enum.EnumMethod;
 import br.com.tercom.Enum.EnumREST;
 import br.com.tercom.Util.CustomPair;
@@ -110,7 +111,7 @@ public class ServicePriceControl extends GenericControl {
         {
             String link = getLink(getBase(EnumREST.SITE, EnumREST.SERVICEPRICE, EnumREST.GETSERVICE), String.valueOf(idService));
             CustomPair<String> jsonResult = callJson(EnumMethod.GET, activity, link);
-            ApiResponse<ServicePrice> servicePriceApiResponse = new ApiResponse<>(ServicePrice.class);
+            ApiResponse<ServicePriceList> servicePriceApiResponse = new ApiResponse<>(ServicePriceList.class);
             if(jsonResult.first)
             {
                 servicePriceApiResponse = populateApiResponse(servicePriceApiResponse, jsonResult.second);

@@ -90,7 +90,7 @@ public class ServicePriceDetailsActivity extends AbstractAppCompatActivity {
 
     @OnClick(R.id.btnAdd)
     void action() {
-        CustomPair<String> result = verifyData(editName.getText().toString(), editPrice.getText().toString(), editObs.getText().toString(), selectedProvider.getId());
+        CustomPair<String> result = verifyData(editName.getText().toString(), editPrice.getText().toString(), editObs.getText().toString(),  selectedProvider != null? selectedProvider.getId() : 0);
         switch (action) {
 
             case ACTION_ADD:
@@ -113,14 +113,6 @@ public class ServicePriceDetailsActivity extends AbstractAppCompatActivity {
                 }
         }
     }
-
-    @OnClick(R.id.btn_option) void addPrice(){
-        Intent intent = new Intent();
-        intent.setClass(this,ServicePriceDetailsActivity.class);
-        intent.putExtra("id",idService);
-        startActivity(intent);
-    }
-
 
 
 

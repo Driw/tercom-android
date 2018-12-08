@@ -2,6 +2,7 @@ package br.com.tercom.Boundary.Activity;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Looper;
 import android.support.v7.app.AlertDialog;
@@ -81,16 +82,22 @@ public class ServiceDetailsActivity extends AbstractAppCompatActivity {
         }
     }
 
+    @OnClick(R.id.btn_option) void goToPrices(){
+
+        Intent intent = new Intent();
+        intent.setClass(this,ServicePriceListAcitivity.class);
+        intent.putExtra("idService",selectedService.getId());
+        startActivity(intent);
+
+    }
+
     private CustomPair<String> verifyEmptyFields() {
         CustomPair<String> verified = new CustomPair<>(true,"ok");
         if(TextUtils.isEmpty(editNameService.getText().toString()))
             verified = new CustomPair<>(false,"Nome inválido");
         if(TextUtils.isEmpty(editDescriptionService.getText().toString()))
             verified = new CustomPair<>(false,"Descrição inválida");
-
         return verified;
-
-
     }
 
 

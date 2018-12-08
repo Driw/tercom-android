@@ -11,55 +11,53 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import br.com.tercom.Entity.ProductValue;
+import br.com.tercom.Entity.ServicePrice;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.R;
 
 public class ServicePriceAdapter extends RecyclerView.Adapter<ServicePriceAdapter.ViewHolder> {
     private LayoutInflater layoutInflater;
-    private ArrayList<ProductValue> productValues;
+    private ArrayList<ServicePrice> servicePrice;
     private Context context;
     private RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;
     public void setmRecyclerViewOnClickListenerHack(RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack) {
         this.mRecyclerViewOnClickListenerHack = mRecyclerViewOnClickListenerHack;
     }
-    public ServicePriceAdapter(Context c, ArrayList<ProductValue> providers) {
+
+    public ServicePriceAdapter(Context c, ArrayList<ServicePrice> providers) {
         layoutInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.productValues = providers;
+        this.servicePrice = providers;
         this.context = c;
     }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = layoutInflater.inflate(R.layout.list_item_product_value,parent,false);
+        View v = layoutInflater.inflate(R.layout.list_item_service_price,parent,false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.productName.setText(productValues.get(position).getName());
-        holder.productPackage.setText(String.format(Locale.getDefault(),"%s %s",productValues.get(position).getAmount(),productValues.get(position).getProduct().getName()));
-        holder.productPrice.setText(String.format(Locale.getDefault(),"R$ %.2f",productValues.get(position).getPrice()).replace(".", ","));
-        holder.productManufacturer.setText(productValues.get(position).getManufacture().getFantasyName());
-        holder.productProvider.setText(productValues.get(position).getProvider().getFantasyName());
+        holder.serviceName.setText(servicePrice.get(position).getName());
+        holder.serviceValue.setText(String.format(Locale.getDefault(),"R$ %.2f", servicePrice.get(position).getPrice()).replace(".", ","));
+        holder.serviceProvider.setText(servicePrice.get(position).getProvider().getFantasyName());
     }
+
     @Override
     public int getItemCount() {
-        return productValues.size();
+        return servicePrice.size();
     }
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        public TextView productName;
-        public TextView productPackage;
-        public TextView productPrice;
-        public TextView productManufacturer;
-        public TextView productProvider;
+        public TextView serviceName;
+        public TextView serviceValue;
+        public TextView serviceProvider;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            productName = itemView.findViewById(R.id.productName);
-            productPackage = itemView.findViewById(R.id.productPackage);
-            productPrice = itemView.findViewById(R.id.productPrice);
-            productManufacturer = itemView.findViewById(R.id.productManufacturer);
-            productProvider = itemView.findViewById(R.id.productProvider);
+            serviceName = itemView.findViewById(R.id.ServiceName);
+            serviceValue = itemView.findViewById(R.id.servicePrice);
+            serviceProvider = itemView.findViewById(R.id.ServiceProvider);
             itemView.setOnClickListener(this);
         }
         @Override

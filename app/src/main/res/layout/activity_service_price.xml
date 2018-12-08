@@ -80,9 +80,11 @@
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/textInputLayout21"
-                android:layout_width="352dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -96,7 +98,7 @@
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/textInputLayout22"
-                android:layout_width="352dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
@@ -109,7 +111,8 @@
                     android:id="@+id/editPrice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Preço" />
+                    android:hint="Preço"
+                    android:inputType="number" />
             </android.support.design.widget.TextInputLayout>
 
             <Button
