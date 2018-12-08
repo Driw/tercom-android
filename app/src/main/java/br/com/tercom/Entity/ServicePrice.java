@@ -10,7 +10,7 @@ public class ServicePrice extends GenericEntity {
     private Provider provider;
     private String name;
     private String additionalDescription;
-    private float price;
+    private Float price;
 
     public ServicePrice()
     {
@@ -62,11 +62,11 @@ public class ServicePrice extends GenericEntity {
         this.additionalDescription = additionalDescription;
     }
 
-    public double getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 }

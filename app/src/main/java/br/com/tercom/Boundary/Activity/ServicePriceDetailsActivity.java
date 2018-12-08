@@ -305,18 +305,19 @@ public class ServicePriceDetailsActivity extends AbstractAppCompatActivity {
             if (Looper.myLooper() == null)
                 Looper.prepare();
             ServicePriceControl servicePriceControl = new ServicePriceControl(ServicePriceDetailsActivity.this);
-            apiResponse = servicePriceControl.add(idService, idProvider, price, name, observations);
+            apiResponse = servicePriceControl.set(idService, name,price, observations);
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            DialogConfirm dialogConfirm = new DialogConfirm(ServicePriceDetailsActivity.this);
+            final DialogConfirm dialogConfirm = new DialogConfirm(ServicePriceDetailsActivity.this);
             if (apiResponse.getStatusBoolean()) {
                 dialogConfirm.init(EnumDialogOptions.CONFIRM, apiResponse.getMessage());
                 dialogConfirm.onClickChanges(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        dialogConfirm.dismissD();
                         setEnable(false);
                     }
                 });
