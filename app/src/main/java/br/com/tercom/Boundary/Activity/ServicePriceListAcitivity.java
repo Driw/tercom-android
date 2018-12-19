@@ -67,6 +67,11 @@ public class ServicePriceListAcitivity extends AbstractAppCompatActivity {
 
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        initTask(idService);
+    }
 
     private void createList(final ArrayList<ServicePrice> servicePriceArrayList){
 
