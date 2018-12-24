@@ -81,7 +81,7 @@ public class PermissionControl extends GenericControl {
 
     public ApiResponse get(int id){
         try{
-            String link = getLink(getBase(EnumREST.SITE, EnumREST.PERMISSION, EnumREST.REMOVE), String.valueOf(id));
+            String link = getLink(getBase(EnumREST.SITE, EnumREST.PERMISSION, EnumREST.GET), String.valueOf(id));
             CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,link);
             ApiResponse<Permission> providerApiResponse = new ApiResponse<>(Permission.class);
             if(jsonResult.first){

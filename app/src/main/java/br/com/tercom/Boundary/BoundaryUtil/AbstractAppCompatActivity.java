@@ -94,7 +94,7 @@ public abstract class AbstractAppCompatActivity extends AppCompatActivity {
                 .withProfileImagesVisible(true)
                 .withCompactStyle(true)
                 .withDividerBelowHeader(true)
-                .addProfiles(new ProfileDrawerItem().withEmail(USER_STATIC.getEmail()).withName("Felipe Amalfi Lima"))
+                .addProfiles(new ProfileDrawerItem().withEmail(USER_STATIC.getTercomEmployee().getEmail()).withName(USER_STATIC.getTercomEmployee().getName()))
                 .withTextColor(Color.BLACK)
                 .build();
 
