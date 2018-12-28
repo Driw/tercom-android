@@ -40,6 +40,7 @@ import br.com.tercom.Interface.IProductCategory;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.R;
 import br.com.tercom.Util.DialogConfirm;
+import br.com.tercom.Util.DialogLoading;
 import br.com.tercom.Util.TextUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -527,14 +528,19 @@ public class ProductDetailsActivity extends AbstractAppCompatActivity {
         private ApiResponse<Product> apiResponse;
         private ProductSend product;
         private int id;
+        private DialogLoading dialogLoading;
+
 
         public ProductTask(ProductSend product, int id) {
             this.product = product;
             this.id = id;
+            dialogLoading = new DialogLoading(ProductDetailsActivity.this);
+
         }
 
         @Override
         protected void onPreExecute() {
+            dialogLoading.init();
             setEnable(false);
         }
 
@@ -549,6 +555,7 @@ public class ProductDetailsActivity extends AbstractAppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            dialogLoading.dismissD();
             final DialogConfirm dialogConfirm = new DialogConfirm(ProductDetailsActivity.this);
             if(apiResponse.getStatusBoolean()){
                 dialogConfirm.init(EnumDialogOptions.CONFIRM,apiResponse.getMessage());

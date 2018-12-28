@@ -30,6 +30,7 @@ import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.R;
 import br.com.tercom.Util.CustomPair;
 import br.com.tercom.Util.DialogConfirm;
+import br.com.tercom.Util.DialogLoading;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -196,13 +197,23 @@ public class ServiceDetailsActivity extends AbstractAppCompatActivity {
         private String description;
         private ApiResponse<Services> apiResponse;
         private int idService;
+        private DialogLoading dialogLoading;
+
 
         public UpdateServiceTask(ArrayList<String> tag, String name, String description, int idService) {
+            dialogLoading = new DialogLoading(ServiceDetailsActivity.this);
             this.tag = tag;
             this.name = name;
             this.description = description;
             this.idService = idService;
         }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialogLoading.init();
+        }
+
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -215,6 +226,7 @@ public class ServiceDetailsActivity extends AbstractAppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            dialogLoading.dismissD();
             final DialogConfirm dialogConfirm = new DialogConfirm(ServiceDetailsActivity.this);
             if(apiResponse.getStatusBoolean()){
                 dialogConfirm.init(EnumDialogOptions.CONFIRM,apiResponse.getMessage());

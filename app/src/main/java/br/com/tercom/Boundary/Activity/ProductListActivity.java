@@ -23,6 +23,7 @@ import br.com.tercom.Entity.ProductList;
 import br.com.tercom.Enum.EnumREST;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.R;
+import br.com.tercom.Util.DialogLoading;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -100,10 +101,20 @@ public class ProductListActivity extends AbstractAppCompatActivity {
 
         private ApiResponse<ProductList> apiResponse;
         private String value;
+        private DialogLoading dialogLoading;
+
 
         public ProductTask(String value) {
+            dialogLoading = new DialogLoading(ProductListActivity.this);
             this.value = value;
         }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialogLoading.init();
+        }
+
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -116,6 +127,7 @@ public class ProductListActivity extends AbstractAppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            dialogLoading.dismissD();
             if(apiResponse.getStatusBoolean()){
                 createListProviders(apiResponse.getResult());
             }

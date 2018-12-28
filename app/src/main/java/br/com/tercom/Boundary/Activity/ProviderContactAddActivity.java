@@ -19,6 +19,7 @@ import br.com.tercom.Enum.PhoneType;
 import br.com.tercom.R;
 import br.com.tercom.Util.CustomPair;
 import br.com.tercom.Util.DialogConfirm;
+import br.com.tercom.Util.DialogLoading;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -157,11 +158,20 @@ public class ProviderContactAddActivity extends AbstractAppCompatActivity {
 
         private ApiResponse<ProviderContact> apiResponse;
         private ProviderContact providerContact;
+        private DialogLoading dialogLoading;
+
 
         public SendContactTask(ProviderContact providerContact){
-
+            dialogLoading = new DialogLoading(ProviderContactAddActivity.this);
             this.providerContact = providerContact;
         }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialogLoading.init();
+        }
+
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -173,6 +183,7 @@ public class ProviderContactAddActivity extends AbstractAppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            dialogLoading.dismissD();
             if(apiResponse.getStatusBoolean()){
                 providerContact.setId(apiResponse.getResult().getId());
                 initPhoneTask(providerContact);
@@ -186,11 +197,21 @@ public class ProviderContactAddActivity extends AbstractAppCompatActivity {
 
         private ApiResponse<ProviderContact> apiResponse;
         private ProviderContact providerContact;
+        private DialogLoading dialogLoading;
+
 
         public SetPhoneTask(ProviderContact providerContact){
-
+            dialogLoading = new DialogLoading(ProviderContactAddActivity.this);
             this.providerContact = providerContact;
         }
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialogLoading.init();
+        }
+
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -203,6 +224,7 @@ public class ProviderContactAddActivity extends AbstractAppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            dialogLoading.dismissD();
             DialogConfirm dialogConfirm = new DialogConfirm(ProviderContactAddActivity.this);
             if(apiResponse.getStatusBoolean()){
                 dialogConfirm.init(EnumDialogOptions.CONFIRM,apiResponse.getMessage());

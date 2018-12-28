@@ -42,6 +42,7 @@ import br.com.tercom.Interface.IProductCategory;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.R;
 import br.com.tercom.Util.DialogConfirm;
+import br.com.tercom.Util.DialogLoading;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -321,6 +322,19 @@ public class ProductCategoryAddActivity extends AbstractAppCompatActivity {
     private class UnitTask extends AsyncTask<Void,Void,Void>{
 
         private ApiResponse<ProductUnitList> apiResponse;
+        private DialogLoading dialogLoading;
+
+        public UnitTask() {
+            dialogLoading = new DialogLoading(ProductCategoryAddActivity.this);
+        }
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialogLoading.init();
+        }
+
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -333,6 +347,7 @@ public class ProductCategoryAddActivity extends AbstractAppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            dialogLoading.dismissD();
             if(apiResponse.getStatusBoolean())
                 createList(apiResponse.getResult().getList(), new RecyclerViewOnClickListenerHack() {
                     @Override
@@ -352,10 +367,21 @@ public class ProductCategoryAddActivity extends AbstractAppCompatActivity {
 
         private ApiResponse<ProductFamilyList> apiResponse;
         private String value;
+        private DialogLoading dialogLoading;
+
 
         public FamilyTask(String value) {
+            dialogLoading = new DialogLoading(ProductCategoryAddActivity.this);
             this.value = value;
         }
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialogLoading.init();
+        }
+
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -368,6 +394,7 @@ public class ProductCategoryAddActivity extends AbstractAppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            dialogLoading.dismissD();
             if(apiResponse.getStatusBoolean()){
                 if(apiResponse.getResult().getList().size() != 0){
                 createList(apiResponse.getResult().getList(), new RecyclerViewOnClickListenerHack() {
@@ -393,11 +420,19 @@ public class ProductCategoryAddActivity extends AbstractAppCompatActivity {
 
         private ApiResponse<ProductFamily> apiResponse;
         private int id;
+        private DialogLoading dialogLoading;
+
 
         private GroupTask(int id) {
+            dialogLoading = new DialogLoading(ProductCategoryAddActivity.this);
             this.id = id;
         }
 
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialogLoading.init();
+        }
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -410,6 +445,7 @@ public class ProductCategoryAddActivity extends AbstractAppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            dialogLoading.dismissD();
             if(apiResponse.getStatusBoolean()){
                 if(apiResponse.getResult().getProductGroups().size() != 0){
                 createList(apiResponse.getResult().getProductGroups(), new RecyclerViewOnClickListenerHack() {
@@ -433,9 +469,18 @@ public class ProductCategoryAddActivity extends AbstractAppCompatActivity {
 
         private ApiResponse<ProductGroup> apiResponse;
         private int id;
+        private DialogLoading dialogLoading;
+
 
         public SubGroupTask(int value) {
+            dialogLoading = new DialogLoading(ProductCategoryAddActivity.this);
             this.id = value;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialogLoading.init();
         }
 
         @Override
@@ -449,6 +494,7 @@ public class ProductCategoryAddActivity extends AbstractAppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            dialogLoading.dismissD();
             if(apiResponse.getStatusBoolean()){
                 if(apiResponse.getResult().getProductSubGroups().size() != 0){
                 createList(apiResponse.getResult().getProductSubGroups(), new RecyclerViewOnClickListenerHack() {
@@ -473,10 +519,20 @@ public class ProductCategoryAddActivity extends AbstractAppCompatActivity {
 
         private ApiResponse<ProductSubGroup> apiResponse;
         private int id;
+        private DialogLoading dialogLoading;
+
 
         public SectorTask(int id) {
+            dialogLoading = new DialogLoading(ProductCategoryAddActivity.this);
             this.id = id;
         }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialogLoading.init();
+        }
+
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -489,6 +545,7 @@ public class ProductCategoryAddActivity extends AbstractAppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            dialogLoading.dismissD();
             if(apiResponse.getStatusBoolean()){
                 if(apiResponse.getResult().getProductSectores().size() != 0){
                 createList(apiResponse.getResult().getProductSectores(), new RecyclerViewOnClickListenerHack() {
@@ -509,9 +566,17 @@ public class ProductCategoryAddActivity extends AbstractAppCompatActivity {
 
         private ApiResponse<Product> apiResponse;
         private ProductSend product;
+        private DialogLoading dialogLoading;
 
         public ProductTask(ProductSend product) {
+            dialogLoading = new DialogLoading(ProductCategoryAddActivity.this);
             this.product = product;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialogLoading.init();
         }
 
         @Override
@@ -525,6 +590,7 @@ public class ProductCategoryAddActivity extends AbstractAppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            dialogLoading.dismissD();
             final DialogConfirm dialogConfirm = new DialogConfirm(ProductCategoryAddActivity.this);
             if(apiResponse.getStatusBoolean()){
                 dialogConfirm.init(EnumDialogOptions.CONFIRM,apiResponse.getMessage());
@@ -545,9 +611,19 @@ public class ProductCategoryAddActivity extends AbstractAppCompatActivity {
 
         private ApiResponse<ProductFamily> apiResponse;
         private String name;
+        private DialogLoading dialogLoading;
+
 
         public AddFamilyTask(String name) {
             this.name = name;
+            dialogLoading = new DialogLoading(ProductCategoryAddActivity.this);
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialogLoading.init();
         }
 
         @Override
@@ -561,6 +637,7 @@ public class ProductCategoryAddActivity extends AbstractAppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            dialogLoading.dismissD();
             final DialogConfirm dialogConfirm = new DialogConfirm(ProductCategoryAddActivity.this);
             if(apiResponse.getStatusBoolean()){
                 dialogConfirm.init(EnumDialogOptions.CONFIRM,apiResponse.getMessage());
@@ -583,11 +660,21 @@ public class ProductCategoryAddActivity extends AbstractAppCompatActivity {
         private ApiResponse<ProductGroup> apiResponse;
         private String name;
         private int id;
+        private DialogLoading dialogLoading;
+
 
         public AddGroupTask(String name, int id) {
+            dialogLoading = new DialogLoading(ProductCategoryAddActivity.this);
             this.name = name;
             this.id = id;
         }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialogLoading.init();
+        }
+
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -600,6 +687,7 @@ public class ProductCategoryAddActivity extends AbstractAppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            dialogLoading.dismissD();
             final DialogConfirm dialogConfirm = new DialogConfirm(ProductCategoryAddActivity.this);
             if(apiResponse.getStatusBoolean()){
                 dialogConfirm.init(EnumDialogOptions.CONFIRM,apiResponse.getMessage());
@@ -622,10 +710,19 @@ public class ProductCategoryAddActivity extends AbstractAppCompatActivity {
         private ApiResponse<ProductSubGroup> apiResponse;
         private String name;
         private int id;
+        private DialogLoading dialogLoading;
+
 
         public AddSubGroupTask(String name, int id) {
+            dialogLoading = new DialogLoading(ProductCategoryAddActivity.this);
             this.name = name;
             this.id = id;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialogLoading.init();
         }
 
         @Override
@@ -639,6 +736,7 @@ public class ProductCategoryAddActivity extends AbstractAppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            dialogLoading.dismissD();
             final DialogConfirm dialogConfirm = new DialogConfirm(ProductCategoryAddActivity.this);
             if(apiResponse.getStatusBoolean()){
                 dialogConfirm.init(EnumDialogOptions.CONFIRM,apiResponse.getMessage());
@@ -661,10 +759,19 @@ public class ProductCategoryAddActivity extends AbstractAppCompatActivity {
         private ApiResponse<ProductSector> apiResponse;
         private String name;
         private int id;
+        private DialogLoading dialogLoading;
+
 
         public AddSectorTask(String name, int id) {
+            dialogLoading = new DialogLoading(ProductCategoryAddActivity.this);
             this.name = name;
             this.id = id;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialogLoading.init();
         }
 
         @Override
@@ -678,6 +785,7 @@ public class ProductCategoryAddActivity extends AbstractAppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            dialogLoading.dismissD();
             final DialogConfirm dialogConfirm = new DialogConfirm(ProductCategoryAddActivity.this);
             if(apiResponse.getStatusBoolean()){
                 dialogConfirm.init(EnumDialogOptions.CONFIRM,apiResponse.getMessage());

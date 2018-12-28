@@ -16,6 +16,7 @@ import br.com.tercom.Enum.EnumDialogOptions;
 import br.com.tercom.R;
 import br.com.tercom.Util.CustomPair;
 import br.com.tercom.Util.DialogConfirm;
+import br.com.tercom.Util.DialogLoading;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -32,6 +33,8 @@ public class ProductAddActivity extends AbstractAppCompatActivity {
     EditText txtApplication;
 
     @OnClick(R.id.btnNext) void next(){
+        DialogLoading dialogLoading = new DialogLoading(ProductAddActivity.this);
+        dialogLoading.init();
 
         String[] values ={txtName.getText().toString(),
                 txtDescription.getText().toString(),
@@ -46,8 +49,10 @@ public class ProductAddActivity extends AbstractAppCompatActivity {
             Intent intent = new Intent();
             intent.setClass(this, ProductCategoryAddActivity.class);
             intent.putExtra("product",new Gson().toJson(product));
+            dialogLoading.dismissD();
             startActivity(intent);
         }else{
+            dialogLoading.dismissD();
             DialogConfirm dialogConfirm = new DialogConfirm(ProductAddActivity.this);
             dialogConfirm.init(EnumDialogOptions.FAIL, result.second);
         }

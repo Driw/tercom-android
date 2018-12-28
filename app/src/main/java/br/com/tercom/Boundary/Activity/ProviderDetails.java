@@ -29,6 +29,7 @@ import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.R;
 import br.com.tercom.Util.CustomPair;
 import br.com.tercom.Util.DialogConfirm;
+import br.com.tercom.Util.DialogLoading;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -211,10 +212,20 @@ public class ProviderDetails extends AppCompatActivity {
 
         private ApiResponse<ProviderContactList> apiResponse;
         private int id;
+        private DialogLoading dialogLoading;
+
 
         public ContactsTask(int id) {
+            dialogLoading = new DialogLoading(ProviderDetails.this);
             this.id = id;
         }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialogLoading.init();
+        }
+
 
         @Override
         protected Void doInBackground(Void... voids){
@@ -227,6 +238,7 @@ public class ProviderDetails extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            dialogLoading.dismissD();
             if(apiResponse.getStatusBoolean()){
                 createListContacts(apiResponse.getResult().getList());
             }

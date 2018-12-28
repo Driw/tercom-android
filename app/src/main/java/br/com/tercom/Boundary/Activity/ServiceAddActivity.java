@@ -31,6 +31,7 @@ import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.R;
 import br.com.tercom.Util.CustomPair;
 import br.com.tercom.Util.DialogConfirm;
+import br.com.tercom.Util.DialogLoading;
 import br.com.tercom.Util.TextUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -145,8 +146,11 @@ public class ServiceAddActivity extends AbstractAppCompatActivity {
         private String name;
         private String description;
         private ApiResponse<Services> apiResponse;
+        private DialogLoading dialogLoading;
+
 
         public AddServiceTask(ArrayList<String> tag, String name, String description) {
+            dialogLoading = new DialogLoading(ServiceAddActivity.this);
             this.tag = tag;
             this.name = name;
             this.description = description;
@@ -159,6 +163,12 @@ public class ServiceAddActivity extends AbstractAppCompatActivity {
             ServiceControl serviceControl = new ServiceControl(ServiceAddActivity.this);
             apiResponse = serviceControl.add(name,description,tags);
             return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialogLoading.init();
         }
 
         @Override
@@ -175,6 +185,7 @@ public class ServiceAddActivity extends AbstractAppCompatActivity {
                 });
             }
             else{
+                dialogLoading.dismissD();
                 dialogConfirm.init(EnumDialogOptions.FAIL,apiResponse.getMessage());
             }
         }

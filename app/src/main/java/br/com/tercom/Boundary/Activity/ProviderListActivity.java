@@ -19,6 +19,7 @@ import br.com.tercom.Entity.ProviderList;
 import br.com.tercom.Entity.Providers;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.R;
+import br.com.tercom.Util.DialogLoading;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -74,10 +75,20 @@ public class ProviderListActivity extends AbstractAppCompatActivity {
 
         private ApiResponse<Providers> apiResponse;
         private int page;
+        private DialogLoading dialogLoading;
+
+
 
         public ProviderTask(int page){
+            dialogLoading = new DialogLoading(ProviderListActivity.this);
 
             this.page = page;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialogLoading.init();
         }
 
         @Override
@@ -91,6 +102,7 @@ public class ProviderListActivity extends AbstractAppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            dialogLoading.dismissD();
             if(apiResponse.getStatusBoolean()){
                 createListProviders(apiResponse.getResult());
             }

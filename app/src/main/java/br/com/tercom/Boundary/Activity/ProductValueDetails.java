@@ -40,6 +40,7 @@ import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.R;
 import br.com.tercom.Util.CustomPair;
 import br.com.tercom.Util.DialogConfirm;
+import br.com.tercom.Util.DialogLoading;
 import br.com.tercom.Util.GsonUtil;
 import br.com.tercom.Util.PriceMask;
 import butterknife.BindView;
@@ -460,11 +461,20 @@ public class ProductValueDetails extends AbstractAppCompatActivity {
 
         private ApiResponse<ProductValue> apiResponse;
         private ProductValueSend productValue;
+        private DialogLoading dialogLoading;
+
 
         public TaskSave(ProductValueSend productValue)
         {
+            dialogLoading = new DialogLoading(ProductValueDetails.this);
             this.productValue = productValue;
             control = new ProductValueControl(ProductValueDetails.this);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialogLoading.init();
         }
 
         private ProductValueControl control;
@@ -484,6 +494,7 @@ public class ProductValueDetails extends AbstractAppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid)
         {
+            dialogLoading.dismissD();
             DialogConfirm dialogConfirm = new DialogConfirm(ProductValueDetails.this);
             if(apiResponse.getStatusBoolean()){
                 dialogConfirm.init(EnumDialogOptions.CONFIRM,apiResponse.getMessage());
@@ -504,10 +515,20 @@ public class ProductValueDetails extends AbstractAppCompatActivity {
 
         private ApiResponse<ProductValue> apiResponse;
         private int id;
+        private DialogLoading dialogLoading;
+
 
         public DeleteTask(int id) {
+            dialogLoading = new DialogLoading(ProductValueDetails.this);
             this.id = id;
         }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialogLoading.init();
+        }
+
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -520,6 +541,7 @@ public class ProductValueDetails extends AbstractAppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            dialogLoading.dismissD();
             DialogConfirm dialogConfirm = new DialogConfirm(ProductValueDetails.this);
             if(apiResponse.getStatusBoolean()){
                 dialogConfirm.init(EnumDialogOptions.CONFIRM,apiResponse.getMessage());

@@ -27,6 +27,7 @@ import br.com.tercom.Enum.EnumDialogOptions;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.R;
 import br.com.tercom.Util.DialogConfirm;
+import br.com.tercom.Util.DialogLoading;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -166,9 +167,17 @@ public class ManufacturerActivity extends AbstractAppCompatActivity {
 
         private ApiResponse<ManufactureList> apiResponse;
         private String value;
+        private DialogLoading dialogLoading;
 
         public ManufacturerTask(String value) {
+            dialogLoading = new DialogLoading(ManufacturerActivity.this);
             this.value = value;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialogLoading.init();
         }
 
         @Override
@@ -182,6 +191,7 @@ public class ManufacturerActivity extends AbstractAppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            dialogLoading.dismissD();
             if(apiResponse.getStatusBoolean()){
                 createListProviders(apiResponse.getResult());
             }
@@ -192,9 +202,17 @@ public class ManufacturerActivity extends AbstractAppCompatActivity {
 
         private ApiResponse<ManufactureList> apiResponse;
         private String value;
+        private DialogLoading dialogLoading;
 
         public AddManufacturerTask(String value) {
+            dialogLoading = new DialogLoading(ManufacturerActivity.this);
             this.value = value;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialogLoading.init();
         }
 
         @Override
@@ -208,6 +226,7 @@ public class ManufacturerActivity extends AbstractAppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            dialogLoading.dismissD();
             DialogConfirm dialogConfirm = new DialogConfirm(ManufacturerActivity.this);
             if(apiResponse.getStatusBoolean()){
                 dialogConfirm.init(EnumDialogOptions.CONFIRM,apiResponse.getMessage());
@@ -222,10 +241,18 @@ public class ManufacturerActivity extends AbstractAppCompatActivity {
         private ApiResponse<ManufactureList> apiResponse;
         private String value;
         private int id;
+        private DialogLoading dialogLoading;
 
         public UpdateManufacturerTask(String value, int id) {
+            dialogLoading = new DialogLoading(ManufacturerActivity.this);
             this.value = value;
             this.id = id;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialogLoading.init();
         }
 
         @Override
@@ -239,6 +266,7 @@ public class ManufacturerActivity extends AbstractAppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            dialogLoading.dismissD();
             DialogConfirm dialogConfirm = new DialogConfirm(ManufacturerActivity.this);
             if(apiResponse.getStatusBoolean()){
                 dialogConfirm.init(EnumDialogOptions.CONFIRM,apiResponse.getMessage());

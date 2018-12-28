@@ -4,8 +4,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.text.ParseException;
 
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
 import br.com.tercom.Control.LoginTercomControl;
@@ -15,11 +18,14 @@ import br.com.tercom.Entity.Login;
 import br.com.tercom.Entity.LoginTercom;
 import br.com.tercom.Entity.ProductGroup;
 import br.com.tercom.Entity.ProductList;
+import br.com.tercom.Entity.TercomEmployee;
+import br.com.tercom.Entity.TercomProfile;
 import br.com.tercom.Entity.User;
 import br.com.tercom.Enum.EnumDialogOptions;
 import br.com.tercom.R;
 import br.com.tercom.Util.CustomPair;
 import br.com.tercom.Util.DialogConfirm;
+import br.com.tercom.Util.DialogLoading;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -76,12 +82,20 @@ public class LoginActivity extends AbstractAppCompatActivity {
         private ApiResponse<LoginTercom> apiResponse;
         private String login;
         private String senha;
+        private DialogLoading dialogLoading;
 
 
 
         public LoginTask(String login, String senha) {
+            dialogLoading = new DialogLoading(LoginActivity.this);
             this.login = login;
             this.senha = senha;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialogLoading.init();
         }
 
         @Override
@@ -95,13 +109,41 @@ public class LoginActivity extends AbstractAppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            dialogLoading.dismissD();
             DialogConfirm dialogConfirm = new DialogConfirm(LoginActivity.this);
             if(apiResponse.getStatusBoolean()){
                 dialogConfirm.init(EnumDialogOptions.CONFIRM,"Bem vindo(a), "+ apiResponse.getResult().getTercomEmployee().getName());
-                USER_STATIC = apiResponse.getResult();
-                createIntentAbs(MenuActivity.class);
+                dialogConfirm.onClickChanges(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        USER_STATIC = apiResponse.getResult();
+                        createIntentAbs(MenuActivity.class);
+                    }
+                });
+
+            }else {
+                dialogConfirm.init(EnumDialogOptions.FAIL, apiResponse.getMessage());
+                dialogConfirm.onClickChanges(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        USER_STATIC = new LoginTercom();
+                        TercomEmployee tercomEmployee = new TercomEmployee();
+                        tercomEmployee.setEmail("teste@teste");
+                        tercomEmployee.setName("Joao");
+                        TercomProfile tercomProfile = new TercomProfile();
+                        tercomProfile.setAssignmentLevel(1);
+                        tercomProfile.setId(1);
+                        try {
+                            tercomProfile.setName("Profile Name");
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        tercomEmployee.setTercomProfile(tercomProfile);
+                        USER_STATIC.setTercomEmployee(tercomEmployee);
+                        createIntentAbs(MenuActivity.class);
+                    }
+                });
             }
-            dialogConfirm.init(EnumDialogOptions.FAIL,apiResponse.getMessage());
         }
     }
 

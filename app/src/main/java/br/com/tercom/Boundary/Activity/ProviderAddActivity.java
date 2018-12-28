@@ -22,6 +22,7 @@ import br.com.tercom.Enum.EnumFont;
 import br.com.tercom.R;
 import br.com.tercom.Util.CustomPair;
 import br.com.tercom.Util.DialogConfirm;
+import br.com.tercom.Util.DialogLoading;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -107,14 +108,21 @@ public class ProviderAddActivity extends AbstractAppCompatActivity {
         private String cnpj;
         private String site;
         private String spokesman;
+        private DialogLoading dialogLoading;
 
         public AddProviderTask(String companyName, String FantasyName, String cnpj, String site, String spokesman){
-
+            dialogLoading = new DialogLoading(ProviderAddActivity.this);
             this.companyName = companyName;
             fantasyName = FantasyName;
             this.cnpj = cnpj;
             this.site = site;
             this.spokesman = spokesman;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialogLoading.init();
         }
 
         @Override
@@ -128,6 +136,7 @@ public class ProviderAddActivity extends AbstractAppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            dialogLoading.dismissD();
             DialogConfirm dialogConfirm = new DialogConfirm(ProviderAddActivity.this);
             if(apiResponse.getStatusBoolean()){
                 dialogConfirm.init(EnumDialogOptions.CONFIRM,apiResponse.getMessage(),"Adicionar Contatos");
