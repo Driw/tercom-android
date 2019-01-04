@@ -2,14 +2,19 @@ package br.com.tercom.Entity;
 
 import java.util.Date;
 
+import br.com.tercom.Annotation.BindObject;
+
 public class TercomEmployee extends GenericEntity{
     private int id;
+    @BindObject
     private TercomProfile tercomProfile;
     private String cpf;
     private String name;
     private String email;
     private String password;
+    @BindObject
     private Phone phone;
+    @BindObject
     private Phone cellphone;
     private boolean enable;
     private Date register;

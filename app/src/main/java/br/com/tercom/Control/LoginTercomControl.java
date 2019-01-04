@@ -5,6 +5,7 @@ import android.util.Pair;
 
 import java.util.TreeMap;
 
+import br.com.tercom.Application.AppTercom;
 import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.LoginTercom;
 import br.com.tercom.Enum.EnumMethod;
@@ -23,9 +24,10 @@ public class LoginTercomControl extends GenericControl {
         map.put("email", email);
         map.put("password", password);
         //UserAgent é um valor padrão utilizado nos browsers. Alterar esse valor dependendo da resposta do Driw.
-        map.put("userAgent", "AndroidApp");
+        map.put("userAgent", "android-" + AppTercom.appVersion);
+
         try{
-            String link = getBase(EnumREST.SITE, EnumREST.LOGIN, EnumREST.LOGIN);
+            String link = getBase(EnumREST.SITE, EnumREST.LOGINTERCOM, EnumREST.LOGIN);
             Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
             CustomPair<String> jsonResult =  callJson(EnumMethod.POST,activity,completePost);
             ApiResponse<LoginTercom> providerApiResponse = new ApiResponse<>(LoginTercom.class);
@@ -46,7 +48,7 @@ public class LoginTercomControl extends GenericControl {
         map.put("idTercomEmployee", String.valueOf(idTercomEmployee));
         map.put("token", token);
         try{
-            String link = getBase(EnumREST.SITE, EnumREST.LOGIN, EnumREST.VERIFY);
+            String link = getBase(EnumREST.SITE, EnumREST.LOGINTERCOM, EnumREST.VERIFY);
             Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
             CustomPair<String> jsonResult =  callJson(EnumMethod.POST,activity,completePost);
             ApiResponse<LoginTercom> providerApiResponse = new ApiResponse<>(LoginTercom.class);
@@ -67,7 +69,7 @@ public class LoginTercomControl extends GenericControl {
         map.put("idTercomEmployee", String.valueOf(idTercomEmployee));
         map.put("token", token);
         try{
-            String link = getBase(EnumREST.SITE, EnumREST.LOGIN, EnumREST.LOGOUT);
+            String link = getBase(EnumREST.SITE, EnumREST.LOGINTERCOM, EnumREST.LOGOUT);
             Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
             CustomPair<String> jsonResult =  callJson(EnumMethod.POST,activity,completePost);
             ApiResponse<LoginTercom> providerApiResponse = new ApiResponse<>(LoginTercom.class);
