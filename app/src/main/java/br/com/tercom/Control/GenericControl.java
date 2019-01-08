@@ -29,6 +29,8 @@ import br.com.tercom.Enum.EnumREST;
 import br.com.tercom.Util.CustomPair;
 import br.com.tercom.Util.HttpUtil;
 
+import static android.content.Context.USER_SERVICE;
+import static br.com.tercom.Application.AppTercom.USER_STATIC;
 import static br.com.tercom.Util.HMAC.encrypt;
 import static br.com.tercom.Util.Util.getTimeStampFormated;
 
@@ -64,7 +66,7 @@ public abstract class GenericControl {
      */
 
     protected  String[] getValuesBase() {
-        return new String[] {AppTercom.USER_STATIC.getTercomEmployee().getEmail(), AppTercom.USER_STATIC.getTercomEmployee().getPassword()};
+        return new String[] {USER_STATIC.getTercomEmployee().getEmail(), USER_STATIC.getTercomEmployee().getPassword()};
     }
 
     /**
@@ -111,7 +113,17 @@ public abstract class GenericControl {
      * @return Retorna uma string com os parâmetros do post feitos, incluindo o token criptografado.
      */
 
-    protected String getPostValues(@Nullable TreeMap<String,String> treeMap) throws UnsupportedEncodingException {
+    protected String getPostValues(@Nullable TreeMap<String,String> treeMap) throws  UnsupportedEncodingException{
+        return getPostValues(treeMap,false);
+    }
+
+    protected String getPostValues(@Nullable TreeMap<String,String> treeMap, boolean login) throws UnsupportedEncodingException {
+
+        if(!login) {
+            treeMap.put("login_id", String.valueOf(USER_STATIC.getId()));
+            treeMap.put("login_token", USER_STATIC.getToken());
+            treeMap.put("login_tercomEmployee", String.valueOf(USER_STATIC.getTercomEmployeeId()));
+        }
 
         StringBuilder valuesBuilder = new StringBuilder();
 

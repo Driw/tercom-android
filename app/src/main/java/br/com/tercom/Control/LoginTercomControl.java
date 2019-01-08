@@ -28,7 +28,7 @@ public class LoginTercomControl extends GenericControl {
 
         try{
             String link = getBase(EnumREST.SITE, EnumREST.LOGINTERCOM, EnumREST.LOGIN);
-            Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
+            Pair<String, String> completePost = new Pair<>(link, getPostValues(map,true));
             CustomPair<String> jsonResult =  callJson(EnumMethod.POST,activity,completePost);
             ApiResponse<LoginTercom> providerApiResponse = new ApiResponse<>(LoginTercom.class);
             if(jsonResult.first){

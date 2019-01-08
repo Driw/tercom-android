@@ -1,5 +1,7 @@
 package br.com.tercom.Boundary.Activity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
@@ -7,6 +9,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
 
 import java.text.ParseException;
 
@@ -35,8 +39,13 @@ import static br.com.tercom.Util.Util.toast;
 
 public class LoginActivity extends AbstractAppCompatActivity {
 
+    private static final String STRING_REFERENCE = "login_tercom";
+    private static final String STRING_LOGIN = "login";
+
 
     private LoginTask loginTask;
+    private SharedPreferences sharedPreferences;
+
 
     @BindView(R.id.txtEmail)
     EditText txtEmail;
@@ -63,9 +72,6 @@ public class LoginActivity extends AbstractAppCompatActivity {
             }
         }
 
-
-
-
     }
 
     @Override
@@ -73,7 +79,15 @@ public class LoginActivity extends AbstractAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_boundary);
         ButterKnife.bind(this);
+           sharedPreferences =  getSharedPreferences(STRING_REFERENCE, Context.MODE_PRIVATE);
+        try {
+           String getJson = sharedPreferences.getString(STRING_LOGIN,"");
+           USER_STATIC = new Gson().fromJson(getJson,LoginTercom.class);
+           createIntentAbs(MenuActivity.class);
 
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 
@@ -83,8 +97,6 @@ public class LoginActivity extends AbstractAppCompatActivity {
         private String login;
         private String senha;
         private DialogLoading dialogLoading;
-
-
 
         public LoginTask(String login, String senha) {
             dialogLoading = new DialogLoading(LoginActivity.this);
@@ -112,37 +124,13 @@ public class LoginActivity extends AbstractAppCompatActivity {
             dialogLoading.dismissD();
             DialogConfirm dialogConfirm = new DialogConfirm(LoginActivity.this);
             if(apiResponse.getStatusBoolean()){
-                dialogConfirm.init(EnumDialogOptions.CONFIRM,"Bem vindo(a), "+ apiResponse.getResult().getTercomEmployee().getName());
-                dialogConfirm.onClickChanges(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        USER_STATIC = apiResponse.getResult();
-                        createIntentAbs(MenuActivity.class);
-                    }
-                });
-
+                USER_STATIC = apiResponse.getResult();
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(STRING_LOGIN, new Gson().toJson(USER_STATIC));
+                editor.apply();
+                createIntentAbs(MenuActivity.class);
             }else {
                 dialogConfirm.init(EnumDialogOptions.FAIL, apiResponse.getMessage());
-                dialogConfirm.onClickChanges(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        USER_STATIC = new LoginTercom();
-                        TercomEmployee tercomEmployee = new TercomEmployee();
-                        tercomEmployee.setEmail("teste@teste");
-                        tercomEmployee.setName("Joao");
-                        TercomProfile tercomProfile = new TercomProfile();
-                        tercomProfile.setAssignmentLevel(1);
-                        tercomProfile.setId(1);
-                        try {
-                            tercomProfile.setName("Profile Name");
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        tercomEmployee.setTercomProfile(tercomProfile);
-                        USER_STATIC.setTercomEmployee(tercomEmployee);
-                        createIntentAbs(MenuActivity.class);
-                    }
-                });
             }
         }
     }
