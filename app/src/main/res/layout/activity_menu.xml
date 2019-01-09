@@ -146,7 +146,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/txtWelcome"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/primary"
@@ -170,7 +170,7 @@
         app:cardCornerRadius="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4">
+        app:layout_constraintTop_toBottomOf="@+id/txtWelcome">
 
         <TextView
             android:id="@+id/textView13"

@@ -30,6 +30,7 @@ import br.com.tercom.R;
 import br.com.tercom.Util.CustomPair;
 import br.com.tercom.Util.DialogConfirm;
 import br.com.tercom.Util.DialogLoading;
+import br.com.tercom.Util.TextUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -82,8 +83,10 @@ public class LoginActivity extends AbstractAppCompatActivity {
            sharedPreferences =  getSharedPreferences(STRING_REFERENCE, Context.MODE_PRIVATE);
         try {
            String getJson = sharedPreferences.getString(STRING_LOGIN,"");
-           USER_STATIC = new Gson().fromJson(getJson,LoginTercom.class);
-           createIntentAbs(MenuActivity.class);
+           if(!TextUtils.isEmpty(getJson)) {
+               USER_STATIC = new Gson().fromJson(getJson, LoginTercom.class);
+               createIntentAbs(MenuActivity.class);
+           }
 
         }catch (Exception e){
             e.printStackTrace();
@@ -92,7 +95,7 @@ public class LoginActivity extends AbstractAppCompatActivity {
 
 
 
-    private class LoginTask extends AsyncTask<Void,Void,Void>{
+       private class LoginTask extends AsyncTask<Void,Void,Void>{
         private ApiResponse<LoginTercom> apiResponse;
         private String login;
         private String senha;
