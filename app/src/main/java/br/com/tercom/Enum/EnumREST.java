@@ -21,6 +21,7 @@ public enum EnumREST {
     SERVICEPRICE("servicePrice"),
     PERMISSION("permission"),
     LOGINTERCOM("loginTercom"),
+    MANAGEPERMISSIONS("managePermissions"),
 
 
 
@@ -51,7 +52,8 @@ public enum EnumREST {
     GROUP("group"),
     NAME("name"),
     SUBGROUP("subgroup"),
-    SECTOR("sector");
+    SECTOR("sector"),
+    TERCOM("tercom");
 
 
     public String path;
