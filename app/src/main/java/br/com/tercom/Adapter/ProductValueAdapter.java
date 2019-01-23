@@ -1,6 +1,7 @@
 package br.com.tercom.Adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +12,15 @@ import java.util.Locale;
 import br.com.tercom.Entity.ProductValue;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.R;
+import butterknife.BindView;
+
 public class ProductValueAdapter extends RecyclerView.Adapter<ProductValueAdapter.ViewHolder> {
     private LayoutInflater layoutInflater;
     private ArrayList<ProductValue> productValues;
     private Context context;
+
+
+
     private RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;
     public void setmRecyclerViewOnClickListenerHack(RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack) {
         this.mRecyclerViewOnClickListenerHack = mRecyclerViewOnClickListenerHack;
@@ -32,6 +38,7 @@ public class ProductValueAdapter extends RecyclerView.Adapter<ProductValueAdapte
     }
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.cardListItemValue.setCardBackgroundColor(context.getResources().getColor(productValues.get(position).isSelected()? R.color.colorOrange: R.color.colorAccent));
         holder.productName.setText(productValues.get(position).getName());
         holder.productPackage.setText(String.format(Locale.getDefault(),"%s %s",productValues.get(position).getAmount(),productValues.get(position).getProduct().getName()));
         holder.productPrice.setText(String.format(Locale.getDefault(),"R$ %.2f",productValues.get(position).getPrice()).replace(".", ","));
@@ -48,9 +55,11 @@ public class ProductValueAdapter extends RecyclerView.Adapter<ProductValueAdapte
         public TextView productPrice;
         public TextView productManufacturer;
         public TextView productProvider;
+        public CardView cardListItemValue;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            cardListItemValue = itemView.findViewById(R.id.cardListItemValue);
             productName = itemView.findViewById(R.id.productName);
             productPackage = itemView.findViewById(R.id.productPackage);
             productPrice = itemView.findViewById(R.id.servicePrice);
