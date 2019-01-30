@@ -22,6 +22,9 @@ public enum EnumREST {
     PERMISSION("permission"),
     LOGINTERCOM("loginTercom"),
     MANAGEPERMISSIONS("managePermissions"),
+    ORDERREQUEST("orderRequest"),
+    ORDERITEMPRODUCT("orderItemProduct"),
+    ORDERITEMSERVICE("orderItemService"),
 
 
 
