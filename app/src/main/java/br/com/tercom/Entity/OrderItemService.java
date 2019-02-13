@@ -1,8 +1,9 @@
 package br.com.tercom.Entity;
 
 import br.com.tercom.Annotation.BindObject;
+import br.com.tercom.Interface.iNewOrderItem;
 
-public class OrderItemService extends GenericEntity {
+public class OrderItemService extends GenericEntity implements iNewOrderItem {
 
     public static final int MAX_OBSERVATIONS_LEN = 128;
     private int id;
@@ -19,6 +20,15 @@ public class OrderItemService extends GenericEntity {
 
     public int getId() {
         return id;
+    }
+
+    @Override
+    public String getName() {
+        if (service != null){
+            return service.getName();
+        } else {
+            return "";
+        }
     }
 
     public void setId(int id) {
@@ -55,6 +65,11 @@ public class OrderItemService extends GenericEntity {
 
     public String getObservations() {
         return observations;
+    }
+
+    @Override
+    public Manufacture getManufacturer() {
+        return null;
     }
 
     public void setObservations(String observations) {

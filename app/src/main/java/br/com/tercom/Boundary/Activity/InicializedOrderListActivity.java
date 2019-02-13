@@ -13,9 +13,12 @@ import br.com.tercom.Adapter.DetailOrderListAdapter;
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
 import br.com.tercom.Entity.Manufacture;
 import br.com.tercom.Entity.OrderItemProduct;
+import br.com.tercom.Entity.OrderItemService;
 import br.com.tercom.Entity.Product;
 import br.com.tercom.Entity.Provider;
+import br.com.tercom.Entity.Services;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
+import br.com.tercom.Interface.iNewOrderItem;
 import br.com.tercom.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,7 +26,7 @@ import butterknife.OnClick;
 
 public class InicializedOrderListActivity extends AbstractAppCompatActivity {
 
-    private ArrayList<OrderItemProduct> orderItemProducts;
+    private ArrayList<iNewOrderItem> list;
     private Product product;
     private Provider provider;
     private Manufacture manufacturer;
@@ -31,7 +34,8 @@ public class InicializedOrderListActivity extends AbstractAppCompatActivity {
     @BindView(R.id.rv_InicializedOrderDetail)
     RecyclerView rv_InicializedOrderDetail;
 
-    @OnClick(R.id.btnRespondOrderFromList) void finilizeOrder(){
+    @OnClick(R.id.btnRespondOrderFromList)
+    void finilizeOrder() {
     }
 
     @Override
@@ -41,7 +45,7 @@ public class InicializedOrderListActivity extends AbstractAppCompatActivity {
         ButterKnife.bind(this);
         //createToolbar();
         populate();
-        DetailOrderListAdapter detailOrderListAdapter = new DetailOrderListAdapter(this, orderItemProducts);
+        DetailOrderListAdapter detailOrderListAdapter = new DetailOrderListAdapter(this, list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rv_InicializedOrderDetail.setLayoutManager(layoutManager);
         rv_InicializedOrderDetail.setAdapter(detailOrderListAdapter);
@@ -53,22 +57,33 @@ public class InicializedOrderListActivity extends AbstractAppCompatActivity {
         });
     }
 
-    public void populate(){
-        orderItemProducts = new ArrayList<OrderItemProduct>();
-        for(int i = 0; i < 5; i++){
-            OrderItemProduct orderItemProductPopulate = new OrderItemProduct();
-            product = new Product();
-            provider = new Provider();
-            manufacturer = new Manufacture();
-            product.setName("Teste");
-            provider.setFantasyName("Teste");
-            manufacturer.setFantasyName("Teste");
-            orderItemProductPopulate.setProduct(product);
-            orderItemProductPopulate.setProvider(provider);
-            orderItemProductPopulate.setManufacturer(manufacturer);
-            orderItemProductPopulate.setObservations("Teste");
-            orderItemProducts.add(orderItemProductPopulate);
-        }
+    public void populate() {
+        list = new ArrayList<iNewOrderItem>();
+        OrderItemProduct orderItemProduct = new OrderItemProduct();
+        OrderItemService orderItemService = new OrderItemService();
+        Product product = new Product();
+        Services services = new Services();
+        Provider provider = new Provider();
+        Manufacture manufacture = new Manufacture();
+
+        product.setName("Produto Teste");
+        services.setName("Serviço Teste");
+        provider.setFantasyName("Fornecedor Teste");
+        manufacture.setFantasyName("Fabricante Teste");
+
+        orderItemProduct.setId(1);
+        orderItemProduct.setProduct(product);
+        orderItemProduct.setProvider(provider);
+        orderItemProduct.setManufacturer(manufacture);
+        orderItemProduct.setObservations("teste");
+
+        orderItemService.setId(1);
+        orderItemService.setService(services);
+        orderItemService.setProvider(provider);
+        orderItemService.setObservations("teste");
+
+        list.add(orderItemProduct);
+        list.add(orderItemService);
     }
 
 }

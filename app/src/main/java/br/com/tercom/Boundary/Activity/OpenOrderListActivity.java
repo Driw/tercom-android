@@ -14,6 +14,7 @@ import br.com.tercom.Entity.Manufacture;
 import br.com.tercom.Entity.OrderItemProduct;
 import br.com.tercom.Entity.Product;
 import br.com.tercom.Entity.Provider;
+import br.com.tercom.Interface.iNewOrderItem;
 import br.com.tercom.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,7 +22,7 @@ import butterknife.OnClick;
 
 public class OpenOrderListActivity extends AbstractAppCompatActivity {
 
-    private ArrayList<OrderItemProduct> orderItemProducts;
+    private ArrayList<iNewOrderItem> list;
     private Product product;
     private Provider provider;
     private Manufacture manufacturer;
@@ -40,14 +41,14 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
         ButterKnife.bind(this);
         //createToolbar();
         populate();
-        DetailOrderListAdapter detailOrderListAdapter = new DetailOrderListAdapter(this, orderItemProducts);
+        DetailOrderListAdapter detailOrderListAdapter = new DetailOrderListAdapter(this, list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rv_OpenOrderDetail.setLayoutManager(layoutManager);
         rv_OpenOrderDetail.setAdapter(detailOrderListAdapter);
     }
 
     public void populate(){
-        orderItemProducts = new ArrayList<OrderItemProduct>();
+        list = new ArrayList<iNewOrderItem>();
         for(int i = 0; i < 5; i++){
             OrderItemProduct orderItemProductPopulate = new OrderItemProduct();
             product = new Product();
@@ -60,7 +61,7 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
             orderItemProductPopulate.setProvider(provider);
             orderItemProductPopulate.setManufacturer(manufacturer);
             orderItemProductPopulate.setObservations("Teste");
-            orderItemProducts.add(orderItemProductPopulate);
+            list.add(orderItemProductPopulate);
         }
     }
 
