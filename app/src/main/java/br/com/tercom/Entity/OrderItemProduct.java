@@ -1,6 +1,8 @@
 package br.com.tercom.Entity;
 
-public class OrderItemProduct extends GenericEntity {
+import br.com.tercom.Interface.iNewOrderItem;
+
+public class OrderItemProduct extends GenericEntity implements iNewOrderItem {
     public final int MAX_OBSERVATION_LENS = 128;
 
     private int id;
@@ -17,6 +19,15 @@ public class OrderItemProduct extends GenericEntity {
 
     public int getId() {
         return id;
+    }
+
+    @Override
+    public String getName() {
+        if (product != null) {
+            return product.getName();
+        } else {
+            return "";
+        }
     }
 
     public void setId(int id) {

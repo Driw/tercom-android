@@ -12,12 +12,13 @@ import java.util.ArrayList;
 
 import br.com.tercom.Entity.OrderItemProduct;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
+import br.com.tercom.Interface.iNewOrderItem;
 import br.com.tercom.R;
 
 public class DetailOrderListAdapter extends RecyclerView.Adapter<DetailOrderListAdapter.ViewHolder> {
 
     private LayoutInflater layoutInflater;
-    private ArrayList<OrderItemProduct> orderItemProducts;
+    private ArrayList<iNewOrderItem> orderItemList;
     private Context context;
 
     private RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;
@@ -26,10 +27,10 @@ public class DetailOrderListAdapter extends RecyclerView.Adapter<DetailOrderList
         this.mRecyclerViewOnClickListenerHack = mRecyclerViewOnClickListenerHack;
     }
 
-    public DetailOrderListAdapter(Context c, ArrayList<OrderItemProduct> orderItemProducts){
+    public DetailOrderListAdapter(Context c, ArrayList<iNewOrderItem> orderItemProducts){
         layoutInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.context = c;
-        this.orderItemProducts = orderItemProducts;
+        this.orderItemList = orderItemProducts;
     }
 
     @NonNull
@@ -41,15 +42,20 @@ public class DetailOrderListAdapter extends RecyclerView.Adapter<DetailOrderList
 
     @Override
     public void onBindViewHolder(@NonNull DetailOrderListAdapter.ViewHolder holder, int position) {
-        holder.txtOrderDetailProductName.setText(orderItemProducts.get(position).getProduct().getName());
-        holder.txtOrderDetailManufacturerName.setText(orderItemProducts.get(position).getManufacturer().getFantasyName());
-        holder.txtOrderDetailProviderName.setText(orderItemProducts.get(position).getProvider().getFantasyName());
-        holder.txtOrderDetailAddInfo.setText(orderItemProducts.get(position).getObservations());
+        holder.txtOrderDetailProductName.setText(orderItemList.get(position).getName());
+        holder.txtOrderDetailProviderName.setText(orderItemList.get(position).getProvider().getFantasyName());
+        holder.txtOrderDetailAddInfo.setText(orderItemList.get(position).getObservations());
+        if (orderItemList.get(position).getManufacturer() != null){
+            holder.txtOrderDetailManufacturerName.setText(orderItemList.get(position).getManufacturer().getFantasyName());
+        } else {
+            holder.txtOrderDetailManufacturerName.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
     public int getItemCount() {
-        return orderItemProducts.size();
+        return orderItemList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
