@@ -25,6 +25,9 @@ public enum EnumREST {
     ORDERREQUEST("orderRequest"),
     ORDERITEMPRODUCT("orderItemProduct"),
     ORDERITEMSERVICE("orderItemService"),
+    ORDERQUOTE("orderQuote"),
+    QUOTEDPRODUCTPRICES("quotedProductPrice"),
+    QUOTEDSERVICEPRICE("quotedServicePrice"),
 
 
 
@@ -48,6 +51,8 @@ public enum EnumREST {
     LOGIN("login"),
     VERIFY("verify"),
     LOGOUT("logout"),
+    QUOTE("quote"),
+    PRICES("prices"),
 
     //FILTERS
     FAMILY("family"),
