@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import br.com.tercom.Entity.OrderItemProduct;
+import br.com.tercom.Entity.OrderRequest;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.Interface.iNewOrderItem;
 import br.com.tercom.R;
@@ -19,6 +20,7 @@ public class DetailOrderListAdapter extends RecyclerView.Adapter<DetailOrderList
 
     private LayoutInflater layoutInflater;
     private ArrayList<iNewOrderItem> orderItemList;
+    private ArrayList<OrderRequest> orderRequests = new ArrayList<OrderRequest>();
     private Context context;
 
     private RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;
@@ -45,13 +47,39 @@ public class DetailOrderListAdapter extends RecyclerView.Adapter<DetailOrderList
         holder.txtOrderDetailProductName.setText(orderItemList.get(position).getName());
         holder.txtOrderDetailProviderName.setText(orderItemList.get(position).getProvider().getFantasyName());
         holder.txtOrderDetailAddInfo.setText(orderItemList.get(position).getObservations());
-        if (orderItemList.get(position).getManufacturer() != null){
+        if (isProduct(position)){
             holder.txtOrderDetailManufacturerName.setText(orderItemList.get(position).getManufacturer().getFantasyName());
         } else {
             holder.txtOrderDetailManufacturerName.setVisibility(View.GONE);
         }
-
+        /*if (isOrderOpen(position)){
+            holder.txtOrderDetailListRequesterName.setVisibility(View.GONE);
+            holder.txtOrderDetailListCompanyName.setVisibility(View.GONE);
+            holder.txtOrderDetailListReceivedBy.setVisibility(View.GONE);
+            holder.txtOrderDetailListStatus.setVisibility(View.GONE);
+        } else {
+            holder.txtOrderDetailListRequesterName.setText(orderRequests.get(position).getCustomerEmployee().getName());
+            holder.txtOrderDetailListCompanyName.setText(orderRequests.get(position).getCustomerEmployee().getEmail()); //NOME DA EMPRESA??
+            holder.txtOrderDetailListReceivedBy.setText(orderRequests.get(position).getTercomEmployee().getName());
+            holder.txtOrderDetailListStatus.setText(orderRequests.get(position).getStatus());
+        }*/
     }
+
+    private boolean isProduct(int position){
+        if (orderItemList.get(position).getManufacturer() != null){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /*private boolean isOrderOpen(int position){
+        if(orderRequests.get(position).getStatus() < 4){
+            return true;
+        } else {
+            return false;
+        }
+    }*/
 
     @Override
     public int getItemCount() {
@@ -64,6 +92,10 @@ public class DetailOrderListAdapter extends RecyclerView.Adapter<DetailOrderList
         private TextView txtOrderDetailProductName;
         private TextView txtOrderDetailManufacturerName;
         private TextView txtOrderDetailAddInfo;
+        private TextView txtOrderDetailListRequesterName;
+        private TextView txtOrderDetailListCompanyName;
+        private TextView txtOrderDetailListReceivedBy;
+        private TextView txtOrderDetailListStatus;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -71,6 +103,10 @@ public class DetailOrderListAdapter extends RecyclerView.Adapter<DetailOrderList
             txtOrderDetailProductName = itemView.findViewById(R.id.txtOrderDetailProductName);
             txtOrderDetailManufacturerName = itemView.findViewById(R.id.txtOrderDetailManufacturerName);
             txtOrderDetailAddInfo = itemView.findViewById(R.id.txtOrderDetailAddInfo);
+            txtOrderDetailListRequesterName = itemView.findViewById(R.id.txtOrderDetailListRequesterName);
+            txtOrderDetailListCompanyName = itemView.findViewById(R.id.txtOrderDetailListCompanyName);
+            txtOrderDetailListReceivedBy = itemView.findViewById(R.id.txtOrderDetailListReceivedBy);
+            txtOrderDetailListStatus = itemView.findViewById(R.id.txtOrderDetailListStatus);
             itemView.setOnClickListener(this);
         }
 

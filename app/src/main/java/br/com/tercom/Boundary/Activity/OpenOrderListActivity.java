@@ -5,6 +5,7 @@ import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import java.util.ArrayList;
 
@@ -14,6 +15,7 @@ import br.com.tercom.Entity.Manufacture;
 import br.com.tercom.Entity.OrderItemProduct;
 import br.com.tercom.Entity.Product;
 import br.com.tercom.Entity.Provider;
+import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.Interface.iNewOrderItem;
 import br.com.tercom.R;
 import butterknife.BindView;
@@ -30,10 +32,6 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
     @BindView(R.id.rv_OpenOrderDetail)
     RecyclerView rv_OpenOrderDetail;
 
-    @OnClick(R.id.btnAttributeOrderFromList) void inicializeOrder(){
-        createIntentAbs(InicializedOrderListActivity.class);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +43,12 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rv_OpenOrderDetail.setLayoutManager(layoutManager);
         rv_OpenOrderDetail.setAdapter(detailOrderListAdapter);
+        detailOrderListAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
+            @Override
+            public void onClickListener(View view, int position) {
+                createIntentAbs(InicializedOrderListActivity.class);
+            }
+        });
     }
 
     public void populate(){
