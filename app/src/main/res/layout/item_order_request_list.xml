@@ -17,57 +17,54 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/txtOrderDetailProviderName"
+                android:id="@+id/txtOrderDetailListStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="Nome do Fornecedor"
-                app:layout_constraintBottom_toTopOf="@+id/txtOrderDetailAddInfo"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtOrderDetailManufacturerName" />
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="Status"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtOrderDetailListReceivedBy" />
 
             <TextView
-                android:id="@+id/txtOrderDetailProductName"
+                android:id="@+id/txtOrderDetailListRequesterName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="Nome do Item"
-                app:layout_constraintBottom_toTopOf="@+id/txtOrderDetailManufacturerName"
+                android:text="Nome do solicitante"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/txtOrderDetailManufacturerName"
+                android:id="@+id/txtOrderDetailListCompanyName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="Nome do Fabricante"
-                app:layout_constraintBottom_toTopOf="@+id/txtOrderDetailProviderName"
+                android:text="Nome da Empresa"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtOrderDetailProductName" />
+                app:layout_constraintTop_toBottomOf="@+id/txtOrderDetailListRequesterName" />
 
             <TextView
-                android:id="@+id/txtOrderDetailAddInfo"
+                android:id="@+id/txtOrderDetailListReceivedBy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:text="Informação Adicional"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtOrderDetailProviderName" />
-
+                android:layout_marginEnd="8dp"
+                android:text="Nome do responsável"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtOrderDetailListCompanyName" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>

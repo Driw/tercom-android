@@ -20,7 +20,6 @@ public class DetailOrderListAdapter extends RecyclerView.Adapter<DetailOrderList
 
     private LayoutInflater layoutInflater;
     private ArrayList<iNewOrderItem> orderItemList;
-    private ArrayList<OrderRequest> orderRequests = new ArrayList<OrderRequest>();
     private Context context;
 
     private RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;
@@ -52,17 +51,7 @@ public class DetailOrderListAdapter extends RecyclerView.Adapter<DetailOrderList
         } else {
             holder.txtOrderDetailManufacturerName.setVisibility(View.GONE);
         }
-        /*if (isOrderOpen(position)){
-            holder.txtOrderDetailListRequesterName.setVisibility(View.GONE);
-            holder.txtOrderDetailListCompanyName.setVisibility(View.GONE);
-            holder.txtOrderDetailListReceivedBy.setVisibility(View.GONE);
-            holder.txtOrderDetailListStatus.setVisibility(View.GONE);
-        } else {
-            holder.txtOrderDetailListRequesterName.setText(orderRequests.get(position).getCustomerEmployee().getName());
-            holder.txtOrderDetailListCompanyName.setText(orderRequests.get(position).getCustomerEmployee().getEmail()); //NOME DA EMPRESA??
-            holder.txtOrderDetailListReceivedBy.setText(orderRequests.get(position).getTercomEmployee().getName());
-            holder.txtOrderDetailListStatus.setText(orderRequests.get(position).getStatus());
-        }*/
+
     }
 
     private boolean isProduct(int position){
@@ -72,14 +61,6 @@ public class DetailOrderListAdapter extends RecyclerView.Adapter<DetailOrderList
             return false;
         }
     }
-
-    /*private boolean isOrderOpen(int position){
-        if(orderRequests.get(position).getStatus() < 4){
-            return true;
-        } else {
-            return false;
-        }
-    }*/
 
     @Override
     public int getItemCount() {
@@ -92,10 +73,6 @@ public class DetailOrderListAdapter extends RecyclerView.Adapter<DetailOrderList
         private TextView txtOrderDetailProductName;
         private TextView txtOrderDetailManufacturerName;
         private TextView txtOrderDetailAddInfo;
-        private TextView txtOrderDetailListRequesterName;
-        private TextView txtOrderDetailListCompanyName;
-        private TextView txtOrderDetailListReceivedBy;
-        private TextView txtOrderDetailListStatus;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -103,10 +80,6 @@ public class DetailOrderListAdapter extends RecyclerView.Adapter<DetailOrderList
             txtOrderDetailProductName = itemView.findViewById(R.id.txtOrderDetailProductName);
             txtOrderDetailManufacturerName = itemView.findViewById(R.id.txtOrderDetailManufacturerName);
             txtOrderDetailAddInfo = itemView.findViewById(R.id.txtOrderDetailAddInfo);
-            txtOrderDetailListRequesterName = itemView.findViewById(R.id.txtOrderDetailListRequesterName);
-            txtOrderDetailListCompanyName = itemView.findViewById(R.id.txtOrderDetailListCompanyName);
-            txtOrderDetailListReceivedBy = itemView.findViewById(R.id.txtOrderDetailListReceivedBy);
-            txtOrderDetailListStatus = itemView.findViewById(R.id.txtOrderDetailListStatus);
             itemView.setOnClickListener(this);
         }
 

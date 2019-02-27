@@ -33,6 +33,9 @@ public class MenuActivity extends AbstractAppCompatActivity {
     @OnClick(R.id.cardPermissions) void sendToPermissions (){
         createIntentAbs(PermissionsActivity.class);
     }
+    @OnClick(R.id.txtMenuOrder) void sendToOrder (){
+        createIntentAbs(OpenOrderListActivity.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

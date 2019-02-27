@@ -54,7 +54,7 @@ public class LoginActivity extends AbstractAppCompatActivity {
     @BindView(R.id.txtPass)
     EditText txtPass;
 
-    /*@OnClick(R.id.btn_login) void login(){
+    @OnClick(R.id.btn_login) void login(){
         boolean result = true;
         if(TextUtils.isEmpty(txtEmail.getText().toString())){
             result = false;
@@ -73,10 +73,6 @@ public class LoginActivity extends AbstractAppCompatActivity {
             }
         }
 
-    }*/
-
-    @OnClick(R.id.btn_login) void loginDud(){
-        createIntentAbs(MenuActivity.class);
     }
 
     @Override
