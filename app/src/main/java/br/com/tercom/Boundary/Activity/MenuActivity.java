@@ -6,6 +6,7 @@ import android.widget.TextView;
 import java.util.Locale;
 
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
+import br.com.tercom.Entity.ManufactureList;
 import br.com.tercom.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,6 +19,9 @@ public class MenuActivity extends AbstractAppCompatActivity {
     @BindView(R.id.txtWelcome)
     TextView txtWelcome;
 
+    @OnClick(R.id.cardQuotation) void sendToQuotation (){
+         createIntentAbs(OrderMainActivity.class);
+    }
     @OnClick(R.id.cardProduct) void sendToProduct (){
          createIntentAbs(ProductListActivity.class);
     }
@@ -28,7 +32,7 @@ public class MenuActivity extends AbstractAppCompatActivity {
         createIntentAbs(ProviderListActivity.class);
     }
     @OnClick(R.id.cardManufacturer) void sendToManufacturer (){
-        createIntentAbs(OrderMainActivity.class);
+        createIntentAbs(ManufacturerActivity.class);
     }
     @OnClick(R.id.cardPermissions) void sendToPermissions (){
         createIntentAbs(PermissionsActivity.class);

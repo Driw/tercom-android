@@ -161,7 +161,7 @@
         app:layout_constraintTop_toBottomOf="@+id/include_toolbar" />
 
     <android.support.v7.widget.CardView
-        android:id="@+id/cardView14"
+        android:id="@+id/cardQuotation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
@@ -193,7 +193,7 @@
         app:cardCornerRadius="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView14">
+        app:layout_constraintTop_toBottomOf="@+id/cardQuotation">
 
         <TextView
             android:id="@+id/cardPermissions"

@@ -42,7 +42,8 @@ public class OrderListAllAdapter extends RecyclerView.Adapter<OrderListAllAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.txtOrderDetailListRequesterName.setText(orderRequests.get(position).getCustomerEmployee().getName());
-        holder.txtOrderDetailListStatus.setText(String.valueOf(orderRequests.get(position).getStatus()));
+        holder.txtOrderDetailListCompanyName.setVisibility(View.GONE);
+        holder.txtOrderDetailListStatus.setText(String.valueOf(orderRequests.get(position).getStatusMessage()));
         if (isOrderOpen(position)){
             holder.txtOrderDetailListReceivedBy.setVisibility(View.GONE);
         } else {

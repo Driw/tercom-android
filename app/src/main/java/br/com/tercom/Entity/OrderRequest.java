@@ -2,6 +2,9 @@ package br.com.tercom.Entity;
 
 import java.util.Calendar;
 
+import br.com.tercom.Annotation.BindObject;
+import butterknife.BindView;
+
 public class OrderRequest extends GenericEntity {
     public final Float MIN_BUDGET = 0f;
     public final int ORS_NONE = 0;
@@ -16,9 +19,13 @@ public class OrderRequest extends GenericEntity {
     private Float budget;
     private int status;
     private String statusMessage;
-    private String register;
-    private String expiration;
+    @BindObject
+    private Register register;
+    @BindObject
+    private Expiration expiration;
+    @BindObject
     private CustomerEmployee customerEmployee;
+    @BindObject
     private TercomEmployee tercomEmployee;
 
     public int getId() {
@@ -51,35 +58,44 @@ public class OrderRequest extends GenericEntity {
     }
 
     public String getStatusMessage() {
-        return statusMessage;
-    }
+        switch(status){
+            default:
+            case ORS_NONE:
+                return "nada acontecendo";
+            case ORS_CANCEL_BY_CUSTOMER:
+                return "cancelado pelo cliente";
+            case ORS_CANCEL_BY_TERCOM:
+                return "cancelado pela Tercom";
+            case ORS_QUEUED:
+                return "Na fila";
+            case ORS_QUOTING:
+                return "Em cotação";
+            case ORS_QUOTED:
+                return "Pedido Cotado";
+            case ORS_DONE:
+                return "Pedido Finalizado";
 
+        }
+    }
     public OrderRequest setStatusMessage(String statusMessage) {
         this.statusMessage = statusMessage;
         return this;
     }
 
-    public String getRegister() {
+    public Register getRegister() {
         return register;
     }
 
-    public OrderRequest setRegister(String register) {
+    public void setRegister(Register register) {
         this.register = register;
-        return this;
     }
 
-    public void setRegisterCurrent(){
-        register = String.valueOf(Calendar.getInstance().getTimeInMillis());
-    }
-
-    public String getExpiration() {
+    public Expiration getExpiration() {
         return expiration;
     }
 
-    public OrderRequest setExpiration(String expiration) {
-        //TODO: Rever - Não entendi como funciona
+    public void setExpiration(Expiration expiration) {
         this.expiration = expiration;
-        return this;
     }
 
     public CustomerEmployee getCustomerEmployee() {
