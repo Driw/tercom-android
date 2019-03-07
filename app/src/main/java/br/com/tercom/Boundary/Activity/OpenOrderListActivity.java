@@ -3,9 +3,11 @@ package br.com.tercom.Boundary.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 
 import java.util.ArrayList;
@@ -42,16 +44,60 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
     RecyclerView rv_OpenOrderDetail;
     @BindView(R.id.btnOrderListAll)
     Button btnOrderListAll;
+    @BindView(R.id.btnOrderListOpen)
+    Button btnOrderListOpen;
+    @BindView(R.id.btnOrderListInicialized)
+    Button btnOrderListInicialized;
 
     @OnClick(R.id.btnOrderListAll) void displayAllOrders(){
-
+        setSelected(typeAll);
+        btnBarmanager();
         setAdapter(typeAll);
     }
     @OnClick(R.id.btnOrderListOpen) void displayOpenOrder(){
+        setSelected(typeOpen);
+        btnBarmanager();
         setAdapter(typeOpen);
     }
     @OnClick(R.id.btnOrderListInicialized) void displayInicializedOrder(){
+        setSelected(typeInitialized);
+        btnBarmanager();
         setAdapter(typeInitialized);
+    }
+
+    private void btnBarmanager(){
+        if (btnOrderListAll.isSelected()){
+            btnOrderListAll.setBackgroundColor(getResources().getColor(R.color.colorGreenButton));
+        } else {
+            btnOrderListAll.setBackgroundColor(getResources().getColor(R.color.cardview_shadow_end_color));
+        }
+        if (btnOrderListOpen.isSelected()){
+            btnOrderListOpen.setBackgroundColor(getResources().getColor(R.color.colorGreenButton));
+        } else {
+            btnOrderListOpen.setBackgroundColor(getResources().getColor(R.color.cardview_shadow_end_color));
+        }
+        if (btnOrderListInicialized.isSelected()){
+            btnOrderListInicialized.setBackgroundColor(getResources().getColor(R.color.colorGreenButton));
+        } else {
+            btnOrderListInicialized.setBackgroundColor(getResources().getColor(R.color.cardview_shadow_end_color));
+        }
+        /*switch (selectedType){
+            case typeAll:
+                btnOrderListAll.setBackgroundColor(getResources().getColor(R.color.colorGreenButton));
+                btnOrderListOpen.setBackgroundColor(getResources().getColor(R.color.cardview_shadow_end_color));
+                btnOrderListInicialized.setBackgroundColor(getResources().getColor(R.color.cardview_shadow_end_color));
+                break;
+            case typeOpen:
+                btnOrderListOpen.setBackgroundColor(getResources().getColor(R.color.colorGreenButton));
+                btnOrderListAll.setBackgroundColor(getResources().getColor(R.color.cardview_shadow_end_color));
+                btnOrderListInicialized.setBackgroundColor(getResources().getColor(R.color.cardview_shadow_end_color));
+                break;
+            case typeInitialized:
+                btnOrderListInicialized.setBackgroundColor(getResources().getColor(R.color.colorGreenButton));
+                btnOrderListOpen.setBackgroundColor(getResources().getColor(R.color.cardview_shadow_end_color));
+                btnOrderListAll.setBackgroundColor(getResources().getColor(R.color.cardview_shadow_end_color));
+                break;
+        }*/
     }
 
     private void setAdapter(int type){
@@ -115,12 +161,12 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
         }
     }
 
-//    private void setSelected(int type){
-//        btnOrderListAll.setSelected(type == typeAll);
-//        btnOrderListAll.setSelected(type == typeInitialized);
-//        btnOrderListAll.setSelected(type == typeOpen);
-//
-//    }
+    private void setSelected(int type){
+        btnOrderListAll.setSelected(type == typeAll);
+        btnOrderListInicialized.setSelected(type == typeInitialized);
+        btnOrderListOpen.setSelected(type == typeOpen);
+        selectedType = type;
+    }
 
     private class GetOrdersTask extends AsyncTask<Void,Void,Void>{
         private ApiResponse<OrderRequestList> apiResponse;
