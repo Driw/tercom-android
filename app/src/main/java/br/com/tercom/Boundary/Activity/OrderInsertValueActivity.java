@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import br.com.tercom.Adapter.ProductValueAdapter;
+import br.com.tercom.Adapter.ServicePriceAdapter;
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
 import br.com.tercom.Entity.LastUpdate;
 import br.com.tercom.Entity.Manufacture;
@@ -21,6 +22,7 @@ import br.com.tercom.Entity.ProductPackage;
 import br.com.tercom.Entity.ProductType;
 import br.com.tercom.Entity.ProductValue;
 import br.com.tercom.Entity.Provider;
+import br.com.tercom.Entity.ServicePrice;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.R;
 import butterknife.BindView;
@@ -29,7 +31,12 @@ import butterknife.OnClick;
 
 public class OrderInsertValueActivity extends AbstractAppCompatActivity {
 
-    private ArrayList<ProductValue> providers;
+    private static int selectedItemType;
+    private static final int typeProduct = 1;
+    private static final int typeService = 2;
+
+    ArrayList<ProductValue> produtos;
+    ArrayList<ServicePrice> services;
 
     @BindView(R.id.rv_OrderInsertValue)
     RecyclerView rv_OrderInsertValue;
@@ -47,23 +54,53 @@ public class OrderInsertValueActivity extends AbstractAppCompatActivity {
         ButterKnife.bind(this);
         //createToolbar();
         populate();
-        final ProductValueAdapter productValueAdapter = new ProductValueAdapter(this, providers);
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
-        rv_OrderInsertValue.setLayoutManager(layoutManager);
-        rv_OrderInsertValue.setAdapter(productValueAdapter);
-        productValueAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
-            @Override
-            public void onClickListener(View view, int position) {
-                if (providers.get(position).isSelected()){
-                    providers.get(position).setSelected(false);
-                } else {providers.get(position).setSelected(true);}
-                productValueAdapter.notifyItemChanged(position);
-            }
-        });
+        if (produtos.size() == 0){
+            selectedItemType = typeService;
+        } else {
+            selectedItemType = typeProduct;
+        }
+        setAdapter(selectedItemType);
+    }
+
+    private void setAdapter(int type){
+        if(rv_OrderInsertValue.getAdapter() != null){
+            rv_OrderInsertValue.setAdapter(null);
+        }
+        switch (type){
+            case typeProduct:
+                final ProductValueAdapter productValueAdapter = new ProductValueAdapter(this, produtos);
+                GridLayoutManager layoutManagerProducts = new GridLayoutManager(this, 2);
+                rv_OrderInsertValue.setLayoutManager(layoutManagerProducts);
+                rv_OrderInsertValue.setAdapter(productValueAdapter);
+                productValueAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
+                    @Override
+                    public void onClickListener(View view, int position) {
+                        if (produtos.get(position).isSelected()){
+                            produtos.get(position).setSelected(false);
+                        } else {produtos.get(position).setSelected(true);}
+                        productValueAdapter.notifyItemChanged(position);
+                    }
+                });
+                break;
+            case typeService:
+                final ServicePriceAdapter servicePriceAdapter = new ServicePriceAdapter(this, services);
+                GridLayoutManager layoutManagerServices = new GridLayoutManager(this, 2);
+                rv_OrderInsertValue.setLayoutManager(layoutManagerServices);
+                rv_OrderInsertValue.setAdapter(servicePriceAdapter);
+                servicePriceAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
+                    @Override
+                    public void onClickListener(View view, int position) {
+                        if (produtos.get(position).isSelected()){
+                            produtos.get(position).setSelected(false);
+                        } else {produtos.get(position).setSelected(true);}
+                        servicePriceAdapter.notifyItemChanged(position);
+                    }
+                });
+        }
     }
 
     public void populate() {
-        providers = new ArrayList<ProductValue>();
+        produtos = new ArrayList<ProductValue>();
         for(int i = 0; i < 5; i++){
             ProductValue p = new ProductValue();
             Product pr = new Product();
@@ -79,7 +116,7 @@ public class OrderInsertValueActivity extends AbstractAppCompatActivity {
             p.setManufacture(m);
             p.setProvider(pro);
             p.setName("Teste");
-            providers.add(p);
+            produtos.add(p);
         }
     }
 
