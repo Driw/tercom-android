@@ -4,27 +4,23 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
 import br.com.tercom.Adapter.OrderListAllAdapter;
-import br.com.tercom.Adapter.OrderListInitializedOrderAdapter;
-import br.com.tercom.Adapter.OrderListOpenOrderAdapter;
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
 import br.com.tercom.Control.OrderRequestControl;
 import br.com.tercom.Entity.ApiResponse;
-import br.com.tercom.Entity.CustomerEmployee;
 import br.com.tercom.Entity.OrderRequest;
 import br.com.tercom.Entity.OrderRequestList;
-import br.com.tercom.Entity.TercomEmployee;
 import br.com.tercom.Enum.EnumDialogOptions;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.R;
@@ -72,16 +68,25 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
     private void btnBarmanager(){
         if (btnOrderListAll.isSelected()){
             btnOrderListAll.setBackgroundColor(getResources().getColor(R.color.colorGreenButton));
+            btnOrderListAll.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 3));
+            btnOrderListOpen.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+            btnOrderListInicialized.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
         } else {
             btnOrderListAll.setBackgroundColor(getResources().getColor(R.color.cardview_shadow_end_color));
         }
         if (btnOrderListOpen.isSelected()){
             btnOrderListOpen.setBackgroundColor(getResources().getColor(R.color.colorGreenButton));
+            btnOrderListOpen.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 3));
+            btnOrderListAll.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+            btnOrderListInicialized.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
         } else {
             btnOrderListOpen.setBackgroundColor(getResources().getColor(R.color.cardview_shadow_end_color));
         }
         if (btnOrderListInicialized.isSelected()){
             btnOrderListInicialized.setBackgroundColor(getResources().getColor(R.color.colorGreenButton));
+            btnOrderListInicialized.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 3));
+            btnOrderListOpen.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+            btnOrderListAll.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
         } else {
             btnOrderListInicialized.setBackgroundColor(getResources().getColor(R.color.cardview_shadow_end_color));
         }
@@ -93,37 +98,26 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
         }
         switch (type){
             case typeAll:
-                 adapterList = new ArrayList<>();
+                adapterList = new ArrayList<>();
+                for(OrderRequest request : list.getList()){
+                        adapterList.add(request);
+                }
+                break;
+            case typeOpen:
+                adapterList = new ArrayList<>();
+                for(OrderRequest request : list.getList()){
+                    if(request.getStatus() == 3){
+                        adapterList.add(request);
+                    }
+                }
+                break;
+            case typeInitialized:
+                adapterList = new ArrayList<>();
                 for(OrderRequest request : list.getList()){
                     if(request.getStatus() == 4){
                         adapterList.add(request);
                     }
                 }
-                break;
-            case typeOpen:
-                OrderListOpenOrderAdapter orderListOpenOrderAdapter = new OrderListOpenOrderAdapter(this, list.getList());
-                LinearLayoutManager layoutManager1 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-                rv_OpenOrderDetail.setLayoutManager(layoutManager1);
-                rv_OpenOrderDetail.setAdapter(orderListOpenOrderAdapter);
-                orderListOpenOrderAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
-                    @Override
-                    public void onClickListener(View view, int position) {
-                        createIntentAbs(InicializedOrderListActivity.class);
-                    }
-                });
-                break;
-            case typeInitialized:
-                OrderListInitializedOrderAdapter orderListInitializedOrderAdapter = new OrderListInitializedOrderAdapter(this, list.getList());
-                LinearLayoutManager layoutManager2 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-                rv_OpenOrderDetail.setLayoutManager(layoutManager2);
-                rv_OpenOrderDetail.setAdapter(orderListInitializedOrderAdapter);
-                orderListInitializedOrderAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
-                    @Override
-                    public void onClickListener(View view, int position) {
-                        //TODO - transformar em um só adapter e filtrar uma lista secundária.
-                        initOrderIntent(list.getList().get(position));
-                    }
-                });
                 break;
         }
         OrderListAllAdapter orderListAllAdapter = new OrderListAllAdapter(this, adapterList);
@@ -143,7 +137,7 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_order_detail);
         ButterKnife.bind(this);
-        createToolbar();
+        //createToolbar();
         initTask();
     }
 
