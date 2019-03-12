@@ -1,5 +1,6 @@
 package br.com.tercom.Boundary.Activity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
@@ -9,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -34,6 +37,7 @@ import butterknife.OnClick;
 public class OpenOrderListActivity extends AbstractAppCompatActivity {
 
     private OrderRequestList list;
+    private ArrayList<OrderRequest> adapterList;
     private int selectedType;
     private static final int typeAll = 1;
     private static final int typeOpen = 2;
@@ -81,23 +85,6 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
         } else {
             btnOrderListInicialized.setBackgroundColor(getResources().getColor(R.color.cardview_shadow_end_color));
         }
-        /*switch (selectedType){
-            case typeAll:
-                btnOrderListAll.setBackgroundColor(getResources().getColor(R.color.colorGreenButton));
-                btnOrderListOpen.setBackgroundColor(getResources().getColor(R.color.cardview_shadow_end_color));
-                btnOrderListInicialized.setBackgroundColor(getResources().getColor(R.color.cardview_shadow_end_color));
-                break;
-            case typeOpen:
-                btnOrderListOpen.setBackgroundColor(getResources().getColor(R.color.colorGreenButton));
-                btnOrderListAll.setBackgroundColor(getResources().getColor(R.color.cardview_shadow_end_color));
-                btnOrderListInicialized.setBackgroundColor(getResources().getColor(R.color.cardview_shadow_end_color));
-                break;
-            case typeInitialized:
-                btnOrderListInicialized.setBackgroundColor(getResources().getColor(R.color.colorGreenButton));
-                btnOrderListOpen.setBackgroundColor(getResources().getColor(R.color.cardview_shadow_end_color));
-                btnOrderListAll.setBackgroundColor(getResources().getColor(R.color.cardview_shadow_end_color));
-                break;
-        }*/
     }
 
     private void setAdapter(int type){
@@ -106,16 +93,12 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
         }
         switch (type){
             case typeAll:
-                OrderListAllAdapter orderListAllAdapter = new OrderListAllAdapter(this, list.getList());
-                LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-                rv_OpenOrderDetail.setLayoutManager(layoutManager);
-                rv_OpenOrderDetail.setAdapter(orderListAllAdapter);
-                orderListAllAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
-                    @Override
-                    public void onClickListener(View view, int position) {
-                        createIntentAbs(InicializedOrderListActivity.class);
+                 adapterList = new ArrayList<>();
+                for(OrderRequest request : list.getList()){
+                    if(request.getStatus() == 4){
+                        adapterList.add(request);
                     }
-                });
+                }
                 break;
             case typeOpen:
                 OrderListOpenOrderAdapter orderListOpenOrderAdapter = new OrderListOpenOrderAdapter(this, list.getList());
@@ -137,11 +120,22 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
                 orderListInitializedOrderAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
                     @Override
                     public void onClickListener(View view, int position) {
-                        createIntentAbs(InicializedOrderListActivity.class);
+                        //TODO - transformar em um só adapter e filtrar uma lista secundária.
+                        initOrderIntent(list.getList().get(position));
                     }
                 });
                 break;
         }
+        OrderListAllAdapter orderListAllAdapter = new OrderListAllAdapter(this, adapterList);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        rv_OpenOrderDetail.setLayoutManager(layoutManager);
+        rv_OpenOrderDetail.setAdapter(orderListAllAdapter);
+        orderListAllAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
+            @Override
+            public void onClickListener(View view, int position) {
+                initOrderIntent(adapterList.get(position));
+            }
+        });
     }
 
     @Override
@@ -149,8 +143,16 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_order_detail);
         ButterKnife.bind(this);
-        //createToolbar();
+        createToolbar();
         initTask();
+    }
+
+    private void initOrderIntent(OrderRequest request){
+        Intent intent = new Intent();
+        intent.setClass(this,InicializedOrderListActivity.class);
+        intent.putExtra("order",new Gson().toJson(request));
+        startActivity(intent);
+
     }
 
 

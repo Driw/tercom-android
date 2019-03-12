@@ -19,7 +19,7 @@ import br.com.tercom.R;
 public class DetailOrderListAdapter extends RecyclerView.Adapter<DetailOrderListAdapter.ViewHolder> {
 
     private LayoutInflater layoutInflater;
-    private ArrayList<iNewOrderItem> orderItemList;
+    private ArrayList<? extends iNewOrderItem> orderItemList;
     private Context context;
 
     private RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;
@@ -28,7 +28,7 @@ public class DetailOrderListAdapter extends RecyclerView.Adapter<DetailOrderList
         this.mRecyclerViewOnClickListenerHack = mRecyclerViewOnClickListenerHack;
     }
 
-    public DetailOrderListAdapter(Context c, ArrayList<iNewOrderItem> orderItemProducts){
+    public DetailOrderListAdapter(Context c, ArrayList<? extends iNewOrderItem> orderItemProducts){
         layoutInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.context = c;
         this.orderItemList = orderItemProducts;
