@@ -67,28 +67,34 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
 
     private void btnBarmanager(){
         if (btnOrderListAll.isSelected()){
-            btnOrderListAll.setBackgroundColor(getResources().getColor(R.color.colorGreenButton));
+            btnOrderListAll.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+            btnOrderListAll.setTextColor((getResources().getColor(R.color.colorPrimary)));
             btnOrderListAll.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 3));
             btnOrderListOpen.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
             btnOrderListInicialized.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
         } else {
             btnOrderListAll.setBackgroundColor(getResources().getColor(R.color.cardview_shadow_end_color));
+            btnOrderListAll.setTextColor((getResources().getColor(R.color.colorAccent)));
         }
         if (btnOrderListOpen.isSelected()){
-            btnOrderListOpen.setBackgroundColor(getResources().getColor(R.color.colorGreenButton));
+            btnOrderListOpen.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+            btnOrderListOpen.setTextColor((getResources().getColor(R.color.colorPrimary)));
             btnOrderListOpen.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 3));
             btnOrderListAll.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
             btnOrderListInicialized.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
         } else {
             btnOrderListOpen.setBackgroundColor(getResources().getColor(R.color.cardview_shadow_end_color));
+            btnOrderListOpen.setTextColor((getResources().getColor(R.color.colorAccent)));
         }
         if (btnOrderListInicialized.isSelected()){
-            btnOrderListInicialized.setBackgroundColor(getResources().getColor(R.color.colorGreenButton));
+            btnOrderListInicialized.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+            btnOrderListInicialized.setTextColor((getResources().getColor(R.color.colorPrimary)));
             btnOrderListInicialized.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 3));
             btnOrderListOpen.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
             btnOrderListAll.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
         } else {
             btnOrderListInicialized.setBackgroundColor(getResources().getColor(R.color.cardview_shadow_end_color));
+            btnOrderListInicialized.setTextColor((getResources().getColor(R.color.colorAccent)));
         }
     }
 

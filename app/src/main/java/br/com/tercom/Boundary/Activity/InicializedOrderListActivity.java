@@ -49,7 +49,7 @@ public class InicializedOrderListActivity extends AbstractAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicialized_order_detail);
         ButterKnife.bind(this);
-        createToolbar();
+//        createToolbar();
         try{
             orderRequest = new Gson().fromJson(getIntent().getExtras().getString("order"),OrderRequest.class);
         }catch (Exception e){
