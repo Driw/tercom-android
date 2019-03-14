@@ -72,6 +72,11 @@ public class OrderItemService extends GenericEntity implements iNewOrderItem {
         return null;
     }
 
+    @Override
+    public boolean isProduct() {
+        return false;
+    }
+
     public void setObservations(String observations) {
         this.observations = observations;
     }

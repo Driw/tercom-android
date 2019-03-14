@@ -17,8 +17,10 @@ import java.util.ArrayList;
 
 import br.com.tercom.Adapter.OrderListAllAdapter;
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
+import br.com.tercom.Control.OrderQuoteControl;
 import br.com.tercom.Control.OrderRequestControl;
 import br.com.tercom.Entity.ApiResponse;
+import br.com.tercom.Entity.OrderItemProductList;
 import br.com.tercom.Entity.OrderRequest;
 import br.com.tercom.Entity.OrderRequestList;
 import br.com.tercom.Enum.EnumDialogOptions;
@@ -39,6 +41,7 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
     private static final int typeOpen = 2;
     private static final int typeInitialized = 3;
     private GetOrdersTask getOrders;
+    private QuoteTask quoteTask;
 
     @BindView(R.id.rv_OpenOrderDetail)
     RecyclerView rv_OpenOrderDetail;
@@ -133,7 +136,7 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
         orderListAllAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
             @Override
             public void onClickListener(View view, int position) {
-                initOrderIntent(adapterList.get(position));
+                initOrderTask(adapterList.get(position));
             }
         });
     }
@@ -147,11 +150,11 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
         initTask();
     }
 
-    private void initOrderIntent(OrderRequest request){
-        Intent intent = new Intent();
-        intent.setClass(this,InicializedOrderListActivity.class);
-        intent.putExtra("order",new Gson().toJson(request));
-        startActivity(intent);
+    private void initOrderTask(OrderRequest request){
+       if(quoteTask == null || quoteTask.getStatus() != AsyncTask.Status.RUNNING){
+           quoteTask = new QuoteTask(request);
+           quoteTask.execute();
+       }
 
     }
 
@@ -168,6 +171,43 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
         btnOrderListInicialized.setSelected(type == typeInitialized);
         btnOrderListOpen.setSelected(type == typeOpen);
         selectedType = type;
+    }
+
+    private class QuoteTask extends AsyncTask<Void,Void,Void>{
+
+        private ApiResponse<OrderItemProductList> apiResponse;
+        private OrderRequest request;
+        private DialogLoading dialogLoading;
+
+        public QuoteTask(OrderRequest request) {
+            this.request = request;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            dialogLoading = new DialogLoading(OpenOrderListActivity.this);
+            dialogLoading.init();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+              if(Looper.myLooper() == null)
+                  Looper.prepare();
+            OrderQuoteControl orderQuoteControl = new OrderQuoteControl(OpenOrderListActivity.this);
+            apiResponse = orderQuoteControl.quote(request.getId());
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+           dialogLoading.dismissD();
+           if(apiResponse.getStatusBoolean()){
+               Intent intent = new Intent();
+               intent.setClass(OpenOrderListActivity.this,InicializedOrderListActivity.class);
+               intent.putExtra("order",new Gson().toJson(request));
+               startActivity(intent);
+           }
+        }
     }
 
     private class GetOrdersTask extends AsyncTask<Void,Void,Void>{

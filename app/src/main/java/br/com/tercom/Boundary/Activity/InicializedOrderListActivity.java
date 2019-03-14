@@ -1,5 +1,6 @@
 package br.com.tercom.Boundary.Activity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
@@ -59,13 +60,17 @@ public class InicializedOrderListActivity extends AbstractAppCompatActivity {
 
     }
 
-    private void createNewOrderList(ArrayList<? extends iNewOrderItem> list) {
+    private void createNewOrderList(final ArrayList<? extends iNewOrderItem> list) {
         DetailOrderListAdapter detailOrderListAdapter= new DetailOrderListAdapter(this, list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         detailOrderListAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
             @Override
             public void onClickListener(View view, int position) {
-
+                Intent intent = new Intent();
+                intent.setClass(InicializedOrderListActivity.this,OrderInsertValueActivity.class);
+                intent.putExtra("orderId",orderRequest.getId());
+                intent.putExtra("itemId",list.get(position).getId());
+                intent.putExtra("isProduct",list.get(position).isProduct());
             }
         });
         rv_InicializedOrderDetail.setLayoutManager(layoutManager);
