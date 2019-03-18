@@ -32,6 +32,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static br.com.tercom.Application.AppTercom.USER_STATIC;
+
 public class OpenOrderListActivity extends AbstractAppCompatActivity {
 
     private OrderRequestList list;
@@ -136,7 +138,15 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
         orderListAllAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
             @Override
             public void onClickListener(View view, int position) {
-                initOrderTask(adapterList.get(position));
+                if(adapterList.get(position).getStatus() == OrderRequest.ORS_QUOTING &&
+                        adapterList.get(position).getTercomEmployee().getId() == USER_STATIC.getTercomEmployee().getId()){
+                    Intent intent = new Intent();
+                    intent.setClass(OpenOrderListActivity.this,InicializedOrderListActivity.class);
+                    intent.putExtra("order",new Gson().toJson(adapterList.get(position)));
+                    startActivity(intent);
+                }else {
+                    initOrderTask(adapterList.get(position));
+                }
             }
         });
     }
@@ -212,6 +222,7 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
 
     private class GetOrdersTask extends AsyncTask<Void,Void,Void>{
         private ApiResponse<OrderRequestList> apiResponse;
+        private ApiResponse<OrderRequestList> apiResponseStarted;
         private DialogLoading dialogLoading;
 
         @Override
@@ -225,6 +236,7 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
             if(Looper.myLooper() == null)
                 Looper.prepare();
             apiResponse = new OrderRequestControl(OpenOrderListActivity.this).getAll(OrderRequestControl.FILA);
+            apiResponseStarted = new OrderRequestControl(OpenOrderListActivity.this).getAll(OrderRequestControl.EMCOTACAO);
             return null;
         }
 
@@ -232,7 +244,10 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             dialogLoading.dismissD();
             if(apiResponse.getStatusBoolean()){
-               list = apiResponse.getResult();
+               list = new OrderRequestList();
+               list.setList(new ArrayList<OrderRequest>());
+               list.getList().addAll(apiResponse.getResult().getList());
+               list.getList().addAll(apiResponseStarted.getResult().getList());
                setAdapter(typeAll);
             }else{
                 DialogConfirm dialogConfirm = new DialogConfirm(OpenOrderListActivity.this);

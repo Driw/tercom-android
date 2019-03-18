@@ -7,13 +7,13 @@ import butterknife.BindView;
 
 public class OrderRequest extends GenericEntity {
     public final Float MIN_BUDGET = 0f;
-    public final int ORS_NONE = 0;
-    public final int ORS_CANCEL_BY_CUSTOMER = 1;
-    public final int ORS_CANCEL_BY_TERCOM = 2;
-    public final int ORS_QUEUED = 3;
-    public final int ORS_QUOTING = 4;
-    public final int ORS_QUOTED = 5;
-    public final int ORS_DONE = 6;
+    public static final int ORS_NONE = 0;
+    public static final int ORS_CANCEL_BY_CUSTOMER = 1;
+    public static final int ORS_CANCEL_BY_TERCOM = 2;
+    public static final int ORS_QUEUED = 3;
+    public static final int ORS_QUOTING = 4;
+    public static final int ORS_QUOTED = 5;
+    public static final int ORS_DONE = 6;
 
     private int id;
     private Float budget;

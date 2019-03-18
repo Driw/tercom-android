@@ -1,5 +1,6 @@
 package br.com.tercom.Boundary.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
@@ -53,12 +54,8 @@ public class OrderInsertValueActivity extends AbstractAppCompatActivity {
         setContentView(R.layout.activity_order_insert_values);
         ButterKnife.bind(this);
         //createToolbar();
-        populate();
-        if (produtos.size() == 0){
-            selectedItemType = typeService;
-        } else {
-            selectedItemType = typeProduct;
-        }
+        Intent i = getIntent();
+
         setAdapter(selectedItemType);
     }
 
@@ -96,27 +93,6 @@ public class OrderInsertValueActivity extends AbstractAppCompatActivity {
                         servicePriceAdapter.notifyItemChanged(position);
                     }
                 });
-        }
-    }
-
-    public void populate() {
-        produtos = new ArrayList<ProductValue>();
-        for(int i = 0; i < 5; i++){
-            ProductValue p = new ProductValue();
-            Product pr = new Product();
-            Manufacture m = new Manufacture();
-            Provider pro = new Provider();
-            ProductPackage p2 = new ProductPackage();
-            ProductType p3 = new ProductType();
-            LastUpdate l = new LastUpdate();
-            p.setLastUpdate(l);
-            p.setType(p3);
-            p.setPackage(p2);
-            p.setProduct(pr);
-            p.setManufacture(m);
-            p.setProvider(pro);
-            p.setName("Teste");
-            produtos.add(p);
         }
     }
 
