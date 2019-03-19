@@ -28,6 +28,7 @@ public enum EnumREST {
     ORDERQUOTE("orderQuote"),
     QUOTEDPRODUCTPRICES("quotedProductPrice"),
     QUOTEDSERVICEPRICE("quotedServicePrice"),
+    ORDERACCEPTANCE("orderAcceptance"),
 
 
 
@@ -52,6 +53,7 @@ public enum EnumREST {
     VERIFY("verify"),
     LOGOUT("logout"),
     QUOTE("quote"),
+    QUOTED("quoted"),
     PRICES("prices"),
 
     //FILTERS
