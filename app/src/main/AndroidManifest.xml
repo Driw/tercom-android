@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="br.com.tercom">
+    package="br.com.tercomfuncionario">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 
     <application
-        android:name=".Application.AppTercom"
+        android:name="br.com.tercomfuncionario.Application.AppTercom"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -20,25 +20,25 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".Boundary.Activity.ProviderListActivity"
+            android:name="br.com.tercomfuncionario.Boundary.Activity.ProviderListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Boundary.Activity.ProviderAddActivity"
+            android:name="br.com.tercomfuncionario.Boundary.Activity.ProviderAddActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Boundary.Activity.ServiceAddActivity"
+            android:name="br.com.tercomfuncionario.Boundary.Activity.ServiceAddActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Boundary.Activity.ProductAddActivity"
+            android:name="br.com.tercomfuncionario.Boundary.Activity.ProductAddActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Boundary.Activity.ProviderContactAddActivity"
+            android:name="br.com.tercomfuncionario.Boundary.Activity.ProviderContactAddActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Boundary.Activity.ProviderContactUpdateActivity"
+            android:name="br.com.tercomfuncionario.Boundary.Activity.ProviderContactUpdateActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Boundary.Activity.LoginActivity"
+            android:name="br.com.tercomfuncionario.Boundary.Activity.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -47,36 +47,36 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Boundary.Activity.ProviderDetails"
+            android:name="br.com.tercomfuncionario.Boundary.Activity.ProviderDetails"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Boundary.Activity.ProductListActivity"
+            android:name="br.com.tercomfuncionario.Boundary.Activity.ProductListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Boundary.Activity.ServiceListActivity"
+            android:name="br.com.tercomfuncionario.Boundary.Activity.ServiceListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Boundary.Activity.ProductCategoryAddActivity"
+            android:name="br.com.tercomfuncionario.Boundary.Activity.ProductCategoryAddActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Boundary.Activity.ManufacturerActivity"
+            android:name="br.com.tercomfuncionario.Boundary.Activity.ManufacturerActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Boundary.Activity.ProductDetailsActivity"
+            android:name="br.com.tercomfuncionario.Boundary.Activity.ProductDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Boundary.Activity.ProductValueListActivity"
+            android:name="br.com.tercomfuncionario.Boundary.Activity.ProductValueListActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Boundary.Activity.ProductValueDetails" />
-        <activity android:name=".Boundary.Activity.ServiceDetailsActivity" />
-        <activity android:name=".Boundary.Activity.MenuActivity" />
-        <activity android:name=".Boundary.Activity.ServicePriceDetailsActivity" />
-        <activity android:name=".Boundary.Activity.ServicePriceListAcitivity" />
-        <activity android:name=".Boundary.Activity.PermissionsActivity"/>
-        <activity android:name=".Boundary.Activity.OrderMainActivity"/>
-        <activity android:name=".Boundary.Activity.OpenOrderListActivity"/>
-        <activity android:name=".Boundary.Activity.InicializedOrderListActivity"/>
-        <activity android:name=".Boundary.Activity.OrderInsertValueActivity"/>
+        <activity android:name="br.com.tercomfuncionario.Boundary.Activity.ProductValueDetails" />
+        <activity android:name="br.com.tercomfuncionario.Boundary.Activity.ServiceDetailsActivity" />
+        <activity android:name="br.com.tercomfuncionario.Boundary.Activity.MenuActivity" />
+        <activity android:name="br.com.tercomfuncionario.Boundary.Activity.ServicePriceDetailsActivity" />
+        <activity android:name="br.com.tercomfuncionario.Boundary.Activity.ServicePriceListAcitivity" />
+        <activity android:name="br.com.tercomfuncionario.Boundary.Activity.PermissionsActivity"/>
+        <activity android:name="br.com.tercomfuncionario.Boundary.Activity.OrderMainActivity"/>
+        <activity android:name="br.com.tercomfuncionario.Boundary.Activity.OpenOrderListActivity"/>
+        <activity android:name="br.com.tercomfuncionario.Boundary.Activity.InicializedOrderListActivity"/>
+        <activity android:name="br.com.tercomfuncionario.Boundary.Activity.OrderInsertValueActivity"/>
     </application>
 
 </manifest>
