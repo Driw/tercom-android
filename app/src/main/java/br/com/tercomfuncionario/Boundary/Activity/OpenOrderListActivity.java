@@ -42,6 +42,7 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
     private static final int typeAll = 1;
     private static final int typeOpen = 2;
     private static final int typeInitialized = 3;
+    private static final int typeQuoted = 4;
     private GetOrdersTask getOrders;
     private QuoteTask quoteTask;
 
@@ -53,6 +54,8 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
     Button btnOrderListOpen;
     @BindView(R.id.btnOrderListInicialized)
     Button btnOrderListInicialized;
+    @BindView(R.id.btnOrderListQuoted)
+    Button btnOrderListQuoted;
 
     @OnClick(R.id.btnOrderListAll) void displayAllOrders(){
         setSelected(typeAll);
@@ -69,37 +72,56 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
         btnBarmanager();
         setAdapter(typeInitialized);
     }
+    @OnClick(R.id.btnOrderListQuoted) void displayQuotedOrders(){
+        setSelected(typeQuoted);
+        btnBarmanager();
+        setAdapter(typeQuoted);
+    }
 
-    private void btnBarmanager(){
-        if (btnOrderListAll.isSelected()){
+    private void btnBarmanager() {
+        if (btnOrderListAll.isSelected()) {
             btnOrderListAll.setBackgroundColor(getResources().getColor(R.color.colorAccent));
             btnOrderListAll.setTextColor((getResources().getColor(R.color.colorPrimary)));
             btnOrderListAll.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 3));
             btnOrderListOpen.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
             btnOrderListInicialized.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+            btnOrderListQuoted.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
         } else {
             btnOrderListAll.setBackgroundColor(getResources().getColor(R.color.cardview_shadow_end_color));
             btnOrderListAll.setTextColor((getResources().getColor(R.color.colorAccent)));
         }
-        if (btnOrderListOpen.isSelected()){
+        if (btnOrderListOpen.isSelected()) {
             btnOrderListOpen.setBackgroundColor(getResources().getColor(R.color.colorAccent));
             btnOrderListOpen.setTextColor((getResources().getColor(R.color.colorPrimary)));
             btnOrderListOpen.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 3));
             btnOrderListAll.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
             btnOrderListInicialized.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+            btnOrderListQuoted.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
         } else {
             btnOrderListOpen.setBackgroundColor(getResources().getColor(R.color.cardview_shadow_end_color));
             btnOrderListOpen.setTextColor((getResources().getColor(R.color.colorAccent)));
         }
-        if (btnOrderListInicialized.isSelected()){
+        if (btnOrderListInicialized.isSelected()) {
             btnOrderListInicialized.setBackgroundColor(getResources().getColor(R.color.colorAccent));
             btnOrderListInicialized.setTextColor((getResources().getColor(R.color.colorPrimary)));
             btnOrderListInicialized.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 3));
             btnOrderListOpen.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
             btnOrderListAll.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+            btnOrderListQuoted.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
         } else {
             btnOrderListInicialized.setBackgroundColor(getResources().getColor(R.color.cardview_shadow_end_color));
             btnOrderListInicialized.setTextColor((getResources().getColor(R.color.colorAccent)));
+        }
+        if (btnOrderListQuoted.isSelected()) {
+            btnOrderListQuoted.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+            btnOrderListQuoted.setTextColor((getResources().getColor(R.color.colorPrimary)));
+            btnOrderListQuoted.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 3));
+            btnOrderListOpen.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+            btnOrderListAll.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+            btnOrderListInicialized.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+        } else {
+            btnOrderListQuoted.setBackgroundColor(getResources().getColor(R.color.cardview_shadow_end_color));
+            btnOrderListQuoted.setTextColor((getResources().getColor(R.color.colorAccent)));
         }
     }
 
@@ -126,6 +148,14 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
                 adapterList = new ArrayList<>();
                 for(OrderRequest request : list.getList()){
                     if(request.getStatus() == 4){
+                        adapterList.add(request);
+                    }
+                }
+                break;
+            case typeQuoted:
+                adapterList = new ArrayList<>();
+                for(OrderRequest request : list.getList()){
+                    if(request.getStatus() == 5){
                         adapterList.add(request);
                     }
                 }
