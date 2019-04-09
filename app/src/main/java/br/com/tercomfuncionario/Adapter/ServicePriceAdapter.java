@@ -2,6 +2,7 @@ package br.com.tercomfuncionario.Adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +40,7 @@ public class ServicePriceAdapter extends RecyclerView.Adapter<ServicePriceAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.cardListServicePrice.setCardBackgroundColor(context.getResources().getColor(servicePrice.get(position).isSelected()? R.color.colorOrange: R.color.accent));
         holder.serviceName.setText(servicePrice.get(position).getName());
         holder.serviceValue.setText(String.format(Locale.getDefault(),"R$ %.2f", servicePrice.get(position).getPrice()).replace(".", ","));
         holder.serviceProvider.setText(servicePrice.get(position).getProvider().getFantasyName());
@@ -52,12 +54,14 @@ public class ServicePriceAdapter extends RecyclerView.Adapter<ServicePriceAdapte
         public TextView serviceName;
         public TextView serviceValue;
         public TextView serviceProvider;
+        public CardView cardListServicePrice;
 
         public ViewHolder(View itemView) {
             super(itemView);
             serviceName = itemView.findViewById(R.id.ServiceName);
             serviceValue = itemView.findViewById(R.id.servicePrice);
             serviceProvider = itemView.findViewById(R.id.ServiceProvider);
+            cardListServicePrice = itemView.findViewById(R.id.cardListServicePrice);
             itemView.setOnClickListener(this);
         }
         @Override

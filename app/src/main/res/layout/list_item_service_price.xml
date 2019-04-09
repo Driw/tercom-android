@@ -7,6 +7,7 @@
     android:layout_margin="5dp">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cardListServicePrice"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/accent"
