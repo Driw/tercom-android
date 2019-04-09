@@ -10,7 +10,7 @@ public class ProductValue extends GenericEntity {
     @BindObject
     private Provider provider;
     @BindObject
-    private Manufacture manufacture;
+    private Manufacture manufacturer;
     @BindObject
     private ProductPackage productPackage;
     @BindObject
@@ -57,11 +57,11 @@ public class ProductValue extends GenericEntity {
     }
 
     public Manufacture getManufacture() {
-        return manufacture;
+        return manufacturer;
     }
 
     public void setManufacture(Manufacture manufacture) {
-        this.manufacture = manufacture;
+        this.manufacturer = manufacture;
     }
 
     public ProductPackage getPackage() {

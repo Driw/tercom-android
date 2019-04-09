@@ -12,6 +12,7 @@ public class ServicePrice extends GenericEntity implements IProductValueItem {
     private String name;
     private String additionalDescription;
     private Float price;
+    private boolean isSelected;
 
     public ServicePrice()
     {
@@ -69,5 +70,13 @@ public class ServicePrice extends GenericEntity implements IProductValueItem {
 
     public void setPrice(Float price) {
         this.price = price;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 }

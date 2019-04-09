@@ -15,9 +15,11 @@ import java.util.ArrayList;
 import br.com.tercomfuncionario.Adapter.DetailOrderListAdapter;
 import br.com.tercomfuncionario.Boundary.BoundaryUtil.AbstractAppCompatActivity;
 import br.com.tercomfuncionario.Control.OrderItemControl;
+import br.com.tercomfuncionario.Control.OrderQuoteControl;
 import br.com.tercomfuncionario.Entity.ApiResponse;
 import br.com.tercomfuncionario.Entity.OrderItemProductList;
 import br.com.tercomfuncionario.Entity.OrderItemServiceList;
+import br.com.tercomfuncionario.Entity.OrderQuote;
 import br.com.tercomfuncionario.Entity.OrderRequest;
 import br.com.tercomfuncionario.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercomfuncionario.Interface.iNewOrderItem;
@@ -26,15 +28,27 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static br.com.tercomfuncionario.Util.Util.toast;
+
 public class InicializedOrderListActivity extends AbstractAppCompatActivity {
 
     private GetAllProductListTask getAllProductListTask;
     private OrderRequest orderRequest;
+    private FinalizeOrderTask finalizeOrderTask;
     @BindView(R.id.rv_InicializedOrderDetail)
     RecyclerView rv_InicializedOrderDetail;
 
     @OnClick(R.id.btnRespondOrderFromList)
     void finilizeOrder() {
+        finilize();
+    }
+
+    private void finilize() {
+        if(finalizeOrderTask  == null || finalizeOrderTask.getStatus() != AsyncTask.Status.RUNNING){
+            finalizeOrderTask = new FinalizeOrderTask(orderRequest.getId());
+            finalizeOrderTask.execute();
+
+        }
     }
 
     @Override
@@ -63,6 +77,7 @@ public class InicializedOrderListActivity extends AbstractAppCompatActivity {
                 intent.putExtra("orderId",orderRequest.getId());
                 intent.putExtra("itemId",list.get(position).getId());
                 intent.putExtra("isProduct",list.get(position).isProduct());
+                startActivity(intent);
             }
         });
         rv_InicializedOrderDetail.setLayoutManager(layoutManager);
@@ -115,4 +130,31 @@ public class InicializedOrderListActivity extends AbstractAppCompatActivity {
         }
     }
 
+    private class FinalizeOrderTask extends AsyncTask<Void,Void,Void> {
+        private ApiResponse<OrderQuote> apiResponse;
+        private int orderId;
+
+        public FinalizeOrderTask(int orderId) {
+            this.orderId = orderId;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            if(Looper.myLooper() == null)
+                Looper.prepare();
+            apiResponse = new OrderQuoteControl(InicializedOrderListActivity.this).quoted(orderId);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if(apiResponse.getStatusBoolean()){
+                toast(InicializedOrderListActivity.this,apiResponse.getMessage());
+                finish();
+                createIntentAbs(MenuActivity.class);
+            }else{
+                toast(InicializedOrderListActivity.this,apiResponse.getMessage());
+            }
+        }
+    }
 }
