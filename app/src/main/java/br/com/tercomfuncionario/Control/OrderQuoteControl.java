@@ -53,4 +53,22 @@ public class OrderQuoteControl extends GenericControl {
         }
     }
 
+    public ApiResponse getQuote(int idOrderQuote){
+        try{
+            TreeMap<String, String> map = new TreeMap<>();
+            map.put("idOrderRequest", String.valueOf(idOrderQuote));
+            String link = getLink(getBase(EnumREST.SITE, EnumREST.ORDERQUOTE, EnumREST.GET), String.valueOf(idOrderQuote));
+            Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
+            CustomPair<String> jsonResult =  callJson(EnumMethod.POST,activity,completePost);
+            ApiResponse<OrderQuote> orderApiResponse = new ApiResponse<>(OrderQuote.class);
+            if(jsonResult.first){
+                orderApiResponse = populateApiResponse(orderApiResponse,jsonResult.second);
+            }
+            return orderApiResponse;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return getErrorResponse();
+        }
+    }
+
 }

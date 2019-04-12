@@ -101,7 +101,7 @@ public class OrderInsertValueActivity extends AbstractAppCompatActivity {
                 productValueAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
                     @Override
                     public void onClickListener(View view, int position) {
-                        if (produtos.get(position).isSelected())
+                        if (!produtos.get(position).isSelected())
                         {
                             addProduct(orderId,produtos.get(position).getId(),itemId,position);
                         } else
@@ -119,7 +119,7 @@ public class OrderInsertValueActivity extends AbstractAppCompatActivity {
                 servicePriceAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
                     @Override
                     public void onClickListener(View view, int position) {
-                        if (produtos.get(position).isSelected()){
+                        if (!produtos.get(position).isSelected()){
                             addService(orderId,services.get(position).getId(),itemId,position);
                         } else
                         {

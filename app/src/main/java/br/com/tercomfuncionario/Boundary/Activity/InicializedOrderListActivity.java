@@ -34,6 +34,7 @@ public class InicializedOrderListActivity extends AbstractAppCompatActivity {
 
     private GetAllProductListTask getAllProductListTask;
     private OrderRequest orderRequest;
+    private OrderQuote orderQuote;
     private FinalizeOrderTask finalizeOrderTask;
     @BindView(R.id.rv_InicializedOrderDetail)
     RecyclerView rv_InicializedOrderDetail;
@@ -59,6 +60,7 @@ public class InicializedOrderListActivity extends AbstractAppCompatActivity {
 //        createToolbar();
         try{
             orderRequest = new Gson().fromJson(getIntent().getExtras().getString("order"),OrderRequest.class);
+            orderQuote = new Gson().fromJson(getIntent().getExtras().getString("orderQuote"),OrderQuote.class);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -74,7 +76,7 @@ public class InicializedOrderListActivity extends AbstractAppCompatActivity {
             public void onClickListener(View view, int position) {
                 Intent intent = new Intent();
                 intent.setClass(InicializedOrderListActivity.this,OrderInsertValueActivity.class);
-                intent.putExtra("orderId",orderRequest.getId());
+                intent.putExtra("orderId",orderQuote.getId());
                 intent.putExtra("itemId",list.get(position).getId());
                 intent.putExtra("isProduct",list.get(position).isProduct());
                 startActivity(intent);

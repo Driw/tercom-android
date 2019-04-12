@@ -21,6 +21,7 @@ import br.com.tercomfuncionario.Control.OrderQuoteControl;
 import br.com.tercomfuncionario.Control.OrderRequestControl;
 import br.com.tercomfuncionario.Entity.ApiResponse;
 import br.com.tercomfuncionario.Entity.OrderItemProductList;
+import br.com.tercomfuncionario.Entity.OrderQuote;
 import br.com.tercomfuncionario.Entity.OrderRequest;
 import br.com.tercomfuncionario.Entity.OrderRequestList;
 import br.com.tercomfuncionario.Enum.EnumDialogOptions;
@@ -45,6 +46,7 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
     private static final int typeQuoted = 4;
     private GetOrdersTask getOrders;
     private QuoteTask quoteTask;
+    private GetQuoteTask getQuoteTask;
 
     @BindView(R.id.rv_OpenOrderDetail)
     RecyclerView rv_OpenOrderDetail;
@@ -170,10 +172,7 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
             public void onClickListener(View view, int position) {
                 if(adapterList.get(position).getStatus() == OrderRequest.ORS_QUOTING &&
                         adapterList.get(position).getTercomEmployee().getId() == USER_STATIC.getTercomEmployee().getId()){
-                    Intent intent = new Intent();
-                    intent.setClass(OpenOrderListActivity.this,InicializedOrderListActivity.class);
-                    intent.putExtra("order",new Gson().toJson(adapterList.get(position)));
-                    startActivity(intent);
+                    initGetOrderTask(adapterList.get(position));
                 }else {
                     initOrderTask(adapterList.get(position));
                 }
@@ -197,6 +196,13 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
        }
 
     }
+    private void initGetOrderTask(OrderRequest request){
+       if(getQuoteTask == null || getQuoteTask.getStatus() != AsyncTask.Status.RUNNING){
+           getQuoteTask = new GetQuoteTask(request);
+           getQuoteTask.execute();
+       }
+
+    }
 
 
     private void initTask(){
@@ -215,7 +221,7 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
 
     private class QuoteTask extends AsyncTask<Void,Void,Void>{
 
-        private ApiResponse<OrderItemProductList> apiResponse;
+        private ApiResponse<OrderQuote> apiResponse;
         private OrderRequest request;
         private DialogLoading dialogLoading;
 
@@ -245,10 +251,51 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
                Intent intent = new Intent();
                intent.setClass(OpenOrderListActivity.this,InicializedOrderListActivity.class);
                intent.putExtra("order",new Gson().toJson(request));
+               intent.putExtra("orderQuote",new Gson().toJson(apiResponse.getResult()));
                startActivity(intent);
            }
         }
     }
+
+
+    private class GetQuoteTask extends AsyncTask<Void,Void,Void>{
+
+        private ApiResponse<OrderQuote> apiResponse;
+        private OrderRequest request;
+        private DialogLoading dialogLoading;
+
+        public GetQuoteTask(OrderRequest request) {
+            this.request = request;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            dialogLoading = new DialogLoading(OpenOrderListActivity.this);
+            dialogLoading.init();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            if(Looper.myLooper() == null)
+                Looper.prepare();
+            OrderQuoteControl orderQuoteControl = new OrderQuoteControl(OpenOrderListActivity.this);
+            apiResponse = orderQuoteControl.getQuote(request.getId());
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            dialogLoading.dismissD();
+            if(apiResponse.getStatusBoolean()){
+                Intent intent = new Intent();
+                intent.setClass(OpenOrderListActivity.this,InicializedOrderListActivity.class);
+                intent.putExtra("order",new Gson().toJson(request));
+                intent.putExtra("orderQuote",new Gson().toJson(apiResponse.getResult()));
+                startActivity(intent);
+            }
+        }
+    }
+
 
     private class GetOrdersTask extends AsyncTask<Void,Void,Void>{
         private ApiResponse<OrderRequestList> apiResponse;
