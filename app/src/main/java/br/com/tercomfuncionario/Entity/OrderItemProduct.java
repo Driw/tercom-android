@@ -50,6 +50,11 @@ public class OrderItemProduct extends GenericEntity implements iNewOrderItem {
         return getProduct().getId();
     }
 
+    @Override
+    public int getItemId(){
+        return getProduct().getId();
+    }
+
     public OrderItemProduct setProduct(Product product) {
         this.product = product;
         return this;

@@ -250,7 +250,6 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
            if(apiResponse.getStatusBoolean()){
                Intent intent = new Intent();
                intent.setClass(OpenOrderListActivity.this,InicializedOrderListActivity.class);
-               intent.putExtra("order",new Gson().toJson(request));
                intent.putExtra("orderQuote",new Gson().toJson(apiResponse.getResult()));
                startActivity(intent);
            }

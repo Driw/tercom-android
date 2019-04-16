@@ -43,6 +43,7 @@ public class OrderInsertValueActivity extends AbstractAppCompatActivity {
     private RemoveServiceTask removeServiceTask;
     private ServicePriceAdapter servicePriceAdapter;
     private ProductValueAdapter productValueAdapter;
+    private int orderQuoteId;
 
 
     ArrayList<ProductValue> produtos;
@@ -64,7 +65,8 @@ public class OrderInsertValueActivity extends AbstractAppCompatActivity {
         setContentView(R.layout.activity_order_insert_values);
         ButterKnife.bind(this);
         Intent i = getIntent();
-        orderId = i.getExtras().getInt("orderId");
+        orderId = i.getExtras().getInt("requestId");
+        orderQuoteId = i.getExtras().getInt("quoteId");
         itemId = i.getExtras().getInt("itemId");
         selectedItemType = i.getExtras().getBoolean("isProduct")? typeProduct : typeService;
         if(selectedItemType == typeProduct){

@@ -33,7 +33,6 @@ import static br.com.tercomfuncionario.Util.Util.toast;
 public class InicializedOrderListActivity extends AbstractAppCompatActivity {
 
     private GetAllProductListTask getAllProductListTask;
-    private OrderRequest orderRequest;
     private OrderQuote orderQuote;
     private FinalizeOrderTask finalizeOrderTask;
     @BindView(R.id.rv_InicializedOrderDetail)
@@ -46,9 +45,8 @@ public class InicializedOrderListActivity extends AbstractAppCompatActivity {
 
     private void finilize() {
         if(finalizeOrderTask  == null || finalizeOrderTask.getStatus() != AsyncTask.Status.RUNNING){
-            finalizeOrderTask = new FinalizeOrderTask(orderRequest.getId());
+            finalizeOrderTask = new FinalizeOrderTask(orderQuote.getId());
             finalizeOrderTask.execute();
-
         }
     }
 
@@ -59,7 +57,6 @@ public class InicializedOrderListActivity extends AbstractAppCompatActivity {
         ButterKnife.bind(this);
 //        createToolbar();
         try{
-            orderRequest = new Gson().fromJson(getIntent().getExtras().getString("order"),OrderRequest.class);
             orderQuote = new Gson().fromJson(getIntent().getExtras().getString("orderQuote"),OrderQuote.class);
         }catch (Exception e){
             e.printStackTrace();
@@ -76,7 +73,8 @@ public class InicializedOrderListActivity extends AbstractAppCompatActivity {
             public void onClickListener(View view, int position) {
                 Intent intent = new Intent();
                 intent.setClass(InicializedOrderListActivity.this,OrderInsertValueActivity.class);
-                intent.putExtra("orderId",orderQuote.getId());
+                intent.putExtra("requestId",orderQuote.getOrderRequest().getId());
+                intent.putExtra("quoteId",orderQuote.getId());
                 intent.putExtra("itemId",list.get(position).getId());
                 intent.putExtra("isProduct",list.get(position).isProduct());
                 startActivity(intent);
@@ -89,7 +87,7 @@ public class InicializedOrderListActivity extends AbstractAppCompatActivity {
 
     private void initGetAllProducts(){
         if(getAllProductListTask == null || getAllProductListTask.getStatus() != AsyncTask.Status.RUNNING){
-            getAllProductListTask = new GetAllProductListTask(orderRequest.getId());
+            getAllProductListTask = new GetAllProductListTask(orderQuote.getOrderRequest().getId());
             getAllProductListTask.execute();
         }
     }

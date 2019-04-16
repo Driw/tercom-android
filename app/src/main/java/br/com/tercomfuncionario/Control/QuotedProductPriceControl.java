@@ -33,8 +33,8 @@ public class QuotedProductPriceControl extends GenericControl {
     }
     public ApiResponse addProductPrices(int idQuote, int idQuoteProduct, int productId) {
         try{
-            String link = getLink(getBase(EnumREST.SITE, EnumREST.QUOTEDPRODUCTPRICES, EnumREST.ADD), String.valueOf(idQuote) + "/" + String.valueOf(idQuoteProduct)
-                    + "/" + String.valueOf(productId));
+            String link = getLink(getBase(EnumREST.SITE, EnumREST.QUOTEDPRODUCTPRICES, EnumREST.ADD), String.valueOf(idQuote) + "/" + String.valueOf(productId)
+                    + "/" + String.valueOf(idQuoteProduct));
             CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,link);
             ApiResponse<ProductValue> orderApiResponse = new ApiResponse<>(ProductValue.class);
             if(jsonResult.first){
