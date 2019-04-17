@@ -22,6 +22,7 @@ import br.com.tercomfuncionario.Control.OrderRequestControl;
 import br.com.tercomfuncionario.Entity.ApiResponse;
 import br.com.tercomfuncionario.Entity.OrderItemProductList;
 import br.com.tercomfuncionario.Entity.OrderQuote;
+import br.com.tercomfuncionario.Entity.OrderQuoteList;
 import br.com.tercomfuncionario.Entity.OrderRequest;
 import br.com.tercomfuncionario.Entity.OrderRequestList;
 import br.com.tercomfuncionario.Enum.EnumDialogOptions;
@@ -46,7 +47,7 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
     private static final int typeQuoted = 4;
     private GetOrdersTask getOrders;
     private QuoteTask quoteTask;
-    private GetQuoteTask getQuoteTask;
+    private ArrayList<OrderQuote> quotedList;
 
     @BindView(R.id.rv_OpenOrderDetail)
     RecyclerView rv_OpenOrderDetail;
@@ -172,14 +173,17 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
             public void onClickListener(View view, int position) {
                 if(adapterList.get(position).getStatus() == OrderRequest.ORS_QUOTING &&
                         adapterList.get(position).getTercomEmployee().getId() == USER_STATIC.getTercomEmployee().getId()){
-                    initGetOrderTask(adapterList.get(position));
+                    Intent intent = new Intent();
+                    intent.setClass(OpenOrderListActivity.this,InicializedOrderListActivity.class);
+                    intent.putExtra("order",new Gson().toJson(adapterList.get(position)));
+                    intent.putExtra("orderQuote",new Gson().toJson(quotedList.get((position))));
+                    startActivity(intent);
                 }else {
                     initOrderTask(adapterList.get(position));
                 }
             }
         });
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -190,17 +194,10 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
     }
 
     private void initOrderTask(OrderRequest request){
-       if(quoteTask == null || quoteTask.getStatus() != AsyncTask.Status.RUNNING){
-           quoteTask = new QuoteTask(request);
-           quoteTask.execute();
-       }
-
-    }
-    private void initGetOrderTask(OrderRequest request){
-       if(getQuoteTask == null || getQuoteTask.getStatus() != AsyncTask.Status.RUNNING){
-           getQuoteTask = new GetQuoteTask(request);
-           getQuoteTask.execute();
-       }
+        if(quoteTask == null || quoteTask.getStatus() != AsyncTask.Status.RUNNING){
+            quoteTask = new QuoteTask(request);
+            quoteTask.execute();
+        }
 
     }
 
@@ -216,6 +213,7 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
         btnOrderListAll.setSelected(type == typeAll);
         btnOrderListInicialized.setSelected(type == typeInitialized);
         btnOrderListOpen.setSelected(type == typeOpen);
+
         selectedType = type;
     }
 
@@ -256,49 +254,9 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
         }
     }
 
-
-    private class GetQuoteTask extends AsyncTask<Void,Void,Void>{
-
-        private ApiResponse<OrderQuote> apiResponse;
-        private OrderRequest request;
-        private DialogLoading dialogLoading;
-
-        public GetQuoteTask(OrderRequest request) {
-            this.request = request;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            dialogLoading = new DialogLoading(OpenOrderListActivity.this);
-            dialogLoading.init();
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            if(Looper.myLooper() == null)
-                Looper.prepare();
-            OrderQuoteControl orderQuoteControl = new OrderQuoteControl(OpenOrderListActivity.this);
-            apiResponse = orderQuoteControl.getQuote(request.getId());
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            dialogLoading.dismissD();
-            if(apiResponse.getStatusBoolean()){
-                Intent intent = new Intent();
-                intent.setClass(OpenOrderListActivity.this,InicializedOrderListActivity.class);
-                intent.putExtra("order",new Gson().toJson(request));
-                intent.putExtra("orderQuote",new Gson().toJson(apiResponse.getResult()));
-                startActivity(intent);
-            }
-        }
-    }
-
-
     private class GetOrdersTask extends AsyncTask<Void,Void,Void>{
         private ApiResponse<OrderRequestList> apiResponse;
-        private ApiResponse<OrderRequestList> apiResponseStarted;
+        private ApiResponse<OrderQuoteList> apiResponseStarted;
         private DialogLoading dialogLoading;
 
         @Override
@@ -312,7 +270,7 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
             if(Looper.myLooper() == null)
                 Looper.prepare();
             apiResponse = new OrderRequestControl(OpenOrderListActivity.this).getAll(OrderRequestControl.FILA);
-            apiResponseStarted = new OrderRequestControl(OpenOrderListActivity.this).getAll(OrderRequestControl.EMCOTACAO);
+            apiResponseStarted = new OrderRequestControl(OpenOrderListActivity.this).getAllQuoted();
             return null;
         }
 
@@ -323,7 +281,10 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
                list = new OrderRequestList();
                list.setList(new ArrayList<OrderRequest>());
                list.getList().addAll(apiResponse.getResult().getList());
-               list.getList().addAll(apiResponseStarted.getResult().getList());
+               quotedList = apiResponseStarted.getResult().getList();
+               for(OrderQuote quoted: apiResponseStarted.getResult().getList()){
+                   list.getList().add(quoted.getOrderRequest());
+               }
                setAdapter(typeAll);
             }else{
                 DialogConfirm dialogConfirm = new DialogConfirm(OpenOrderListActivity.this);

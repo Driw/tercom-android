@@ -29,6 +29,7 @@ public enum EnumREST {
     QUOTEDPRODUCTPRICES("quotedProductPrice"),
     QUOTEDSERVICEPRICE("quotedServicePrice"),
     ORDERACCEPTANCE("orderAcceptance"),
+    ORDERQUOTEBYTERCOMEMPLOYEE("getByTercomEmployee"),
 
 
 

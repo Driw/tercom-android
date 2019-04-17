@@ -6,6 +6,8 @@ import android.util.Pair;
 import java.util.TreeMap;
 
 import br.com.tercomfuncionario.Entity.ApiResponse;
+import br.com.tercomfuncionario.Entity.OrderQuote;
+import br.com.tercomfuncionario.Entity.OrderQuoteList;
 import br.com.tercomfuncionario.Entity.OrderRequest;
 import br.com.tercomfuncionario.Entity.OrderRequestList;
 import br.com.tercomfuncionario.Enum.EnumMethod;
@@ -54,6 +56,24 @@ public class OrderRequestControl extends GenericControl {
             Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
             CustomPair<String> jsonResult =  callJson(EnumMethod.POST, activity, completePost);
             ApiResponse<OrderRequestList> orderApiResponse = new ApiResponse<>(OrderRequestList.class);
+            if(jsonResult.first){
+                orderApiResponse = populateApiResponse(orderApiResponse,jsonResult.second);
+            }
+            return orderApiResponse;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return getErrorResponse();
+        }
+
+    }
+
+    public ApiResponse getAllQuoted(){
+        try{
+            TreeMap<String, String> map = new TreeMap<>();
+            String link = getBase(EnumREST.SITE, EnumREST.ORDERQUOTE, EnumREST.ORDERQUOTEBYTERCOMEMPLOYEE);
+            Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
+            CustomPair<String> jsonResult =  callJson(EnumMethod.POST, activity, completePost);
+            ApiResponse<OrderQuoteList> orderApiResponse = new ApiResponse<>(OrderQuoteList.class);
             if(jsonResult.first){
                 orderApiResponse = populateApiResponse(orderApiResponse,jsonResult.second);
             }
