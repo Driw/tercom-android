@@ -1,6 +1,8 @@
 package br.com.tercomfuncionario.Entity;
 
-public class OrderAcceptanceService extends GenericEntity {
+import br.com.tercomfuncionario.Interface.iQuotedOrderItem;
+
+public class OrderAcceptanceService extends GenericEntity implements iQuotedOrderItem {
     private static final int MIN_NAME_LEN = 2;
     private static final int MAX_NAME_LEN = 64;
     private static final int MIN_AMOUNT = 1;
@@ -78,6 +80,22 @@ public class OrderAcceptanceService extends GenericEntity {
     public double getPrice() {
         return price;
     }
+
+    @Override
+    public String getManufacturerName() {
+        return null;
+    }
+
+    @Override
+    public String getProviderName() {
+        return provider.getName();
+    }
+
+    @Override
+    public boolean isProduct() {
+        return false;
+    }
+
 
     public void setPrice(double price) {
         this.price = price;

@@ -5,7 +5,9 @@ import android.text.TextUtils;
 import java.util.Calendar;
 import java.util.Date;
 
-public class OrderAcceptanceProduct extends GenericEntity {
+import br.com.tercomfuncionario.Interface.iQuotedOrderItem;
+
+public class OrderAcceptanceProduct extends GenericEntity implements iQuotedOrderItem {
     private static final int MIN_NAME_LEN = 2;
     private static final int MAX_NAME_LEN = 64;
     private static final int MIN_AMOUNT = 1;
@@ -106,6 +108,21 @@ public class OrderAcceptanceProduct extends GenericEntity {
 
     public double getPrice() {
         return price;
+    }
+
+    @Override
+    public String getManufacturerName() {
+        return manufacturer.getName();
+    }
+
+    @Override
+    public String getProviderName() {
+        return provider.getName();
+    }
+
+    @Override
+    public boolean isProduct() {
+        return true;
     }
 
     public void setPrice(double price) {

@@ -30,6 +30,8 @@ public enum EnumREST {
     QUOTEDSERVICEPRICE("quotedServicePrice"),
     ORDERACCEPTANCE("orderAcceptance"),
     ORDERQUOTEBYTERCOMEMPLOYEE("getByTercomEmployee"),
+    ORDERACCEPTANCEPRODUCT("orderAcceptanceProduct"),
+    ORDERACCEPTANCESERVICE("orderAcceptanceService"),
 
 
 

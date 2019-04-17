@@ -171,6 +171,11 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
         orderListAllAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
             @Override
             public void onClickListener(View view, int position) {
+                if(adapterList.get(position).getStatus() == OrderRequest.ORS_QUOTED) {
+                    Intent intentQuoted = new Intent();
+                    intentQuoted.setClass(OpenOrderListActivity.this, QuotedOrderListActivity.class);
+                    intentQuoted.putExtra("id", quotedList.get(position).getId());
+                }
                 if(adapterList.get(position).getStatus() == OrderRequest.ORS_QUOTING &&
                         adapterList.get(position).getTercomEmployee().getId() == USER_STATIC.getTercomEmployee().getId()){
                     Intent intent = new Intent();
@@ -189,7 +194,9 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_order_detail);
         ButterKnife.bind(this);
-        //createToolbar();
+        createToolbar();
+        setSelected(typeAll);
+        btnBarmanager();
         initTask();
     }
 
@@ -213,7 +220,7 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
         btnOrderListAll.setSelected(type == typeAll);
         btnOrderListInicialized.setSelected(type == typeInitialized);
         btnOrderListOpen.setSelected(type == typeOpen);
-
+        btnOrderListQuoted.setSelected(type == typeQuoted);
         selectedType = type;
     }
 
