@@ -35,6 +35,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static br.com.tercomfuncionario.Application.AppTercom.USER_STATIC;
+import static br.com.tercomfuncionario.Util.Util.toast;
 
 public class OpenOrderListActivity extends AbstractAppCompatActivity {
 
@@ -175,15 +176,17 @@ public class OpenOrderListActivity extends AbstractAppCompatActivity {
                     Intent intentQuoted = new Intent();
                     intentQuoted.setClass(OpenOrderListActivity.this, QuotedOrderListActivity.class);
                     intentQuoted.putExtra("id", quotedList.get(position).getId());
-                }
-                if(adapterList.get(position).getStatus() == OrderRequest.ORS_QUOTING &&
+                }else if(adapterList.get(position).getStatus() == OrderRequest.ORS_QUOTING &&
                         adapterList.get(position).getTercomEmployee().getId() == USER_STATIC.getTercomEmployee().getId()){
                     Intent intent = new Intent();
                     intent.setClass(OpenOrderListActivity.this,InicializedOrderListActivity.class);
                     intent.putExtra("order",new Gson().toJson(adapterList.get(position)));
                     intent.putExtra("orderQuote",new Gson().toJson(quotedList.get((position))));
                     startActivity(intent);
-                }else {
+                }else if(adapterList.get(position).getStatus() == OrderRequest.ORS_QUOTED){
+                        toast(OpenOrderListActivity.this, "Tela em construção");
+                } else
+                    {
                     initOrderTask(adapterList.get(position));
                 }
             }

@@ -3,20 +3,21 @@ package br.com.tercomfuncionario.Boundary.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 import br.com.tercomfuncionario.Boundary.BoundaryUtil.AbstractAppCompatActivity;
 import br.com.tercomfuncionario.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static br.com.tercomfuncionario.Application.AppTercom.USER_STATIC;
+
 public class MenuActivity extends AbstractAppCompatActivity {
 
     @BindView(R.id.txtWelcome)
     TextView txtWelcome;
 
-    @OnClick(R.id.cardQuotation) void sendToQuotation (){
-         createIntentAbs(OrderMainActivity.class);
-    }
     @OnClick(R.id.cardProduct) void sendToProduct (){
          createIntentAbs(ProductListActivity.class);
     }
@@ -42,6 +43,6 @@ public class MenuActivity extends AbstractAppCompatActivity {
         setContentView(R.layout.activity_menu);
         ButterKnife.bind(this);
         //createToolbarWithNavigation(1);
-        //txtWelcome.setText(String.format(Locale.US,"Bem Vindo(a) %s",USER_STATIC.getTercomEmployee().getName()));
+        txtWelcome.setText(String.format(Locale.US,"Bem Vindo(a) %s",USER_STATIC.getTercomEmployee().getName()));
     }
 }

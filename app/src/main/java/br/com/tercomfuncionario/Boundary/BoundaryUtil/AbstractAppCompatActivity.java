@@ -42,7 +42,7 @@ public abstract class AbstractAppCompatActivity extends AppCompatActivity {
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
         TextView textTitle = mToolbar.findViewById(R.id.textTitle);
-         textTitle.setTypeface(setFontSingleTxt(AppTercom.getContext(),EnumFont.FONT_RNS));
+//         textTitle.setTypeface(setFontSingleTxt(AppTercom.getContext(),EnumFont.FONT_RNS));
          getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
